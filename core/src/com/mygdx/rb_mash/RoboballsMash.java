@@ -9,14 +9,14 @@ public class RoboballsMash extends Game {
 	private Game game = new Game() {
 		@Override
 		public void create() {
-            AssetLoader.load();
+            AssetLoader.getInstance().load();
 			setScreen(new GameScreen());
 		}
 
         @Override
         public void dispose() {
             super.dispose();
-            AssetLoader.dispose();
+            AssetLoader.getInstance().dispose();
         }
 	};
 

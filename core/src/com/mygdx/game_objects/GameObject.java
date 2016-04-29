@@ -1,35 +1,51 @@
 package com.mygdx.game_objects;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game_helpers.AssetLoader;
 
 
-public class GameObject {
-    private Vector2 position;
-    private Vector2 velocity;
+public abstract class GameObject implements IRenderable {
+    protected Vector2 velocity;
+    protected Vector2 position;
+    protected Rectangle rect;
+    protected String textureName;
 
-    private int width;
-    private int height;
-
-    public GameObject(float x, float y, int width, int height) {
+    public GameObject(float x, float y, float width, float height) {
+        this.rect = new Rectangle(x, y, width, height);
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0, 0);
-        this.width = width;
-        this.height = height;
     }
 
-    public int getWidth() {
-        return width;
+    public float getWidth() {
+        return rect.width;
     }
 
-    public int getHeight() {
-        return height;
+    public float getHeight() {
+        return rect.height;
     }
 
     public float getX() {
-        return position.x;
+        return rect.x;
     }
 
     public float getY() {
-        return position.y;
+        return rect.y;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(float x, float y) {
+        rect.x = x;
+        rect.y = y;
+        position.x = x;
+        position.y = y;
+    }
+
+    public boolean contains(float x, float y) {
+        return rect.contains(x, y);
     }
 }

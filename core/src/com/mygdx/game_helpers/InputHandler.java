@@ -1,11 +1,17 @@
 package com.mygdx.game_helpers;
 
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game_objects.GameMap;
+import com.mygdx.gameworld.GameWorld;
 
-/**
- * Created by Vlad on 4/15/2016.
- */
+
 public class InputHandler implements InputProcessor {
+    private GameWorld world;
+
+    public InputHandler(GameWorld world) {
+        this.world = world;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -23,7 +29,8 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        world.onClick(screenX, screenY, button);
+        return true;
     }
 
     @Override
@@ -38,7 +45,8 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+        world.onMove(screenX, screenY);
+        return true;
     }
 
     @Override
