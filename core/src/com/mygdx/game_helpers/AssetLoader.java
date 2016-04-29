@@ -28,9 +28,11 @@ public class AssetLoader {
     public TextureRegion background;
 
     private Texture robotTilesTexture;
-    private Texture robotsTexture;
     public HashMap<String, TextureRegion> robotTiles;
+    private Texture robotsTexture;
     public HashMap<String, TextureRegion> robots;
+    private Texture enemiesTexture;
+    public HashMap<String, TextureRegion> enemies;
 
     public void load() {
         // Load textures from disk
@@ -39,6 +41,7 @@ public class AssetLoader {
         robotTilesTexture = new Texture((Gdx.files.internal("gui/robot_tiles.png")));
         robotsTexture = new Texture((Gdx.files.internal("robots/robots_stub" +
                 ".png")));
+        enemiesTexture = new Texture((Gdx.files.internal("enemies/enemies_stub.png")));
 
         // Load background
         background = new TextureRegion(backgroundTexture, 0, 0, 1280, 720);
@@ -62,10 +65,18 @@ public class AssetLoader {
                 100, 100));
         robots.get("GunnerBot").flip(false, true);
 
+        // Load enemies
+        enemies = new HashMap<String, TextureRegion>();
+        enemies.put("SimpleEnemy", new TextureRegion(enemiesTexture, 0, 0,
+                200, 200));
+        enemies.get("SimpleEnemy").flip(false, true);
+
     }
 
     public void dispose() {
         backgroundTexture.dispose();
         robotTilesTexture.dispose();
+        robotsTexture.dispose();
+        enemiesTexture.dispose();
     }
 }

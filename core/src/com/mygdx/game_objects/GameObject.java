@@ -8,13 +8,11 @@ import com.mygdx.game_helpers.AssetLoader;
 
 public abstract class GameObject implements IRenderable {
     protected Vector2 velocity;
-    protected Vector2 position;
     protected Rectangle rect;
     protected String name;
 
     public GameObject(float x, float y, float width, float height) {
         this.rect = new Rectangle(x, y, width, height);
-        this.position = new Vector2(x, y);
         this.velocity = new Vector2(0, 0);
     }
 
@@ -34,18 +32,17 @@ public abstract class GameObject implements IRenderable {
         return rect.y;
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
-
     public void setPosition(float x, float y) {
         rect.x = x;
         rect.y = y;
-        position.x = x;
-        position.y = y;
     }
 
     public boolean contains(float x, float y) {
         return rect.contains(x, y);
+    }
+
+    public void update(float delta) {
+        rect.x += delta * velocity.x;
+        rect.y += delta * velocity.y;
     }
 }
