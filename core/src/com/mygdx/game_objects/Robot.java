@@ -12,7 +12,7 @@ public class Robot extends GameObject {
 
     @Override
     public void render(SpriteBatch batcher) {
-        batcher.draw(AssetLoader.getInstance().robots.get(textureName), rect
+        batcher.draw(AssetLoader.getInstance().robots.get(name), rect
                 .x, rect.y, rect.width, rect.height);
     }
 }

@@ -10,7 +10,7 @@ public abstract class GameObject implements IRenderable {
     protected Vector2 velocity;
     protected Vector2 position;
     protected Rectangle rect;
-    protected String textureName;
+    protected String name;
 
     public GameObject(float x, float y, float width, float height) {
         this.rect = new Rectangle(x, y, width, height);

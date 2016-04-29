@@ -56,12 +56,11 @@ public class GameWorld {
 
     public void onClick(int x, int y, int button) {
         switch (action) {
-            // TODO add map reaction on touch
             case NOTHING:
                 if (statusBarField.contains(x, y)) {
 
                 } else if (gameField.contains(x, y)) {
-
+                    return;
                 } else if (robotBarField.contains(x, y)) {
                     Robot newRobot = selectRobotPanel.getRobot(x, y);
                     if (newRobot == null) {
@@ -73,12 +72,25 @@ public class GameWorld {
                 }
 
             case ADD_ROBOT:
+                // If right mouse button was pressed then cancel robot planting
                 if (button == Input.Buttons.RIGHT) {
                     selectedRobot = null;
                     action = PointerActions.NOTHING;
                 }
 
+                // If button was pressed on game field then plant robot
+                if (gameField.contains(x, y)) {
+                    // If cell is empty and we can plant robot - do it
+                    // else do nothing
+                    if (map.plantRobot(selectedRobot, x, y)) {
+                        robots.add(selectedRobot);
+                        selectedRobot = null;
+                        action = PointerActions.NOTHING;
+                    }
+                }
+
             case REMOVE_ROBOT:
+                // TODO removing robots
                 break;
         }
     }
@@ -88,6 +100,9 @@ public class GameWorld {
             selectedRobot.render(batcher);
         }
         selectRobotPanel.render(batcher);
+        for (Robot robot : robots) {
+            robot.render(batcher);
+        }
     }
 
     public void onMove(int x, int y) {
