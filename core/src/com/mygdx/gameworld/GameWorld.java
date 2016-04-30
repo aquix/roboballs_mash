@@ -11,29 +11,49 @@ import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
 import com.mygdx.gui_objects.SelectRobotPanel;
+import com.mygdx.level_infrastructure.Level;
+import com.mygdx.level_infrastructure.LevelFactory;
 
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 public class GameWorld {
     private ArrayList<Robot> robots;
-    private ArrayList<Enemy> enemies;
+    private TreeSet<Enemy> readyEnemies;
     private GameMap map;
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
     private Robot selectedRobot;
-    private int level;
+    private int levelNumber;
     private PointerActions action;
     private Rectangle gameField;
     private Rectangle robotBarField;
     private Rectangle statusBarField;
 
     public GameWorld() {
+        levelNumber = 1;
+        Level level = LevelFactory.createLevel(levelNumber);
         robots = new ArrayList<Robot>();
-        enemies = new ArrayList<Enemy>();
+
+        // Initialize all level enemies
+        readyEnemies = new TreeSet<Enemy>(new Comparator<Enemy>() {
+            @Override
+            public int compare(Enemy enemy, Enemy t1) {
+                if (enemy.getSpawnTime() < t1.getSpawnTime()) {
+                    return -1;
+                } else if (enemy.getSpawnTime() > t1.getSpawnTime()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        readyEnemies.addAll(level.getEnemies());
+
         map = new GameMap();
-        level = 1;
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
                 GunnerBot.class));
 

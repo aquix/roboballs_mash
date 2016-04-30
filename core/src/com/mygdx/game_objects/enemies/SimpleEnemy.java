@@ -8,9 +8,12 @@ import com.mygdx.game_objects.Enemy;
 
 public class SimpleEnemy extends Enemy {
 
-    public SimpleEnemy(float x, float y, float width, float height, float
-            spawnTime, int startLine) {
-        super(x, y, width, height, spawnTime, startLine);
+    public SimpleEnemy(float spawnTime, int startLine) {
+        super(-EnemiesData.data.get("SimpleEnemy").width,
+                240 + startLine * 100 - EnemiesData.data.get("SimpleEnemy").height,
+                EnemiesData.data.get("SimpleEnemy").width,
+                EnemiesData.data.get("SimpleEnemy").height, spawnTime,
+                startLine);
         EnemyParams enemyParams = EnemiesData.data.get("SimpleEnemy");
         cooldown = enemyParams.cooldown;
         health = enemyParams.health;

@@ -6,6 +6,7 @@ public class RobotsData {
     public static HashMap<String, RobotParams> data;
 
     static {
+        data = new HashMap<String, RobotParams>();
         data.put("GunnerBot", new RobotParams("GunnerBot", 6, 1));
         data.put("GemBot", new RobotParams("GunnerBot", 6, 0));
     }
