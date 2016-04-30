@@ -3,6 +3,8 @@ package com.mygdx.game_helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.config.EnemiesData;
+import com.mygdx.config.RobotsData;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 import sun.security.jca.GetInstance;
 
@@ -34,14 +36,18 @@ public class AssetLoader {
     private Texture enemiesTexture;
     public HashMap<String, TextureRegion> enemies;
 
+    private Texture bulletsTexture;
+    public HashMap<String, TextureRegion> bullets;
+
     public void load() {
         // Load textures from disk
         backgroundTexture = new Texture(Gdx.files.internal
                 ("backgrounds/background_stub.png"));
-        robotTilesTexture = new Texture((Gdx.files.internal("gui/robot_tiles.png")));
-        robotsTexture = new Texture((Gdx.files.internal("robots/robots_stub" +
-                ".png")));
-        enemiesTexture = new Texture((Gdx.files.internal("enemies/enemies_stub.png")));
+        robotTilesTexture = new Texture(Gdx.files.internal("gui/robot_tiles.png"));
+        robotsTexture = new Texture(Gdx.files.internal("robots/robots_stub" +
+                ".png"));
+        enemiesTexture = new Texture(Gdx.files.internal("enemies/enemies_stub.png"));
+        bulletsTexture = new Texture(Gdx.files.internal("bullets/bullets.png"));
 
         // Load background
         background = new TextureRegion(backgroundTexture, 0, 0, 1280, 720);
@@ -59,17 +65,25 @@ public class AssetLoader {
         // Load robots
         robots = new HashMap<String, TextureRegion>();
         robots.put("GemBot", new TextureRegion(robotsTexture, 0, 0,
-                100, 100));
+                RobotsData.data.get("GemBot").width, RobotsData.data.get
+                ("GemBot").height));
         robots.get("GemBot").flip(false, true);
-        robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, 100,
-                100, 100));
+        robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, RobotsData.data.get
+                ("GemBot").height, RobotsData.data.get("GemBot").width,
+                RobotsData.data.get("GemBot").height));
         robots.get("GunnerBot").flip(false, true);
 
         // Load enemies
         enemies = new HashMap<String, TextureRegion>();
         enemies.put("SimpleEnemy", new TextureRegion(enemiesTexture, 0, 0,
-                200, 200));
+                EnemiesData.data.get("SimpleEnemy").width, EnemiesData.data
+                .get("SimpleEnemy").height));
         enemies.get("SimpleEnemy").flip(false, true);
+
+        // Load bullets
+        bullets = new HashMap<String, TextureRegion>();
+        bullets.put("GunnerBotBullet", new TextureRegion(bulletsTexture, 0,
+                0, 20, 20));
 
     }
 
