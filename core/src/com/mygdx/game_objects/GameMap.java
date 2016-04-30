@@ -8,6 +8,8 @@ import java.util.List;
 public class GameMap {
     private MapCell[][] cells;
     private ArrayList<Bullet> newBullets;
+    private ArrayList<Enemy> enemies;
+    private ArrayList<Robot> robots;
 
     public GameMap() {
         float cellX = 140;
@@ -26,6 +28,8 @@ public class GameMap {
         }
 
         newBullets = new ArrayList<Bullet>();
+        enemies = new ArrayList<Enemy>();
+        robots = new ArrayList<Robot>();
     }
 
     public Robot getRobot(float x, float y) {
@@ -85,4 +89,11 @@ public class GameMap {
         return newBullets;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public ArrayList<Robot> getRobots() {
+        return robots;
+    }
 }

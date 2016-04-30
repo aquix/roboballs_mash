@@ -31,9 +31,22 @@ public abstract class Robot extends GameObject {
         return cell;
     }
 
-    public abstract void update(float delta, GameMap map);
+    public void update(float delta, GameMap map) {
+        super.update(delta);
+        if (leftoverCooldown > 0) {
+            leftoverCooldown -= delta;
+            if (leftoverCooldown < 0) {
+                leftoverCooldown = 0;
+            }
+        }
+    }
 
     public boolean isAlive() {
-        return health < 0;
+        return health > 0;
+    }
+
+    public boolean makeDamaged(Enemy enemy) {
+        health -= enemy.getDamage();
+        return true;
     }
 }

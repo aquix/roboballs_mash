@@ -8,9 +8,11 @@ public abstract class Enemy extends GameObject {
     protected float spawnTime;
     protected float health;
     protected float cooldown;
+    protected float leftoverCooldown;
     protected int startLine;
     protected float max_velocity;
     protected EnemyState state;
+    protected float damage;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine) {
@@ -30,9 +32,14 @@ public abstract class Enemy extends GameObject {
                 rect.y, rect.width, rect.height);
     }
 
-    @Override
-    public void update(float delta) {
+    public void update(float delta, GameMap map) {
         super.update(delta);
+        if (leftoverCooldown > 0) {
+            leftoverCooldown -= delta;
+            if (leftoverCooldown < 0) {
+                leftoverCooldown = 0;
+            }
+        }
         if (health <= 0) {
             state = EnemyState.DEAD;
         }
@@ -50,5 +57,9 @@ public abstract class Enemy extends GameObject {
     public boolean makeDamaged(Bullet bullet) {
         health -= bullet.getDamage();
         return true;
+    }
+
+    public float getDamage() {
+        return damage;
     }
 }

@@ -20,9 +20,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class GameWorld {
-    private ArrayList<Robot> robots;
     private TreeSet<Enemy> readyEnemies;
-    private ArrayList<Enemy> onFieldEnemies;
     private GameMap map;
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
@@ -39,7 +37,6 @@ public class GameWorld {
         gameTime = 0;
         levelNumber = 1;
         Level level = LevelFactory.createLevel(levelNumber);
-        robots = new ArrayList<Robot>();
 
         // Initialize all level enemies
         readyEnemies = new TreeSet<Enemy>(new Comparator<Enemy>() {
@@ -55,8 +52,6 @@ public class GameWorld {
             }
         });
         readyEnemies.addAll(level.getEnemies());
-
-        onFieldEnemies = new ArrayList<Enemy>();
 
         map = new GameMap();
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
@@ -82,12 +77,12 @@ public class GameWorld {
                 .getSpawnTime()) {
             Enemy newEnemy = readyEnemies.pollFirst();
             newEnemy.start();
-            onFieldEnemies.add(newEnemy);
+            map.getEnemies().add(newEnemy);
         }
 
         // Update enemies state
-        for (Enemy enemy : onFieldEnemies) {
-            enemy.update(delta);
+        for (Enemy enemy : map.getEnemies()) {
+            enemy.update(delta, map);
             for (Bullet bullet : bullets) {
                 if (enemy.getRect().overlaps(bullet.getCollisionRect())) {
                     bullet.damageEnemy(enemy);
@@ -96,7 +91,7 @@ public class GameWorld {
         }
 
         // Update map
-        map.updateCells(onFieldEnemies);
+        map.updateCells(map.getEnemies());
 
         // Grab new bullets from game map
         List<Bullet> newBullets = map.grabNewBullets();
@@ -117,15 +112,29 @@ public class GameWorld {
         });
 
         // Delete death enemies
-        onFieldEnemies.removeIf(new Predicate<Enemy>() {
+        map.getEnemies().removeIf(new Predicate<Enemy>() {
             @Override
-            public boolean test(Enemy bullet) {
-                return !bullet.isAlive();
+            public boolean test(Enemy enemy) {
+                if (!enemy.isAlive()) {
+                    map.getRobots();
+                }
+                return !enemy.isAlive();
+            }
+        });
+
+        // Delete death robots
+        map.getRobots().removeIf(new Predicate<Robot>() {
+            @Override
+            public boolean test(Robot robot) {
+                if (!robot.isAlive()) {
+                    map.getRobots();
+                }
+                return !robot.isAlive();
             }
         });
 
         // Update robots
-        for (Robot robot : robots) {
+        for (Robot robot : map.getRobots()) {
             robot.update(delta, map);
         }
     }
@@ -159,7 +168,7 @@ public class GameWorld {
                     // If cell is empty and we can plant robot - do it
                     // else do nothing
                     if (map.plantRobot(selectedRobot, x, y)) {
-                        robots.add(selectedRobot);
+                        map.getRobots().add(selectedRobot);
                         selectedRobot = null;
                         action = PointerActions.NOTHING;
                     }
@@ -176,11 +185,11 @@ public class GameWorld {
             selectedRobot.render(batcher);
         }
         selectRobotPanel.render(batcher);
-        for (Robot robot : robots) {
+        for (Robot robot : map.getRobots()) {
             robot.render(batcher);
         }
 
-        for (Enemy enemy : onFieldEnemies) {
+        for (Enemy enemy : map.getEnemies()) {
             enemy.render(batcher);
         }
 

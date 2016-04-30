@@ -11,14 +11,17 @@ public class EnemyParams {
     public float velocity_x;
     public float width;
     public float height;
+    public float damage;
 
     public EnemyParams(String name, float health, float cooldown,
-                       float velocity_x, float width, float height) {
+                       float velocity_x, float width, float height, float
+                               damage) {
         this.name = name;
         this.health = health;
         this.cooldown = cooldown;
         this.velocity_x = velocity_x;
         this.width = width;
         this.height = height;
+        this.damage = damage;
     }
 }

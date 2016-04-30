@@ -43,8 +43,12 @@ public abstract class GameObject implements IRenderable {
     }
 
     public void setPosition(float x, float y) {
+        float dx = rect.x - collisionRect.x;
+        float dy = rect.y - collisionRect.y;
         rect.x = x;
         rect.y = y;
+        collisionRect.x = x - dx;
+        collisionRect.y = y - dy;
     }
 
     public boolean contains(float x, float y) {
