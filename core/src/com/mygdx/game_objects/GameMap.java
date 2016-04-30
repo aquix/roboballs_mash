@@ -1,6 +1,9 @@
 package com.mygdx.game_objects;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameMap {
     private MapCell[][] cells;
 
@@ -33,10 +36,38 @@ public class GameMap {
             int j = (int)((x - 140) / 100);
             MapCell cell = cells[i][j];
             cell.setRobot((robot));
-            robot.setPosition(cell.getPosition().x, cell.getPosition().y);
+            robot.setPosition(cell.getX(), cell.getY());
             return true;
         } else {
             return false;
+        }
+    }
+
+    public ArrayList<Enemy> getEnemiesOnLine(int lineIndex) {
+        ArrayList<Enemy> resultEnemies = new ArrayList<Enemy>();
+        for (MapCell cell: cells[lineIndex]) {
+            resultEnemies.addAll(cell.getEnemies());
+        }
+        return resultEnemies;
+    }
+
+    public boolean isLineEmpty(int lineIndex) {
+        return getEnemiesOnLine(lineIndex).size() == 0;
+    }
+
+    // TODO optimize this govnokod
+    public void updateCells(List<Enemy> enemies) {
+
+        for (Enemy enemy : enemies) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 10; j++) {
+                    if (cells[i][j].isInCell(enemy.rect)) {
+                        cells[i][j].addEnemy(enemy);
+                    } else {
+                        cells[i][j].removeEnemy(enemy);
+                    }
+                }
+            }
         }
     }
 

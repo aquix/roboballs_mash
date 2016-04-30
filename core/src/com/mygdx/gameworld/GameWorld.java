@@ -85,6 +85,9 @@ public class GameWorld {
         for (Enemy enemy : onFieldEnemies) {
             enemy.update(delta);
         }
+
+        // Update map
+        map.updateCells(onFieldEnemies);
     }
 
     public boolean addRobot(Robot robot, int x_square, int y_square) {

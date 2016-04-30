@@ -32,6 +32,10 @@ public abstract class GameObject implements IRenderable {
         return rect.y;
     }
 
+    public Rectangle getRect() {
+        return rect;
+    }
+
     public void setPosition(float x, float y) {
         rect.x = x;
         rect.y = y;
