@@ -13,6 +13,8 @@ public class LevelFactory {
         switch (levelNumber) {
             case 1:
                 enemies.add(new SimpleEnemy(2, 4));
+                enemies.add(new SimpleEnemy(4, 3));
+                enemies.add(new SimpleEnemy(7, 0));
 
                 return new Level(levelNumber, enemies);
         }

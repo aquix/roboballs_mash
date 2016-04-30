@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.GameMap;
 import com.mygdx.game_objects.Robot;
@@ -15,10 +16,8 @@ import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class GameWorld {
     private ArrayList<Robot> robots;
@@ -34,6 +33,7 @@ public class GameWorld {
     private Rectangle robotBarField;
     private Rectangle statusBarField;
     private float gameTime;
+    private ArrayList<Bullet> bullets;
 
     public GameWorld() {
         gameTime = 0;
@@ -70,10 +70,14 @@ public class GameWorld {
         gameField = new Rectangle(140, 110, 1000, 500);
         robotBarField = new Rectangle(0, Configuration.windowHeight - 100,
                 Configuration.windowWidth, 100);
+
+        bullets = new ArrayList<Bullet>();
     }
 
     public void update(float delta) {
         gameTime += delta;
+
+        // Create new enemies by spawn time
         if (readyEnemies.size() != 0 && gameTime >= readyEnemies.first()
                 .getSpawnTime()) {
             Enemy newEnemy = readyEnemies.pollFirst();
@@ -88,10 +92,29 @@ public class GameWorld {
 
         // Update map
         map.updateCells(onFieldEnemies);
-    }
 
-    public boolean addRobot(Robot robot, int x_square, int y_square) {
-        return false;
+        // Grab new bullets from game map
+        List<Bullet> newBullets = map.grabNewBullets();
+        bullets.addAll(newBullets);
+        newBullets.clear();
+
+        // Delete death bullets
+        bullets.removeIf(new Predicate<Bullet>() {
+            @Override
+            public boolean test(Bullet bullet) {
+                return !bullet.isActive();
+            }
+        });
+
+        // Update bullets
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+        }
+
+        // Update robots
+        for (Robot robot : robots) {
+            robot.update(delta, map);
+        }
     }
 
     public void onClick(int x, int y, int button) {
@@ -146,6 +169,10 @@ public class GameWorld {
 
         for (Enemy enemy : onFieldEnemies) {
             enemy.render(batcher);
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.render(batcher);
         }
     }
 

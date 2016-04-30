@@ -20,5 +20,10 @@ public class SimpleEnemy extends Enemy {
         health = enemyParams.health;
         max_velocity = enemyParams.velocity_x;
         name = "SimpleEnemy";
+
+        collisionRect.width = 100;
+        collisionRect.height = 100;
+        collisionRect.x = rect.x + (rect.width - 100);
+        collisionRect.y = rect.y + (rect.height - 100);
     }
 }

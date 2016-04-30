@@ -1,11 +1,13 @@
 package com.mygdx.game_objects;
 
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
     private MapCell[][] cells;
+    private ArrayList<Bullet> newBullets;
 
     public GameMap() {
         float cellX = 140;
@@ -22,6 +24,8 @@ public class GameMap {
             cellY += cellSide;
             cellX = 140;
         }
+
+        newBullets = new ArrayList<Bullet>();
     }
 
     public Robot getRobot(float x, float y) {
@@ -36,6 +40,7 @@ public class GameMap {
             int j = (int)((x - 140) / 100);
             MapCell cell = cells[i][j];
             cell.setRobot((robot));
+            robot.setCell(i, j);
             robot.setPosition(cell.getX(), cell.getY());
             return true;
         } else {
@@ -61,7 +66,7 @@ public class GameMap {
         for (Enemy enemy : enemies) {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 10; j++) {
-                    if (cells[i][j].isInCell(enemy.rect)) {
+                    if (cells[i][j].isInCell(enemy.getCollisionRect())) {
                         cells[i][j].addEnemy(enemy);
                     } else {
                         cells[i][j].removeEnemy(enemy);
@@ -69,6 +74,14 @@ public class GameMap {
                 }
             }
         }
+    }
+
+    public void addNewBullet(Bullet bullet) {
+        newBullets.add(bullet);
+    }
+
+    public ArrayList<Bullet> grabNewBullets() {
+        return newBullets;
     }
 
 }
