@@ -19,12 +19,6 @@ public class GunnerBot extends Robot {
     @Override
     public void update(float delta, GameMap map) {
         super.update(delta, map);
-        if (leftoverCooldown > 0) {
-            leftoverCooldown -= delta;
-            if (leftoverCooldown < 0) {
-                leftoverCooldown = 0;
-            }
-        }
 
         if (leftoverCooldown <= 0) {
             if (!map.isLineEmpty((int)cell.y)) {
