@@ -9,14 +9,16 @@ public class RobotParams {
     public float width;
     public float height;
     public Vector2 bulletVelocity;
+    public float damage;
 
     public RobotParams(String name, float health, float cooldown, float
-            bulletVelocityX, float bulletVelocitY) {
+            bulletVelocityX, float bulletVelocitY, float damage) {
         this.name = name;
         this.health = health;
         this.cooldown = cooldown;
         this.width = 100;
         this.height = 100;
         this.bulletVelocity = new Vector2(bulletVelocityX, bulletVelocitY);
+        this.damage = damage;
     }
 }

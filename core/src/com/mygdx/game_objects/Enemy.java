@@ -33,10 +33,22 @@ public abstract class Enemy extends GameObject {
     @Override
     public void update(float delta) {
         super.update(delta);
+        if (health <= 0) {
+            state = EnemyState.DEAD;
+        }
     }
 
     public void start() {
         velocity.x = max_velocity;
         state = EnemyState.ALIVE;
+    }
+
+    public boolean isAlive() {
+        return state != EnemyState.DEAD;
+    }
+
+    public boolean makeDamaged(Bullet bullet) {
+        health -= bullet.getDamage();
+        return true;
     }
 }

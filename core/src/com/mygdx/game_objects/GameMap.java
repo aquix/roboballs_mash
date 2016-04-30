@@ -66,7 +66,8 @@ public class GameMap {
         for (Enemy enemy : enemies) {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 10; j++) {
-                    if (cells[i][j].isInCell(enemy.getCollisionRect())) {
+                    if (cells[i][j].isInCell(enemy.getCollisionRect()) &&
+                            enemy.isAlive()) {
                         cells[i][j].addEnemy(enemy);
                     } else {
                         cells[i][j].removeEnemy(enemy);

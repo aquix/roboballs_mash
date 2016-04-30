@@ -32,4 +32,8 @@ public abstract class Robot extends GameObject {
     }
 
     public abstract void update(float delta, GameMap map);
+
+    public boolean isAlive() {
+        return health < 0;
+    }
 }

@@ -88,6 +88,11 @@ public class GameWorld {
         // Update enemies state
         for (Enemy enemy : onFieldEnemies) {
             enemy.update(delta);
+            for (Bullet bullet : bullets) {
+                if (enemy.getRect().overlaps(bullet.getCollisionRect())) {
+                    bullet.damageEnemy(enemy);
+                }
+            }
         }
 
         // Update map
@@ -98,6 +103,11 @@ public class GameWorld {
         bullets.addAll(newBullets);
         newBullets.clear();
 
+        // Update bullets and apply damage for enemies
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+        }
+
         // Delete death bullets
         bullets.removeIf(new Predicate<Bullet>() {
             @Override
@@ -106,10 +116,13 @@ public class GameWorld {
             }
         });
 
-        // Update bullets
-        for (Bullet bullet : bullets) {
-            bullet.update(delta);
-        }
+        // Delete death enemies
+        onFieldEnemies.removeIf(new Predicate<Enemy>() {
+            @Override
+            public boolean test(Enemy bullet) {
+                return !bullet.isAlive();
+            }
+        });
 
         // Update robots
         for (Robot robot : robots) {
