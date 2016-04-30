@@ -1,6 +1,7 @@
 package com.mygdx.game_objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 
 public abstract class Enemy extends GameObject {
@@ -8,12 +9,15 @@ public abstract class Enemy extends GameObject {
     protected float health;
     protected float cooldown;
     protected int startLine;
+    protected float max_velocity;
+    protected EnemyState state;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine) {
         super(x, y, width, height);
         this.spawnTime = spawnTime;
         this.startLine = startLine;
+        state = EnemyState.READY;
     }
 
     public float getSpawnTime() {
@@ -29,5 +33,10 @@ public abstract class Enemy extends GameObject {
     @Override
     public void update(float delta) {
         super.update(delta);
+    }
+
+    public void start() {
+        velocity.x = max_velocity;
+        state = EnemyState.ALIVE;
     }
 }

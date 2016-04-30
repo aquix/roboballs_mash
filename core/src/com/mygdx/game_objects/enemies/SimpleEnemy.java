@@ -10,13 +10,15 @@ public class SimpleEnemy extends Enemy {
 
     public SimpleEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.data.get("SimpleEnemy").width,
-                240 + startLine * 100 - EnemiesData.data.get("SimpleEnemy").height,
+                210 + startLine * 100 - EnemiesData.data.get("SimpleEnemy")
+                        .height,
                 EnemiesData.data.get("SimpleEnemy").width,
                 EnemiesData.data.get("SimpleEnemy").height, spawnTime,
                 startLine);
         EnemyParams enemyParams = EnemiesData.data.get("SimpleEnemy");
         cooldown = enemyParams.cooldown;
         health = enemyParams.health;
-        velocity = new Vector2(enemyParams.velocity_x, 0);
+        max_velocity = enemyParams.velocity_x;
+        name = "SimpleEnemy";
     }
 }

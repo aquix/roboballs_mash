@@ -12,9 +12,7 @@ public class LevelFactory {
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         switch (levelNumber) {
             case 1:
-                EnemyParams simpleEnemyData = EnemiesData.data.get
-                        ("SimpleEnemy");
-                enemies.add(new SimpleEnemy(2, 5));
+                enemies.add(new SimpleEnemy(2, 4));
 
                 return new Level(levelNumber, enemies);
         }

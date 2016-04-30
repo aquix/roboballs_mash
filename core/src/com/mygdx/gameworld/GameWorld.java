@@ -23,6 +23,7 @@ import java.util.TreeSet;
 public class GameWorld {
     private ArrayList<Robot> robots;
     private TreeSet<Enemy> readyEnemies;
+    private ArrayList<Enemy> onFieldEnemies;
     private GameMap map;
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
@@ -32,8 +33,10 @@ public class GameWorld {
     private Rectangle gameField;
     private Rectangle robotBarField;
     private Rectangle statusBarField;
+    private float gameTime;
 
     public GameWorld() {
+        gameTime = 0;
         levelNumber = 1;
         Level level = LevelFactory.createLevel(levelNumber);
         robots = new ArrayList<Robot>();
@@ -53,6 +56,8 @@ public class GameWorld {
         });
         readyEnemies.addAll(level.getEnemies());
 
+        onFieldEnemies = new ArrayList<Enemy>();
+
         map = new GameMap();
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
                 GunnerBot.class));
@@ -68,6 +73,18 @@ public class GameWorld {
     }
 
     public void update(float delta) {
+        gameTime += delta;
+        if (readyEnemies.size() != 0 && gameTime >= readyEnemies.first()
+                .getSpawnTime()) {
+            Enemy newEnemy = readyEnemies.pollFirst();
+            newEnemy.start();
+            onFieldEnemies.add(newEnemy);
+        }
+
+        // Update enemies state
+        for (Enemy enemy : onFieldEnemies) {
+            enemy.update(delta);
+        }
     }
 
     public boolean addRobot(Robot robot, int x_square, int y_square) {
@@ -122,6 +139,10 @@ public class GameWorld {
         selectRobotPanel.render(batcher);
         for (Robot robot : robots) {
             robot.render(batcher);
+        }
+
+        for (Enemy enemy : onFieldEnemies) {
+            enemy.render(batcher);
         }
     }
 
