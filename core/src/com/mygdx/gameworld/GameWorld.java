@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
-import com.mygdx.game_objects.GameMap;
+import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
@@ -15,7 +15,6 @@ import com.mygdx.gui_objects.SelectRobotPanel;
 import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
-import java.security.Key;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -32,6 +31,7 @@ public class GameWorld {
     private Rectangle statusBarField;
     private float gameTime;
     private ArrayList<Bullet> bullets;
+    private GameState gameState;
 
     public GameWorld() {
         gameTime = 0;
@@ -53,7 +53,7 @@ public class GameWorld {
         });
         readyEnemies.addAll(level.getEnemies());
 
-        map = new GameMap();
+        map = new GameMap(level.getLevelMap());
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
                 GunnerBot.class));
 
@@ -67,6 +67,7 @@ public class GameWorld {
                 Configuration.windowWidth, 100);
 
         bullets = new ArrayList<Bullet>();
+        gameState = GameState.PLAY;
     }
 
     public void update(float delta) {
@@ -137,6 +138,10 @@ public class GameWorld {
         for (Robot robot : map.getRobots()) {
             robot.update(delta, map);
         }
+
+        if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
+            gameState = GameState.WIN;
+        }
     }
 
     public void onClick(int x, int y, int button) {
@@ -155,25 +160,25 @@ public class GameWorld {
                     action = PointerActions.ADD_ROBOT;
                     selectedRobot = newRobot;
                 }
-
+                break;
             case ADD_ROBOT:
                 // If right mouse button was pressed then cancel robot planting
                 if (button == Input.Buttons.RIGHT) {
                     selectedRobot = null;
                     action = PointerActions.NOTHING;
-                }
-
-                // If button was pressed on game field then plant robot
-                if (gameField.contains(x, y)) {
-                    // If cell is empty and we can plant robot - do it
-                    // else do nothing
-                    if (map.plantRobot(selectedRobot, x, y)) {
-                        map.getRobots().add(selectedRobot);
-                        selectedRobot = null;
-                        action = PointerActions.NOTHING;
+                } else if (button == Input.Buttons.LEFT) {
+                    // If button was pressed on game field then plant robot
+                    if (gameField.contains(x, y)) {
+                        // If cell is empty and we can plant robot - do it
+                        // else do nothing
+                        if (map.plantRobot(selectedRobot, x, y)) {
+                            map.getRobots().add(selectedRobot);
+                            selectedRobot = null;
+                            action = PointerActions.NOTHING;
+                        }
                     }
                 }
-
+                break;
             case REMOVE_ROBOT:
                 // TODO removing robots
                 break;
@@ -202,5 +207,9 @@ public class GameWorld {
         if (action == PointerActions.ADD_ROBOT) {
             selectedRobot.setPosition(x, y);
         }
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

@@ -1,10 +1,13 @@
 package com.mygdx.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game_helpers.InputHandler;
 import com.mygdx.gameworld.GameRenderer;
+import com.mygdx.gameworld.GameState;
 import com.mygdx.gameworld.GameWorld;
 import com.mygdx.rb_mash.RoboballsMash;
 
@@ -13,10 +16,12 @@ import javax.script.ScriptEngine;
 public class GameScreen implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
+    private Game game;
 
     private float runTime = 0;
 
-    public GameScreen() {
+    public GameScreen(Game game) {
+        this.game = game;
         world = new GameWorld();
         renderer = new GameRenderer(world);
 
@@ -33,6 +38,17 @@ public class GameScreen implements Screen {
 
         world.update(delta);
         renderer.render(runTime);
+
+        SpriteBatch batch;
+
+        switch (world.getGameState()) {
+            case WIN:
+                game.setScreen(new GameScreen(game));
+                break;
+            case GAMEOVER:
+                // TODO game over
+                break;
+        }
     }
 
     @Override
@@ -54,10 +70,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-
-    public void onClick() {
 
     }
 }

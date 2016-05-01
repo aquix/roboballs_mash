@@ -1,8 +1,8 @@
 package com.mygdx.game_objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.map.GameMap;
 
 public abstract class Enemy extends GameObject {
     protected float spawnTime;

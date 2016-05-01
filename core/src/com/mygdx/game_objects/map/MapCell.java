@@ -1,18 +1,19 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.map;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.Robot;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class MapCell {
     private Rectangle rect;
     private Robot robot;
     private HashSet<Enemy> enemies;
+    private CellType type;
 
-    public MapCell(float x, float y) {
+    public MapCell(float x, float y, CellType type) {
+        this.type = type;
         rect = new Rectangle(x, y, 100, 100);
         robot = null;
         enemies = new HashSet<Enemy>();
@@ -49,4 +50,8 @@ public class MapCell {
     public boolean isInCell(Rectangle rect) {
         return this.rect.overlaps(rect);
     }
- }
+
+    public CellType getType() {
+        return type;
+    }
+}

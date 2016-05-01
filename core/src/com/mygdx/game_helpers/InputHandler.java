@@ -1,7 +1,6 @@
 package com.mygdx.game_helpers;
 
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.game_objects.GameMap;
 import com.mygdx.gameworld.GameWorld;
 
 

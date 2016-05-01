@@ -1,12 +1,10 @@
 package com.mygdx.game_objects.enemies;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.EnemyState;
-import com.mygdx.game_objects.GameMap;
+import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
 
 public class SimpleEnemy extends Enemy {
@@ -43,7 +41,7 @@ public class SimpleEnemy extends Enemy {
         }
     }
 
-    public void damageRobot(Robot robot) {
+    private void damageRobot(Robot robot) {
         if (leftoverCooldown <= 0) {
             if (this.collisionRect.overlaps(robot.getCollisionRect())) {
                 this.velocity.x = 0;

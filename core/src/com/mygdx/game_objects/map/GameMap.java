@@ -1,7 +1,10 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.map;
 
 
-import java.sql.ResultSet;
+import com.mygdx.game_objects.Bullet;
+import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.Robot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +14,26 @@ public class GameMap {
     private ArrayList<Enemy> enemies;
     private ArrayList<Robot> robots;
 
-    public GameMap() {
+    public GameMap(String levelMap) {
+        // Create array of cells types
+        CellType[][] levelMapArray = new CellType[5][10];
+        String[] lines = levelMap.split("\n");
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 10; ++j) {
+                switch (lines[i].charAt(j)) {
+                    case 'g':
+                        levelMapArray[i][j] = CellType.GROUND;
+                        break;
+                    case 'a':
+                        levelMapArray[i][j] = CellType.AIR;
+                        break;
+                    case 'w':
+                        levelMapArray[i][j] = CellType.WATER;
+                        break;
+                }
+            }
+        }
+
         float cellX = 140;
         float cellY = 110;
         float cellSide = 100;
@@ -20,7 +42,7 @@ public class GameMap {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
-                cells[i][j] = new MapCell(cellX, cellY);
+                cells[i][j] = new MapCell(cellX, cellY, levelMapArray[i][j]);
                 cellX += cellSide;
             }
             cellY += cellSide;
@@ -43,6 +65,9 @@ public class GameMap {
             int i = (int)((y - 110) / 100);
             int j = (int)((x - 140) / 100);
             MapCell cell = cells[i][j];
+            if (!robot.getCellTypes().contains(cell.getType())) {
+                return false;
+            }
             cell.setRobot((robot));
             robot.setCell(i, j);
             robot.setPosition(cell.getX(), cell.getY());
