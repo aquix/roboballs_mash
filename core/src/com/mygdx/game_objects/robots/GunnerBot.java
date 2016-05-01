@@ -19,7 +19,7 @@ public class GunnerBot extends Robot {
 
         if (leftoverCooldown <= 0) {
             if (!map.isLineEmpty((int)cell.y)) {
-                map.addNewBullet(new GunnerBotBullet(rect.x, rect.y));
+                map.addNewBullet(new GunnerBotBullet(rect.x, rect.y + 40));
                 leftoverCooldown = cooldown;
             }
         }

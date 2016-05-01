@@ -16,17 +16,23 @@ import javax.script.ScriptEngine;
 public class GameScreen implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
+
     private Game game;
 
     private float runTime = 0;
 
-    public GameScreen(Game game) {
-        this.game = game;
+    public GameScreen() {
         world = new GameWorld();
         renderer = new GameRenderer(world);
 
         Gdx.input.setInputProcessor(new InputHandler(world));
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+
 
     @Override
     public void show() {
@@ -43,7 +49,10 @@ public class GameScreen implements Screen {
 
         switch (world.getGameState()) {
             case WIN:
-                game.setScreen(new GameScreen(game));
+                GameScreen winScreen = new GameScreen();
+                game.setScreen(winScreen);
+                winScreen.setGame(game);
+
                 break;
             case GAMEOVER:
                 // TODO game over

@@ -12,11 +12,12 @@ import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
 import com.mygdx.gui_objects.SelectRobotPanel;
+import com.mygdx.lang_helpers.ArrayListHelpers;
+import com.mygdx.lang_helpers.Predicate;
 import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 public class GameWorld {
     private TreeSet<Enemy> readyEnemies;
@@ -32,6 +33,10 @@ public class GameWorld {
     private float gameTime;
     private ArrayList<Bullet> bullets;
     private GameState gameState;
+
+    private ArrayListHelpers<Bullet> bulletArrayListHelpers;
+    private ArrayListHelpers<Robot> robotArrayListHelpers;
+    private ArrayListHelpers<Enemy> enemyArrayListHelpers;
 
     public GameWorld() {
         gameTime = 0;
@@ -68,6 +73,10 @@ public class GameWorld {
 
         bullets = new ArrayList<Bullet>();
         gameState = GameState.PLAY;
+
+        bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
+        enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
+        robotArrayListHelpers = new ArrayListHelpers<Robot>();
     }
 
     public void update(float delta) {
@@ -104,33 +113,24 @@ public class GameWorld {
             bullet.update(delta);
         }
 
-        // Delete death bullets
-        bullets.removeIf(new Predicate<Bullet>() {
+        bulletArrayListHelpers.removeIf(bullets, new Predicate<Bullet>() {
             @Override
-            public boolean test(Bullet bullet) {
-                return !bullet.isActive();
+            public boolean test(Bullet obj) {
+                return !obj.isActive();
             }
         });
 
-        // Delete death enemies
-        map.getEnemies().removeIf(new Predicate<Enemy>() {
+        enemyArrayListHelpers.removeIf(map.getEnemies(), new Predicate<Enemy>() {
             @Override
-            public boolean test(Enemy enemy) {
-                if (!enemy.isAlive()) {
-                    map.getRobots();
-                }
-                return !enemy.isAlive();
+            public boolean test(Enemy obj) {
+                return !obj.isAlive();
             }
         });
 
-        // Delete death robots
-        map.getRobots().removeIf(new Predicate<Robot>() {
+        robotArrayListHelpers.removeIf(map.getRobots(), new Predicate<Robot>() {
             @Override
-            public boolean test(Robot robot) {
-                if (!robot.isAlive()) {
-                    map.getRobots();
-                }
-                return !robot.isAlive();
+            public boolean test(Robot obj) {
+                return !obj.isAlive();
             }
         });
 
@@ -142,6 +142,32 @@ public class GameWorld {
         if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
             gameState = GameState.WIN;
         }
+
+
+        // JAVA 8 code
+//        //Delete death bullets
+//        bullets.removeIf(new Predicate<Bullet>() {
+//            @Override
+//            public boolean test(Bullet bullet) {
+//                return !bullet.isActive();
+//            }
+//        });
+//
+//        // Delete death enemies
+//        map.getEnemies().removeIf(new Predicate<Enemy>() {
+//            @Override
+//            public boolean test(Enemy enemy) {
+//                return !enemy.isAlive();
+//            }
+//        });
+//
+//        // Delete death robots
+//        map.getRobots().removeIf(new Predicate<Robot>() {
+//            @Override
+//            public boolean test(Robot robot) {
+//                return !robot.isAlive();
+//            }
+//        });
     }
 
     public void onClick(int x, int y, int button) {

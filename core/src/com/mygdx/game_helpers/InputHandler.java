@@ -1,14 +1,22 @@
 package com.mygdx.game_helpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.config.Configuration;
 import com.mygdx.gameworld.GameWorld;
 
 
 public class InputHandler implements InputProcessor {
     private GameWorld world;
+    private float scaleX;
+    private float scaleY;
 
     public InputHandler(GameWorld world) {
         this.world = world;
+        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
+                .getWidth();
+        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
+
     }
 
     @Override
@@ -28,7 +36,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        world.onClick(screenX, screenY, button);
+        world.onClick((int)(screenX * scaleX), (int)(screenY * scaleY), button);
         return true;
     }
 
@@ -44,7 +52,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        world.onMove(screenX, screenY);
+        world.onMove((int)(screenX * scaleX), (int)(screenY * scaleY));
         return true;
     }
 

@@ -10,7 +10,10 @@ public class RoboballsMash extends Game {
 		@Override
 		public void create() {
             AssetLoader.getInstance().load();
-			setScreen(new GameScreen(this));
+			GameScreen startScreen = new GameScreen();
+			startScreen.setGame(this);
+			setScreen(startScreen);
+
 		}
 
         @Override
