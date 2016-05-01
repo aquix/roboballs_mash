@@ -11,6 +11,7 @@ import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
+import com.mygdx.gui_objects.HudPanel;
 import com.mygdx.gui_objects.SelectRobotPanel;
 import com.mygdx.lang_helpers.ArrayListHelpers;
 import com.mygdx.lang_helpers.Predicate;
@@ -33,6 +34,9 @@ public class GameWorld {
     private float gameTime;
     private ArrayList<Bullet> bullets;
     private GameState gameState;
+    private int gems;
+    private int lives;
+    private HudPanel hud;
 
     private ArrayListHelpers<Bullet> bulletArrayListHelpers;
     private ArrayListHelpers<Robot> robotArrayListHelpers;
@@ -62,7 +66,7 @@ public class GameWorld {
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
                 GunnerBot.class));
 
-        selectRobotPanel = new SelectRobotPanel(350, 500, 100, 100, availableRobots);
+        selectRobotPanel = new SelectRobotPanel(availableRobots);
         action = PointerActions.NOTHING;
         selectedRobot = null;
 
@@ -73,6 +77,9 @@ public class GameWorld {
 
         bullets = new ArrayList<Bullet>();
         gameState = GameState.PLAY;
+        gems = level.getStartGems();
+        lives = 3;
+        hud = new HudPanel(this.gems, this.lives);
 
         bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
         enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
@@ -143,7 +150,6 @@ public class GameWorld {
             gameState = GameState.WIN;
         }
 
-
         // JAVA 8 code
 //        //Delete death bullets
 //        bullets.removeIf(new Predicate<Bullet>() {
@@ -212,6 +218,7 @@ public class GameWorld {
     }
 
     public void render(SpriteBatch batcher) {
+        hud.render(batcher);
         if (selectedRobot != null) {
             selectedRobot.render(batcher);
         }

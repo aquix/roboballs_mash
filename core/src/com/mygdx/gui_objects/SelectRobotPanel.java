@@ -14,9 +14,8 @@ import java.util.ArrayList;
 public class SelectRobotPanel extends GameObject {
     private ArrayList<RobotTile> tiles;
 
-    public SelectRobotPanel(float x, float y, int width, int height,
-                            ArrayList<Class> robotTypes) {
-        super(x, y, width, height);
+    public SelectRobotPanel(ArrayList<Class> robotTypes) {
+        super(350, 500, 100, 100);
         tiles = new ArrayList<RobotTile>();
 
         Vector2 newTilePosition = new Vector2(10, 620);
