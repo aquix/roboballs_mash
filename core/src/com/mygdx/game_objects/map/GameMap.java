@@ -1,6 +1,7 @@
 package com.mygdx.game_objects.map;
 
 
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.Robot;
@@ -13,6 +14,7 @@ public class GameMap {
     private ArrayList<Bullet> newBullets;
     private ArrayList<Enemy> enemies;
     private ArrayList<Robot> robots;
+    private ArrayList<Rectangle> groundRects;
 
     public GameMap(String levelMap) {
         // Create array of cells types
@@ -39,10 +41,14 @@ public class GameMap {
         float cellSide = 100;
 
         cells = new MapCell[5][10];
+        groundRects = new ArrayList<Rectangle>();
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 cells[i][j] = new MapCell(cellX, cellY, levelMapArray[i][j]);
+                if (levelMapArray[i][j] == CellType.GROUND) {
+                    groundRects.add(new Rectangle(cellX, cellY + 100, 100, 1));
+                }
                 cellX += cellSide;
             }
             cellY += cellSide;
@@ -120,5 +126,9 @@ public class GameMap {
 
     public ArrayList<Robot> getRobots() {
         return robots;
+    }
+
+    public ArrayList<Rectangle> getGroundRects() {
+        return groundRects;
     }
 }

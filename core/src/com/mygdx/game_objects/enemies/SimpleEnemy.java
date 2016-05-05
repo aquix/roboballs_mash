@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_objects.Enemy;
@@ -32,6 +33,26 @@ public class SimpleEnemy extends Enemy {
 
     @Override
     public void update(float delta, GameMap map) {
+        boolean isOnGround = false;
+        for (Rectangle groundRect : map.getGroundRects()) {
+            if (groundRect.overlaps(this.collisionRect) || rect.x < 140) {
+                isOnGround = true;
+                break;
+            }
+        }
+
+        if (isOnGround) {
+            velocity.y = 0;
+        } else {
+            velocity.y = 200;
+        }
+
+        if (state == EnemyState.DAMAGING) {
+            this.velocity.x = 0;
+        } else {
+            this.velocity.x = max_velocity;
+        }
+
         super.update(delta, map);
 
         if (leftoverCooldown <= 0) {
@@ -44,7 +65,6 @@ public class SimpleEnemy extends Enemy {
     private void damageRobot(Robot robot) {
         if (leftoverCooldown <= 0) {
             if (this.collisionRect.overlaps(robot.getCollisionRect())) {
-                this.velocity.x = 0;
                 this.state = EnemyState.DAMAGING;
                 robot.makeDamaged(this);
                 leftoverCooldown = cooldown;
@@ -52,7 +72,6 @@ public class SimpleEnemy extends Enemy {
                 // If enemy kill robot then continue moving
                 if (!robot.isAlive()) {
                     this.state = EnemyState.ALIVE;
-                    this.velocity.x = max_velocity;
                 }
             }
         }
