@@ -2,22 +2,20 @@ package com.mygdx.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game_helpers.InputHandler;
+import com.mygdx.config.Configuration;
 import com.mygdx.gameworld.GameRenderer;
-import com.mygdx.gameworld.GameState;
 import com.mygdx.gameworld.GameWorld;
-import com.mygdx.rb_mash.RoboballsMash;
 
-import javax.script.ScriptEngine;
-
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, InputProcessor {
     private GameWorld world;
     private GameRenderer renderer;
-
     private Game game;
+
+    private float scaleX;
+    private float scaleY;
 
     private float runTime = 0;
 
@@ -25,14 +23,16 @@ public class GameScreen implements Screen {
         world = new GameWorld();
         renderer = new GameRenderer(world);
 
-        Gdx.input.setInputProcessor(new InputHandler(world));
+        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
+                .getWidth();
+        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
+
+        Gdx.input.setInputProcessor(this);
     }
 
     public void setGame(Game game) {
         this.game = game;
     }
-
-
 
     @Override
     public void show() {
@@ -80,5 +80,47 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        world.onClick((int)(screenX * scaleX), (int)(screenY * scaleY), button);
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        world.onMove((int)(screenX * scaleX), (int)(screenY * scaleY));
+        return true;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
