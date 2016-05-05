@@ -26,4 +26,10 @@ public class HudPanel extends GameObject {
         font.draw(batcher, String.valueOf(lives), rect.x + 100, rect.y + 10);
         batcher.disableBlending();
     }
+
+    public void update(float delta, int gems, int lives) {
+        super.update(delta);
+        this.gems = gems;
+        this.lives = lives;
+    }
 }

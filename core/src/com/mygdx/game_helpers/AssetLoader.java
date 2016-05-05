@@ -39,6 +39,8 @@ public class AssetLoader {
 
     private Texture bulletsTexture;
     public HashMap<String, TextureRegion> bullets;
+    public TextureRegion littleGem;
+    public TextureRegion bigGem;
 
     private Texture mainMenuBackgroundTexture;
     public TextureRegion mainMenuBackground;
@@ -102,6 +104,10 @@ public class AssetLoader {
                 0, Configuration.windowWidth, Configuration.windowHeight);
         levelTile = new TextureRegion(menuIconsTexture, 0, 0, 50, 50);
         lockedLevel = new TextureRegion(menuIconsTexture, 510, 0, 50, 50);
+
+        // Load gems
+        littleGem = new TextureRegion(bulletsTexture, 100, 100, 20, 20);
+        bigGem = new TextureRegion(bulletsTexture, 100, 120, 30, 30);
     }
 
     public void dispose() {

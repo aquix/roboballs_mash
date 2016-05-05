@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.Robot;
+import com.mygdx.game_objects.collect_items.Gem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class GameMap {
     private ArrayList<Enemy> enemies;
     private ArrayList<Robot> robots;
     private ArrayList<Rectangle> groundRects;
+    private ArrayList<Gem> gems;
 
     public GameMap(String levelMap) {
         // Create array of cells types
@@ -58,6 +60,7 @@ public class GameMap {
         newBullets = new ArrayList<Bullet>();
         enemies = new ArrayList<Enemy>();
         robots = new ArrayList<Robot>();
+        gems = new ArrayList<Gem>();
     }
 
     public Robot getRobot(float x, float y) {
@@ -95,6 +98,10 @@ public class GameMap {
         return getEnemiesOnLine(lineIndex).size() == 0;
     }
 
+    public void produceGem(Gem gem) {
+        gems.add(gem);
+    }
+
     // TODO optimize this govnokod
     public void updateCells(List<Enemy> enemies) {
 
@@ -130,5 +137,9 @@ public class GameMap {
 
     public ArrayList<Rectangle> getGroundRects() {
         return groundRects;
+    }
+
+    public ArrayList<Gem> grabNewGems() {
+        return gems;
     }
 }

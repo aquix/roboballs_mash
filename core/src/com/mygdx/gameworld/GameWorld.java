@@ -1,13 +1,13 @@
 package com.mygdx.gameworld;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.collect_items.Gem;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
@@ -20,6 +20,7 @@ import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
 import java.util.*;
+import java.util.List;
 
 public class GameWorld {
     private TreeSet<Enemy> readyEnemies;
@@ -34,13 +35,15 @@ public class GameWorld {
     private float gameTime;
     private ArrayList<Bullet> bullets;
     private GameState gameState;
-    private int gems;
+    private int gemsCount;
     private int lives;
     private HudPanel hud;
+    private ArrayList<Gem> gems;
 
     private ArrayListHelpers<Bullet> bulletArrayListHelpers;
     private ArrayListHelpers<Robot> robotArrayListHelpers;
     private ArrayListHelpers<Enemy> enemyArrayListHelpers;
+    private ArrayListHelpers<Gem> gemArrayListHelpers;
 
     public GameWorld(int levelNumber) {
         gameTime = 0;
@@ -76,13 +79,15 @@ public class GameWorld {
 
         bullets = new ArrayList<Bullet>();
         gameState = GameState.PLAY;
-        gems = level.getStartGems();
+        gemsCount = level.getStartGems();
         lives = 3;
-        hud = new HudPanel(this.gems, this.lives);
+        hud = new HudPanel(this.gemsCount, this.lives);
+        gems = new ArrayList<Gem>();
 
         bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
         enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
         robotArrayListHelpers = new ArrayListHelpers<Robot>();
+        gemArrayListHelpers = new ArrayListHelpers<Gem>();
     }
 
     public void update(float delta) {
@@ -119,10 +124,27 @@ public class GameWorld {
             bullet.update(delta);
         }
 
+        // Grab new gemsCount
+        List<Gem> newGems = map.grabNewGems();
+        gems.addAll(newGems);
+        newGems.clear();
+
+        // Update gemsCount
+        for (Gem gem : gems) {
+            gem.update(delta);
+        }
+
         bulletArrayListHelpers.removeIf(bullets, new Predicate<Bullet>() {
             @Override
             public boolean test(Bullet obj) {
                 return !obj.isActive();
+            }
+        });
+
+        gemArrayListHelpers.removeIf(gems, new Predicate<Gem>() {
+            @Override
+            public boolean test(Gem obj) {
+                return !obj.isAlive();
             }
         });
 
@@ -144,6 +166,9 @@ public class GameWorld {
         for (Robot robot : map.getRobots()) {
             robot.update(delta, map);
         }
+
+        // Update hud
+        hud.update(delta, gemsCount, lives);
 
         if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
             gameState = GameState.WIN;
@@ -181,7 +206,12 @@ public class GameWorld {
                 if (statusBarField.contains(x, y)) {
 
                 } else if (gameField.contains(x, y)) {
-                    return;
+                    // Check if gem picked
+                    for (Gem gem : gems) {
+                        if (gem.contains(x, y)) {
+                            this.gemsCount += gem.pickGem();
+                        }
+                    }
                 } else if (robotBarField.contains(x, y)) {
                     Robot newRobot = selectRobotPanel.getRobot(x, y);
                     if (newRobot == null) {
@@ -232,6 +262,10 @@ public class GameWorld {
 
         for (Bullet bullet : bullets) {
             bullet.render(batcher);
+        }
+
+        for (Gem gem : gems) {
+            gem.render(batcher);
         }
     }
 
