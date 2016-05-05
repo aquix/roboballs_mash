@@ -1,34 +1,76 @@
 package com.mygdx.level_infrastructure;
 
+import com.badlogic.gdx.Gdx;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.enemies.SimpleEnemy;
 
+import java.io.*;
 import java.util.ArrayList;
+
+class EnemyCreator {
+    private String name;
+    private int spawnTime;
+    private int startLine;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSpawnTime() {
+        return spawnTime;
+    }
+
+    public int getStartLine() {
+        return startLine;
+    }
+}
+
+class LevelCreator {
+    private int levelNumber;
+    private int startGems;
+    private String levelMap;
+    private ArrayList<EnemyCreator> enemies;
+
+    public Level getLevel() {
+        ArrayList<Enemy> result_enemies = new ArrayList<Enemy>();
+        for (EnemyCreator enemy : enemies) {
+            if (enemy.getName().equals("SimpleEnemy")) {
+                result_enemies.add(new SimpleEnemy(enemy.getSpawnTime(),
+                        enemy.getStartLine()));
+            }
+        }
+
+        return new Level(levelNumber, result_enemies, startGems, levelMap);
+    }
+}
 
 public class LevelFactory {
     public static Level createLevel(int levelNumber) {
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        int startGems = 0;
-        String levelMap = "";
 
-        switch (levelNumber) {
-            case 1:
-                startGems = 15;
-                levelMap = "aaaaaaaaaa\n" +
-                           "aaaaaaaaaa\n" +
-                           "aaaaaaaaaa\n" +
-                           "aaaaaaaaaa\n" +
-                           "gggggggggg";
+        Gson gson = new Gson();
 
+        try {
+            Reader reader = new FileReader(String.valueOf(Gdx.files
+                    .internal("levels/" + Integer.toString(levelNumber) +
+                            ".json")));
 
-                enemies.add(new SimpleEnemy(2, 4));
-                enemies.add(new SimpleEnemy(4, 3));
-                enemies.add(new SimpleEnemy(7, 0));
+            String s = String.valueOf(Gdx.files
+                            .internal("levels/" +
+                                    Integer.toString(levelNumber) + ".json"));
 
-                return new Level(levelNumber, enemies, startGems, levelMap);
+            LevelCreator levelCreator = (LevelCreator) gson.fromJson(reader,
+                    LevelCreator.class);
+            return levelCreator.getLevel();
+        } catch (FileNotFoundException e) {
+                e.printStackTrace();
         }
+
         return null;
     }
 }
