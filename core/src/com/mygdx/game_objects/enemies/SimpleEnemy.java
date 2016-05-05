@@ -8,8 +8,10 @@ import com.mygdx.game_objects.EnemyState;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
 
-public class SimpleEnemy extends Enemy {
+import java.util.ArrayList;
 
+public class SimpleEnemy extends Enemy {
+    private ArrayList<Robot> aimRobots;
     public SimpleEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.data.get("SimpleEnemy").width,
                 210 + startLine * 100 - EnemiesData.data.get("SimpleEnemy")
@@ -29,6 +31,8 @@ public class SimpleEnemy extends Enemy {
         collisionRect.height = 100;
         collisionRect.x = rect.x + (rect.width - 100);
         collisionRect.y = rect.y + (rect.height - 100);
+
+        aimRobots = new ArrayList<Robot>();
     }
 
     @Override
@@ -56,6 +60,9 @@ public class SimpleEnemy extends Enemy {
         super.update(delta, map);
 
         if (leftoverCooldown <= 0) {
+            if (map.getRobots().size() == 0) {
+                this.state = EnemyState.ALIVE;
+            }
             for (Robot robot : map.getRobots()) {
                 damageRobot(robot);
             }
@@ -63,17 +70,19 @@ public class SimpleEnemy extends Enemy {
     }
 
     private void damageRobot(Robot robot) {
+        boolean damageSomebody = false;
         if (leftoverCooldown <= 0) {
-            if (this.collisionRect.overlaps(robot.getCollisionRect())) {
+            if (this.collisionRect.overlaps(robot.getCollisionRect()) &&
+                    robot.isAlive()) {
                 this.state = EnemyState.DAMAGING;
                 robot.makeDamaged(this);
                 leftoverCooldown = cooldown;
-
-                // If enemy kill robot then continue moving
-                if (!robot.isAlive()) {
-                    this.state = EnemyState.ALIVE;
-                }
+                damageSomebody = true;
             }
+        }
+
+        if (!damageSomebody) {
+            this.state = EnemyState.ALIVE;
         }
     }
 }

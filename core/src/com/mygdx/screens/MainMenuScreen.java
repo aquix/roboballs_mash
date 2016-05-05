@@ -1,63 +1,17 @@
 package com.mygdx.screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.AssetLoader;
 
-public class MainMenuScreen implements Screen, InputProcessor {
-    private Game game;
+public class MainMenuScreen extends UniversalScreen {
+    private BitmapFont font;
 
     public MainMenuScreen(Game game) {
-        this.game = game;
-        Gdx.input.setInputProcessor(this);
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
+        super(game);
+        font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
     }
 
     @Override
@@ -69,22 +23,20 @@ public class MainMenuScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
+        batcher.begin();
+        batcher.disableBlending();
+        batcher.draw(AssetLoader.getInstance().mainMenuBackground, 0, 0, Configuration
+                .windowWidth, Configuration.windowHeight);
 
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
+        batcher.enableBlending();
+        font.draw(batcher, "Touch to start game", Configuration.windowWidth /
+                2 - 200, Configuration.windowHeight / 2 - 10);
+        batcher.disableBlending();
+        batcher.end();
     }
 }
