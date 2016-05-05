@@ -9,33 +9,23 @@ import com.mygdx.config.Configuration;
 import com.mygdx.gameworld.GameRenderer;
 import com.mygdx.gameworld.GameWorld;
 
-public class GameScreen implements Screen, InputProcessor {
+public class GameScreen extends UniversalScreen {
     private GameWorld world;
     private GameRenderer renderer;
-    private Game game;
 
     private float scaleX;
     private float scaleY;
 
     private float runTime = 0;
 
-    public GameScreen() {
+    public GameScreen(Game game) {
+        super(game);
         world = new GameWorld();
-        renderer = new GameRenderer(world);
+        renderer = new GameRenderer(world, camera, batcher);
 
         this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
                 .getWidth();
         this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
-
-        Gdx.input.setInputProcessor(this);
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public void show() {
     }
 
     @Override
@@ -49,52 +39,12 @@ public class GameScreen implements Screen, InputProcessor {
 
         switch (world.getGameState()) {
             case WIN:
-                GameScreen winScreen = new GameScreen();
-                game.setScreen(winScreen);
-                winScreen.setGame(game);
-
+                game.setScreen(new GameScreen(game));
                 break;
             case GAMEOVER:
                 // TODO game over
                 break;
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
     }
 
     @Override
@@ -104,23 +54,8 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
     public boolean mouseMoved(int screenX, int screenY) {
         world.onMove((int)(screenX * scaleX), (int)(screenY * scaleY));
         return true;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
     }
 }

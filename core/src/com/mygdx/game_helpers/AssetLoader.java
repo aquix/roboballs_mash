@@ -3,6 +3,7 @@ package com.mygdx.game_helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.RobotsData;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
@@ -39,6 +40,12 @@ public class AssetLoader {
     private Texture bulletsTexture;
     public HashMap<String, TextureRegion> bullets;
 
+    private Texture mainMenuBackgroundTexture;
+    public TextureRegion mainMenuBackground;
+
+    private Texture menuIconsTexture;
+    public TextureRegion levelTile;
+
     public void load() {
         // Load textures from disk
         backgroundTexture = new Texture(Gdx.files.internal
@@ -48,6 +55,10 @@ public class AssetLoader {
                 ".png"));
         enemiesTexture = new Texture(Gdx.files.internal("enemies/enemies_stub.png"));
         bulletsTexture = new Texture(Gdx.files.internal("bullets/bullets.png"));
+        mainMenuBackgroundTexture = new Texture(Gdx.files.internal
+                ("backgrounds/main_menu_background_stub.png"));
+        menuIconsTexture = new Texture(Gdx.files.internal
+                ("gui/menu_icons_stub.png"));
 
         // Load background
         background = new TextureRegion(backgroundTexture, 0, 0, 1280, 720);
@@ -83,7 +94,12 @@ public class AssetLoader {
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
         bullets.put("GunnerBotBullet", new TextureRegion(bulletsTexture, 0,
-                0, 20, 20));
+            0, 20, 20));
+
+        // Load main menu
+        mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
+                0, Configuration.windowWidth, Configuration.windowHeight);
+        levelTile = new TextureRegion(menuIconsTexture, 0, 0, 50, 50);
 
     }
 

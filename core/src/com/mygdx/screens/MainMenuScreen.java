@@ -1,11 +1,12 @@
 package com.mygdx.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 
 public class MainMenuScreen implements Screen, InputProcessor {
-    public MainMenuScreen() {
+    private Game game;
+
+    public MainMenuScreen(Game game) {
+        this.game = game;
         Gdx.input.setInputProcessor(this);
     }
 
@@ -61,7 +62,10 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        if (button == Input.Buttons.LEFT) {
+            game.setScreen(new SelectLevelScreen(game));
+        }
+        return true;
     }
 
     @Override

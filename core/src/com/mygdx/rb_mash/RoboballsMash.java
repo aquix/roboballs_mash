@@ -4,16 +4,14 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.utils.Logger;
 import com.mygdx.screens.GameScreen;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.screens.MainMenuScreen;
 
 public class RoboballsMash extends Game {
 	private Game game = new Game() {
 		@Override
 		public void create() {
             AssetLoader.getInstance().load();
-			GameScreen startScreen = new GameScreen();
-			startScreen.setGame(this);
-			setScreen(startScreen);
-
+			setScreen(new MainMenuScreen(this));
 		}
 
         @Override

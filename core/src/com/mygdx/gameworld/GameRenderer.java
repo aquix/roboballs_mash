@@ -16,13 +16,11 @@ public class GameRenderer {
 
     private SpriteBatch batcher;
 
-    public GameRenderer(GameWorld world) {
+    public GameRenderer(GameWorld world, OrthographicCamera camera,
+                        SpriteBatch batcher) {
         this.world = world;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true, Configuration.windowWidth, Configuration.windowHeight);
-
-        batcher = new SpriteBatch();
-        batcher.setProjectionMatrix(camera.combined);
+        this.camera = camera;
+        this.batcher = batcher;
     }
 
     public void render(float runTime) {
@@ -31,7 +29,8 @@ public class GameRenderer {
 
         batcher.begin();
         batcher.disableBlending();
-        batcher.draw(AssetLoader.getInstance().background, 0, 0, Configuration.windowWidth, Configuration.windowHeight);
+        batcher.draw(AssetLoader.getInstance().background, 0, 0,
+                Configuration.windowWidth, Configuration.windowHeight);
         world.render(batcher);
         batcher.end();
     }
