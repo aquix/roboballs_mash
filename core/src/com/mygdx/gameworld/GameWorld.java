@@ -27,7 +27,6 @@ public class GameWorld {
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
     private Robot selectedRobot;
-    private int levelNumber;
     private PointerActions action;
     private Rectangle gameField;
     private Rectangle robotBarField;
@@ -43,9 +42,8 @@ public class GameWorld {
     private ArrayListHelpers<Robot> robotArrayListHelpers;
     private ArrayListHelpers<Enemy> enemyArrayListHelpers;
 
-    public GameWorld() {
+    public GameWorld(int levelNumber) {
         gameTime = 0;
-        levelNumber = 1;
         Level level = LevelFactory.createLevel(levelNumber);
 
         // Initialize all level enemies

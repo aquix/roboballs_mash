@@ -18,9 +18,9 @@ public class GameScreen extends UniversalScreen {
 
     private float runTime = 0;
 
-    public GameScreen(Game game) {
+    public GameScreen(Game game, int level) {
         super(game);
-        world = new GameWorld();
+        world = new GameWorld(level);
         renderer = new GameRenderer(world, camera, batcher);
 
         this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
@@ -39,7 +39,8 @@ public class GameScreen extends UniversalScreen {
 
         switch (world.getGameState()) {
             case WIN:
-                game.setScreen(new GameScreen(game));
+                // TODO fix win screen
+                game.setScreen(new GameScreen(game, 1));
                 break;
             case GAMEOVER:
                 // TODO game over

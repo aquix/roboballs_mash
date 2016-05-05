@@ -45,6 +45,7 @@ public class AssetLoader {
 
     private Texture menuIconsTexture;
     public TextureRegion levelTile;
+    public TextureRegion lockedLevel;
 
     public void load() {
         // Load textures from disk
@@ -100,7 +101,7 @@ public class AssetLoader {
         mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
                 0, Configuration.windowWidth, Configuration.windowHeight);
         levelTile = new TextureRegion(menuIconsTexture, 0, 0, 50, 50);
-
+        lockedLevel = new TextureRegion(menuIconsTexture, 510, 0, 50, 50);
     }
 
     public void dispose() {
