@@ -9,12 +9,12 @@ public class EnemyParams {
     public float health;
     public float cooldown;
     public float velocity_x;
-    public float width;
-    public float height;
+    public int width;
+    public int height;
     public float damage;
 
     public EnemyParams(String name, float health, float cooldown,
-                       float velocity_x, float width, float height, float
+                       float velocity_x, int width, int height, float
                                damage) {
         this.name = name;
         this.health = health;

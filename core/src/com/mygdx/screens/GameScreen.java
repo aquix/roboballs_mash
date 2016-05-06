@@ -44,6 +44,7 @@ public class GameScreen extends UniversalScreen {
                 break;
             case GAMEOVER:
                 // TODO game over
+                game.setScreen(new GameOverScreen(game));
                 break;
         }
     }

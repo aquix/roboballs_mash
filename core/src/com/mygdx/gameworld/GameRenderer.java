@@ -31,6 +31,7 @@ public class GameRenderer {
         batcher.disableBlending();
         batcher.draw(AssetLoader.getInstance().background, 0, 0,
                 Configuration.windowWidth, Configuration.windowHeight);
+        batcher.enableBlending();
         world.render(batcher);
         batcher.end();
     }

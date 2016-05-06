@@ -21,10 +21,8 @@ public class HudPanel extends GameObject {
 
     @Override
     public void render(SpriteBatch batcher) {
-        batcher.enableBlending();
         font.draw(batcher, String.valueOf(gems), rect.x + 20, rect.y + 10);
         font.draw(batcher, String.valueOf(lives), rect.x + 100, rect.y + 10);
-        batcher.disableBlending();
     }
 
     public void update(float delta, int gems, int lives) {

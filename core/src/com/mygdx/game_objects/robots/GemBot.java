@@ -9,10 +9,12 @@ import com.mygdx.game_objects.Robot;
 
 public class GemBot extends Robot {
     public GemBot(float x, float y) {
-        super(x, y, RobotsData.data.get("GemBot").width, RobotsData.data
-                .get("GemBot").height,"GemBot", RobotsData.data.get("GemBot")
-                .cooldown, RobotsData.data.get("GemBot").health, RobotsData
-                .data.get("GemBot").cellTypes);
+        super(x, y, RobotsData.getInstance().getData().get("GemBot").width, RobotsData
+                .getInstance().getData().get("GemBot").height,"GemBot",
+                RobotsData.getInstance().getData().get("GemBot")
+                .cooldown, RobotsData.getInstance().getData().get("GemBot").health,
+                RobotsData
+                .getInstance().getData().get("GemBot").cellTypes);
     }
 
     @Override

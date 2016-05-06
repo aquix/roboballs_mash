@@ -101,13 +101,17 @@ public class GameWorld {
             map.getEnemies().add(newEnemy);
         }
 
-        // Update enemies state
+        // Update enemies state and check for game over
         for (Enemy enemy : map.getEnemies()) {
             enemy.update(delta, map);
             for (Bullet bullet : bullets) {
                 if (enemy.getRect().overlaps(bullet.getCollisionRect())) {
                     bullet.damageEnemy(enemy);
                 }
+            }
+
+            if (enemy.getCollisionRect().x > Configuration.windowWidth - 140) {
+                gameState = GameState.GAMEOVER;
             }
         }
 
@@ -170,6 +174,7 @@ public class GameWorld {
         // Update hud
         hud.update(delta, gemsCount, lives);
 
+        // Check for win
         if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
             gameState = GameState.WIN;
         }

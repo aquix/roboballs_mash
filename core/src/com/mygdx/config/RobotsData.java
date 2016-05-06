@@ -8,14 +8,26 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class RobotsData {
-    public static HashMap<String, RobotParams> data;
+    private static RobotsData instance;
 
-    static {
+    private RobotsData() {
         data = new HashMap<String, RobotParams>();
         data.put("GunnerBot", new RobotParams("GunnerBot", 6, 2.5f, -200, 0,
                 1, new ArrayList<CellType>(Collections.singletonList(CellType
                 .GROUND))));
         data.put("GemBot", new RobotParams("GemBot", 6, 6, 0, 0, 0, new
                 ArrayList<CellType>(Collections.singletonList(CellType.GROUND))));
+    }
+
+    public static RobotsData getInstance() {
+        if (instance == null) {
+            instance = new RobotsData();
+        }
+        return instance;
+    }
+    private HashMap<String, RobotParams> data;
+
+    public HashMap<String, RobotParams> getData() {
+        return data;
     }
 }

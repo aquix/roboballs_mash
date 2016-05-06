@@ -52,12 +52,12 @@ public class AssetLoader {
     public void load() {
         // Load textures from disk
         backgroundTexture = new Texture(Gdx.files.internal
-                ("backgrounds/background_stub.png"));
+                ("backgrounds/level1.png"));
         robotTilesTexture = new Texture(Gdx.files.internal("gui/robot_tiles.png"));
-        robotsTexture = new Texture(Gdx.files.internal("robots/robots_stub" +
-                ".png"));
-        enemiesTexture = new Texture(Gdx.files.internal("enemies/enemies_stub.png"));
-        bulletsTexture = new Texture(Gdx.files.internal("bullets/bullets.png"));
+        robotsTexture = new Texture(Gdx.files.internal("robots/robots.png"));
+        enemiesTexture = new Texture(Gdx.files.internal
+                ("enemies/enemies.png"));
+        bulletsTexture = new Texture(Gdx.files.internal("littles/littles.png"));
         mainMenuBackgroundTexture = new Texture(Gdx.files.internal
                 ("backgrounds/main_menu_background_stub.png"));
         menuIconsTexture = new Texture(Gdx.files.internal
@@ -69,6 +69,7 @@ public class AssetLoader {
 
         // Load robot tiles
         robotTiles = new HashMap<String, TextureRegion>();
+        TextureRegion temp = new TextureRegion(robotTilesTexture, 0, 0, 75, 75);
         robotTiles.put("GemBot", new TextureRegion(robotTilesTexture, 0, 0,
                 75, 75));
         robotTiles.get("GemBot").flip(false, true);
@@ -78,13 +79,12 @@ public class AssetLoader {
 
         // Load robots
         robots = new HashMap<String, TextureRegion>();
-        robots.put("GemBot", new TextureRegion(robotsTexture, 0, 0,
-                RobotsData.data.get("GemBot").width, RobotsData.data.get
-                ("GemBot").height));
+        robots.put("GemBot", new TextureRegion(robotsTexture, 0, 100, 100,
+                100));
         robots.get("GemBot").flip(false, true);
-        robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, RobotsData.data.get
-                ("GemBot").height, RobotsData.data.get("GemBot").width,
-                RobotsData.data.get("GemBot").height));
+        robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, 0,
+                RobotsData.getInstance().getData().get("GemBot").width,
+                RobotsData.getInstance().getData().get("GemBot").height));
         robots.get("GunnerBot").flip(false, true);
 
         // Load enemies
@@ -96,8 +96,8 @@ public class AssetLoader {
 
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
-        bullets.put("GunnerBotBullet", new TextureRegion(bulletsTexture, 0,
-            0, 20, 20));
+        bullets.put("GunnerBotBullet", new TextureRegion(bulletsTexture, 222,
+            14, 50, 32));
 
         // Load main menu
         mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
@@ -106,8 +106,8 @@ public class AssetLoader {
         lockedLevel = new TextureRegion(menuIconsTexture, 510, 0, 50, 50);
 
         // Load gems
-        littleGem = new TextureRegion(bulletsTexture, 100, 100, 20, 20);
-        bigGem = new TextureRegion(bulletsTexture, 100, 120, 30, 30);
+        littleGem = new TextureRegion(bulletsTexture, 140, 0, 64, 64);
+        bigGem = new TextureRegion(bulletsTexture, 80, 0, 38, 62);
     }
 
     public void dispose() {

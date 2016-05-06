@@ -9,8 +9,8 @@ public class RobotParams {
     public String name;
     public float health;
     public float cooldown;
-    public float width;
-    public float height;
+    public int width;
+    public int height;
     public Vector2 bulletVelocity;
     public float damage;
     public ArrayList<CellType> cellTypes;

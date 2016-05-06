@@ -6,9 +6,10 @@ import com.mygdx.game_objects.Bullet;
 public class GunnerBotBullet extends Bullet {
 
     public GunnerBotBullet(float x, float y) {
-        super(x, y, 20, 20);
+        super(x, y, 50, 32);
         name = "GunnerBotBullet";
-        velocity = RobotsData.data.get("GunnerBot").bulletVelocity;
-        damage = RobotsData.data.get("GunnerBot").damage;
+        velocity = RobotsData.getInstance().getData().get("GunnerBot")
+                .bulletVelocity;
+        damage = RobotsData.getInstance().getData().get("GunnerBot").damage;
     }
 }
