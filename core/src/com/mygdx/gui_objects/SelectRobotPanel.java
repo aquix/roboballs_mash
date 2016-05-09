@@ -15,16 +15,17 @@ public class SelectRobotPanel extends GameObject {
     private ArrayList<RobotTile> tiles;
 
     public SelectRobotPanel(ArrayList<Class> robotTypes) {
-        super(350, 500, 100, 100);
+        super(0, 610, 110, 1280);
         tiles = new ArrayList<RobotTile>();
 
-        Vector2 newTilePosition = new Vector2(10, 620);
-        float tileSize = 75;
+        Vector2 newTilePosition = new Vector2(10, 610);
+        float tileSizeX = 102;
+        float tileSizeY = 112;
         for (Class type : robotTypes) {
             tiles.add(new RobotTile(type, newTilePosition.x,
-                    newTilePosition.y, tileSize, tileSize));
+                    newTilePosition.y, tileSizeX, tileSizeY));
 
-            newTilePosition.x += 85;
+            newTilePosition.x += tileSizeX + 10;
         }
     }
 
@@ -36,14 +37,29 @@ public class SelectRobotPanel extends GameObject {
         }
     }
 
-    public Robot getRobot(int x, int y) {
+    public Robot getRobot(int x, int y, int gems) {
         for (RobotTile tile : tiles) {
             if (tile.contains(x, y)) {
-                return RobotFactory.createRobot(tile.getRobotType(), x, y);
+                return tile.createNewRobot(gems);
             }
         }
 
         return null;
     }
 
+    @Override
+    public void update(float delta) {
+        for (RobotTile tile : tiles) {
+            tile.update(delta);
+        }
+    }
+
+    public RobotTile getTile(int x, int y) {
+        for (RobotTile tile : tiles) {
+            if (tile.contains(x, y)) {
+                return tile;
+            }
+        }
+        return null;
+    }
 }

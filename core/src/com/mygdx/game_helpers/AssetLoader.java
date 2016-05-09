@@ -69,12 +69,11 @@ public class AssetLoader {
 
         // Load robot tiles
         robotTiles = new HashMap<String, TextureRegion>();
-        TextureRegion temp = new TextureRegion(robotTilesTexture, 0, 0, 75, 75);
-        robotTiles.put("GemBot", new TextureRegion(robotTilesTexture, 0, 0,
-                75, 75));
+        robotTiles.put("GemBot", new TextureRegion(robotTilesTexture, 102, 0,
+                102, 113));
         robotTiles.get("GemBot").flip(false, true);
         robotTiles.put("GunnerBot", new TextureRegion(robotTilesTexture, 0,
-                75, 75, 75));
+                0, 102, 113));
         robotTiles.get("GunnerBot").flip(false, true);
 
         // Load robots

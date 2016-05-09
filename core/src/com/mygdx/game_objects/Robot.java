@@ -23,6 +23,7 @@ public abstract class Robot extends GameObject {
         cell = new Vector2(-1, -1);
         this.name = name;
         this.cooldown = cooldown;
+        this.leftoverCooldown = cooldown;
         this.health = health;
         this.cellTypes = cellTypes;
     }

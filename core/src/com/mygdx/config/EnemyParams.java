@@ -13,6 +13,7 @@ public class EnemyParams {
     public int height;
     public float damage;
 
+
     public EnemyParams(String name, float health, float cooldown,
                        float velocity_x, int width, int height, float
                                damage) {

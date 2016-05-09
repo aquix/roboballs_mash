@@ -13,6 +13,7 @@ import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
 import com.mygdx.gui_objects.HudPanel;
+import com.mygdx.gui_objects.RobotTile;
 import com.mygdx.gui_objects.SelectRobotPanel;
 import com.mygdx.lang_helpers.ArrayListHelpers;
 import com.mygdx.lang_helpers.Predicate;
@@ -28,6 +29,7 @@ public class GameWorld {
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
     private Robot selectedRobot;
+    private RobotTile selectedRobotTile;
     private PointerActions action;
     private Rectangle gameField;
     private Rectangle robotBarField;
@@ -174,6 +176,9 @@ public class GameWorld {
         // Update hud
         hud.update(delta, gemsCount, lives);
 
+        // Update robot tiles
+        selectRobotPanel.update(delta);
+
         // Check for win
         if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
             gameState = GameState.WIN;
@@ -218,13 +223,13 @@ public class GameWorld {
                         }
                     }
                 } else if (robotBarField.contains(x, y)) {
-                    Robot newRobot = selectRobotPanel.getRobot(x, y);
+                    Robot newRobot = selectRobotPanel.getRobot(x, y, gemsCount);
                     if (newRobot == null) {
                         return;
                     }
-
                     action = PointerActions.ADD_ROBOT;
                     selectedRobot = newRobot;
+                    selectedRobotTile = selectRobotPanel.getTile(x, y);
                 }
                 break;
             case ADD_ROBOT:
@@ -239,7 +244,10 @@ public class GameWorld {
                         // else do nothing
                         if (map.plantRobot(selectedRobot, x, y)) {
                             map.getRobots().add(selectedRobot);
+                            int gemsUsed = selectedRobotTile.robotUsed();
+                            gemsCount -= gemsUsed;
                             selectedRobot = null;
+                            selectedRobotTile = null;
                             action = PointerActions.NOTHING;
                         }
                     }

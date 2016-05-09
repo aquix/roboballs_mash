@@ -14,9 +14,10 @@ public class RobotsData {
         data = new HashMap<String, RobotParams>();
         data.put("GunnerBot", new RobotParams("GunnerBot", 6, 2.5f, -200, 0,
                 1, new ArrayList<CellType>(Collections.singletonList(CellType
-                .GROUND))));
+                .GROUND)), 5, 20));
         data.put("GemBot", new RobotParams("GemBot", 6, 6, 0, 0, 0, new
-                ArrayList<CellType>(Collections.singletonList(CellType.GROUND))));
+                ArrayList<CellType>(Collections.singletonList(CellType
+                .GROUND)), 3, 10));
     }
 
     public static RobotsData getInstance() {

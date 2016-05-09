@@ -12,7 +12,7 @@ public class Gem extends GameObject {
     private boolean isAlive;
 
     public Gem(float x, float y, GemType type) {
-        super(x, y - 1, 20, 20);
+        super(x, y - 1, 64, 64);
 
         this.appearPosition = new Vector2(x, y);
         this.accelerationY = 400;

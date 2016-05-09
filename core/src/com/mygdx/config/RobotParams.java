@@ -14,10 +14,13 @@ public class RobotParams {
     public Vector2 bulletVelocity;
     public float damage;
     public ArrayList<CellType> cellTypes;
+    public float tileCooldown;
+    public int cost;
 
     public RobotParams(String name, float health, float cooldown, float
             bulletVelocityX, float bulletVelocitY, float damage,
-                       ArrayList<CellType> cellTypes) {
+                       ArrayList<CellType> cellTypes, float tileCooldown, int
+                               cost) {
         this.name = name;
         this.health = health;
         this.cooldown = cooldown;
@@ -26,5 +29,7 @@ public class RobotParams {
         this.bulletVelocity = new Vector2(bulletVelocityX, bulletVelocitY);
         this.damage = damage;
         this.cellTypes = cellTypes;
+        this.tileCooldown = tileCooldown;
+        this.cost = cost;
     }
 }
