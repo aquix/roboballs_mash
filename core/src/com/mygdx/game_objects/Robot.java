@@ -8,6 +8,7 @@ import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.map.CellType;
 import com.mygdx.game_objects.map.GameMap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class Robot extends GameObject {

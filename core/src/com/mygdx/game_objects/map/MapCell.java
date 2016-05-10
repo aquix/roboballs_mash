@@ -4,9 +4,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.Robot;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class MapCell {
+public class MapCell implements Serializable{
     private Rectangle rect;
     private Robot robot;
     private HashSet<Enemy> enemies;

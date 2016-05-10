@@ -2,9 +2,10 @@ package com.mygdx.lang_helpers;
 
 import com.badlogic.gdx.utils.Array;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ArrayListHelpers<T> {
+public class ArrayListHelpers<T> implements Serializable {
     private ArrayList<T> tempList;
 
     public ArrayListHelpers() {

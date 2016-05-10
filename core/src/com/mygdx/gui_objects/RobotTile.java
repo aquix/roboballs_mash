@@ -21,9 +21,6 @@ public class RobotTile extends GameObject {
     private float leftoverCooldown;
     private int playerGems;
 
-    private ShapeRenderer unavailableFilter;
-    private ShapeRenderer cooldownFilter;
-
     public RobotTile(Class type, float x, float y, float width, float height) {
         super(x, y, width, height);
         this.robotType = type;
@@ -36,9 +33,6 @@ public class RobotTile extends GameObject {
         leftoverCooldown = cooldown;
         cost = RobotsData.getInstance().getData().get(name).cost;
         playerGems = 0;
-
-        unavailableFilter = new ShapeRenderer();
-        cooldownFilter = new ShapeRenderer();
     }
 
     public void render(SpriteBatch batcher){

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.DistanceFieldFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game_objects.GameObject;
 
+import java.io.Serializable;
+
 public class HudPanel extends GameObject {
     private int lives;
     private int gems;

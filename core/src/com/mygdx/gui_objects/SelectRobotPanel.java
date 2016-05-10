@@ -11,9 +11,10 @@ import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.RobotFactory;
 import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SelectRobotPanel extends GameObject {
+public class SelectRobotPanel extends GameObject implements Serializable{
     private ArrayList<RobotTile> tiles;
 
     public SelectRobotPanel(ArrayList<Class> robotTypes) {

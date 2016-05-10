@@ -6,7 +6,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gameworld.GameRenderer;
+import com.mygdx.gameworld.GameState;
 import com.mygdx.gameworld.GameWorld;
 
 public class GameScreen extends UniversalScreen {
@@ -46,6 +48,9 @@ public class GameScreen extends UniversalScreen {
                 // TODO game over
                 game.setScreen(new GameOverScreen(game));
                 break;
+            case PAUSE:
+                pause();
+                break;
         }
     }
 
@@ -59,5 +64,27 @@ public class GameScreen extends UniversalScreen {
     public boolean mouseMoved(int screenX, int screenY) {
         world.onMove((int)(screenX * scaleX), (int)(screenY * scaleY));
         return true;
+    }
+
+    @Override
+    public void pause() {
+        game.setScreen(new PauseScreen(game, this));
+    }
+
+    @Override
+    public void resume() {
+        game.setScreen(this);
+        Gdx.input.setInputProcessor(this);
+        world.setGameState(GameState.PLAY);
+    }
+
+    public void saveGame() {
+        SaveManager.save(world);
+    }
+
+    public void loadGame() {
+        world = (GameWorld)SaveManager.load();
+        world.initializeAfterLoading();
+        world.setGameState(GameState.PLAY);
     }
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
@@ -19,19 +20,21 @@ import com.mygdx.gui_objects.SelectRobotPanel;
 import com.mygdx.lang_helpers.ArrayListHelpers;
 import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 import com.mygdx.lang_helpers.Predicate;
+import com.mygdx.lang_helpers.SerializableComparator;
 import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
-public class GameWorld {
+public class GameWorld implements Serializable {
     private TreeSet<Enemy> readyEnemies;
     private GameMap map;
     private SelectRobotPanel selectRobotPanel;
     private ArrayList<Class> availableRobots;
-    private Robot selectedRobot;
-    private RobotTile selectedRobotTile;
+    private transient Robot selectedRobot;
+    private transient RobotTile selectedRobotTile;
     private PointerActions action;
     private Rectangle gameField;
     private Rectangle robotBarField;
@@ -41,20 +44,22 @@ public class GameWorld {
     private GameState gameState;
     private int gemsCount;
     private int lives;
-    private HudPanel hud;
-    private ArrayList<Gem> gems;
+    private int levelNumber;
+    private transient HudPanel hud;
+    private transient ArrayList<Gem> gems;
 
-    private ArrayListHelpers<Bullet> bulletArrayListHelpers;
-    private ArrayListHelpers<Robot> robotArrayListHelpers;
-    private ArrayListHelpers<Enemy> enemyArrayListHelpers;
-    private ArrayListHelpers<Gem> gemArrayListHelpers;
+    private transient ArrayListHelpers<Bullet> bulletArrayListHelpers;
+    private transient ArrayListHelpers<Robot> robotArrayListHelpers;
+    private transient ArrayListHelpers<Enemy> enemyArrayListHelpers;
+    private transient ArrayListHelpers<Gem> gemArrayListHelpers;
 
     public GameWorld(int levelNumber) {
+        this.levelNumber = levelNumber;
         gameTime = 0;
         Level level = LevelFactory.createLevel(levelNumber);
 
         // Initialize all level enemies
-        readyEnemies = new TreeSet<Enemy>(new Comparator<Enemy>() {
+        readyEnemies = new TreeSet<Enemy>(new SerializableComparator<Enemy>() {
             @Override
             public int compare(Enemy enemy, Enemy t1) {
                 if (enemy.getSpawnTime() < t1.getSpawnTime()) {
@@ -85,7 +90,7 @@ public class GameWorld {
         gameState = GameState.PLAY;
         gemsCount = level.getStartGems();
         lives = 3;
-        hud = new HudPanel(this.gemsCount, this.lives);
+        hud = new HudPanel(this.lives, this.gemsCount);
         gems = new ArrayList<Gem>();
 
         bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
@@ -188,7 +193,7 @@ public class GameWorld {
         }
 
         // Check for game over
-        if (lives <= 0) {
+        if (lives <= 2) {
             gameState = GameState.GAMEOVER;
         }
 
@@ -222,7 +227,7 @@ public class GameWorld {
         switch (action) {
             case NOTHING:
                 if (statusBarField.contains(x, y)) {
-
+                    gameState = GameState.PAUSE;
                 } else if (gameField.contains(x, y)) {
                     // Check if gem picked
                     for (Gem gem : gems) {
@@ -302,5 +307,19 @@ public class GameWorld {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public void initializeAfterLoading() {
+        hud = new HudPanel(this.lives, this.gemsCount);
+        gems = new ArrayList<Gem>();
+
+        bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
+        enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
+        robotArrayListHelpers = new ArrayListHelpers<Robot>();
+        gemArrayListHelpers = new ArrayListHelpers<Gem>();
     }
 }

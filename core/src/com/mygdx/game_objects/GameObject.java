@@ -5,8 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 
+import java.io.Serializable;
 
-public abstract class GameObject implements IRenderable {
+
+public abstract class GameObject implements IRenderable, Serializable {
     protected Vector2 velocity;
     protected Rectangle rect;
     protected Rectangle collisionRect;
