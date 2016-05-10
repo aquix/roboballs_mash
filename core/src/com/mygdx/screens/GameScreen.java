@@ -21,7 +21,7 @@ public class GameScreen extends UniversalScreen {
     public GameScreen(Game game, int level) {
         super(game);
         world = new GameWorld(level);
-        renderer = new GameRenderer(world, camera, batcher);
+        renderer = new GameRenderer(world, camera, batcher, shapeRenderer);
 
         this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
                 .getWidth();

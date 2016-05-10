@@ -6,13 +6,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.config.Configuration;
 import com.mygdx.config.PlayerData;
+import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 public abstract class UniversalScreen implements Screen, InputProcessor {
     protected Game game;
     protected OrthographicCamera camera;
     protected SpriteBatch batcher;
+    protected ExtendedShapeRenderer shapeRenderer;
 
     public UniversalScreen(Game game) {
         this.game = game;
@@ -20,6 +23,8 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
         camera.setToOrtho(true, Configuration.windowWidth, Configuration.windowHeight);
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(camera.combined);
+        shapeRenderer = new ExtendedShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
         Gdx.input.setInputProcessor(this);
     }
 

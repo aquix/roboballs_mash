@@ -3,6 +3,7 @@ package com.mygdx.gameworld;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_objects.Bullet;
@@ -16,6 +17,7 @@ import com.mygdx.gui_objects.HudPanel;
 import com.mygdx.gui_objects.RobotTile;
 import com.mygdx.gui_objects.SelectRobotPanel;
 import com.mygdx.lang_helpers.ArrayListHelpers;
+import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 import com.mygdx.lang_helpers.Predicate;
 import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
@@ -103,7 +105,7 @@ public class GameWorld {
             map.getEnemies().add(newEnemy);
         }
 
-        // Update enemies state and check for game over
+        // Update enemies state
         for (Enemy enemy : map.getEnemies()) {
             enemy.update(delta, map);
             for (Bullet bullet : bullets) {
@@ -113,7 +115,8 @@ public class GameWorld {
             }
 
             if (enemy.getCollisionRect().x > Configuration.windowWidth - 140) {
-                gameState = GameState.GAMEOVER;
+                lives -= 1;
+                enemy.kill();
             }
         }
 
@@ -177,11 +180,16 @@ public class GameWorld {
         hud.update(delta, gemsCount, lives);
 
         // Update robot tiles
-        selectRobotPanel.update(delta);
+        selectRobotPanel.update(delta, gemsCount);
 
         // Check for win
         if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
             gameState = GameState.WIN;
+        }
+
+        // Check for game over
+        if (lives <= 0) {
+            gameState = GameState.GAMEOVER;
         }
 
         // JAVA 8 code
@@ -282,9 +290,13 @@ public class GameWorld {
         }
     }
 
+    public void render(ExtendedShapeRenderer shapeRenderer) {
+        selectRobotPanel.render(shapeRenderer);
+    }
+
     public void onMove(int x, int y) {
         if (action == PointerActions.ADD_ROBOT) {
-            selectedRobot.setPosition(x, y);
+            selectedRobot.setPosition(x - 50, y - 50);
         }
     }
 

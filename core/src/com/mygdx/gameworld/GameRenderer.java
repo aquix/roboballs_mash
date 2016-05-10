@@ -8,19 +8,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 public class GameRenderer {
     private GameWorld world;
     private OrthographicCamera camera;
-    private ShapeRenderer shapeRenderer;
 
+    private ExtendedShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
 
     public GameRenderer(GameWorld world, OrthographicCamera camera,
-                        SpriteBatch batcher) {
+                        SpriteBatch batcher, ExtendedShapeRenderer shapeRenderer) {
         this.world = world;
         this.camera = camera;
         this.batcher = batcher;
+        this.shapeRenderer = shapeRenderer;
     }
 
     public void render(float runTime) {
@@ -34,5 +36,11 @@ public class GameRenderer {
         batcher.enableBlending();
         world.render(batcher);
         batcher.end();
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        world.render(shapeRenderer);
+        shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 }

@@ -62,4 +62,8 @@ public abstract class Enemy extends GameObject {
     public float getDamage() {
         return damage;
     }
+
+    public void kill() {
+        this.state = EnemyState.DEAD;
+    }
 }
