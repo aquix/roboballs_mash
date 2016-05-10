@@ -17,10 +17,7 @@ public class MainMenuScreen extends UniversalScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
-//            game.setScreen(new SelectLevelScreen(game));
-            GameScreen gameScreen = new GameScreen(game, 1);
-            game.setScreen(gameScreen);
-            gameScreen.loadGame();
+            game.setScreen(new LoadSaveScreen(game));
         }
         return true;
     }

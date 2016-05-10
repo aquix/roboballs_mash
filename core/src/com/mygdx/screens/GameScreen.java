@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.GameWorldInfo;
 import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gameworld.GameRenderer;
 import com.mygdx.gameworld.GameState;
@@ -79,12 +80,11 @@ public class GameScreen extends UniversalScreen {
     }
 
     public void saveGame() {
-        SaveManager.save(world);
+        SaveManager.save(world.getInfo());
     }
 
     public void loadGame() {
-        world = (GameWorld)SaveManager.load();
-        world.initializeAfterLoading();
-        world.setGameState(GameState.PLAY);
+        GameWorldInfo info = (GameWorldInfo)SaveManager.load();
+        world.restoreState(info);
     }
 }

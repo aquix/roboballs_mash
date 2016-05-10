@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.GameWorldInfo;
 import com.mygdx.game_objects.Bullet;
 import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.collect_items.Gem;
@@ -35,10 +36,10 @@ public class GameWorld implements Serializable {
     private ArrayList<Class> availableRobots;
     private transient Robot selectedRobot;
     private transient RobotTile selectedRobotTile;
-    private PointerActions action;
-    private Rectangle gameField;
-    private Rectangle robotBarField;
-    private Rectangle statusBarField;
+    private transient PointerActions action;
+    private transient Rectangle gameField;
+    private transient Rectangle robotBarField;
+    private transient Rectangle statusBarField;
     private float gameTime;
     private ArrayList<Bullet> bullets;
     private GameState gameState;
@@ -313,13 +314,32 @@ public class GameWorld implements Serializable {
         this.gameState = gameState;
     }
 
-    public void initializeAfterLoading() {
-        hud = new HudPanel(this.lives, this.gemsCount);
-        gems = new ArrayList<Gem>();
+    public void restoreState(GameWorldInfo info) {
+        readyEnemies = info.readyEnemies;
+        map = info.map;
+        selectRobotPanel = info.selectRobotPanel;
+        availableRobots = info.availableRobots;
+        gameTime = info.gameTime;
+        bullets = info.bullets;
+        gameState = info.gameState;
+        gemsCount = info.gemsCount;
+        lives = info.lives;
+        levelNumber = info.levelNumber;
+        gameState = GameState.PLAY;
+    }
 
-        bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
-        enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
-        robotArrayListHelpers = new ArrayListHelpers<Robot>();
-        gemArrayListHelpers = new ArrayListHelpers<Gem>();
+    public GameWorldInfo getInfo() {
+        GameWorldInfo info = new GameWorldInfo();
+        info.readyEnemies = readyEnemies;
+        info.map = map;
+        info.selectRobotPanel = selectRobotPanel;
+        info.availableRobots = availableRobots;
+        info.gameTime = gameTime;
+        info.bullets = bullets;
+        info.gameState = gameState;
+        info.gemsCount = gemsCount;
+        info.lives = lives;
+        info.levelNumber = levelNumber;
+        return info;
     }
 }

@@ -101,28 +101,28 @@ public class PauseScreen extends UniversalScreen {
         text = "PAUSE";
         glyphLayout.setText(font, text);
         menuItems.add(new MenuItem(Configuration.windowWidth /
-                2 - 90, Configuration.windowHeight / 2 - 150, glyphLayout
-                .width, glyphLayout.height, font, text, false, MenuAction.NONE));
+                2 - glyphLayout.width / 2, Configuration.windowHeight / 2 - 150,
+                glyphLayout.width, glyphLayout.height, font, text, false, MenuAction.NONE));
 
         text = "Continue";
         glyphLayout.setText(font, text);
 
         menuItems.add(new MenuItem(Configuration.windowWidth /
-                2 - 100, Configuration.windowHeight / 2 - 75, glyphLayout
+                2 - glyphLayout.width / 2, Configuration.windowHeight / 2 - 75, glyphLayout
                 .width, glyphLayout.height, font, text, true, MenuAction.CONTINUE));
 
         text = "Exit to main menu";
         glyphLayout.setText(font, text);
 
         menuItems.add(new MenuItem(Configuration.windowWidth /
-                2 - 150, Configuration.windowHeight / 2, glyphLayout
+                2 - glyphLayout.width / 2, Configuration.windowHeight / 2, glyphLayout
                 .width, glyphLayout.height, font, text, true, MenuAction.EXIT_TO_MAIN));
 
         text = "Exit";
         glyphLayout.setText(font, text);
 
         menuItems.add(new MenuItem(Configuration.windowWidth /
-                2 - 50, Configuration.windowHeight / 2 + 75, glyphLayout
+                2 - glyphLayout.width / 2, Configuration.windowHeight / 2 + 75, glyphLayout
                 .width, glyphLayout.height, font, text, true, MenuAction.EXIT));
     }
 
@@ -133,7 +133,7 @@ public class PauseScreen extends UniversalScreen {
         text = "Save game?";
         glyphLayout.setText(font, text);
         menuItems.add(new MenuItem(Configuration.windowWidth /
-                2 - 90, Configuration.windowHeight / 2 - 50, glyphLayout
+                2 - glyphLayout.width / 2, Configuration.windowHeight / 2 - 50, glyphLayout
                 .width, glyphLayout.height, font, text, false, MenuAction.NONE));
 
         text = "yes";
@@ -153,7 +153,7 @@ public class PauseScreen extends UniversalScreen {
 
     private void doAfterSaving() {
         if (actionAfterSaveDialog == MenuAction.EXIT) {
-            game.dispose();
+            Gdx.app.exit();
         } else if (actionAfterSaveDialog == MenuAction.EXIT_TO_MAIN) {
             game.setScreen(new MainMenuScreen(game));
         }

@@ -8,7 +8,7 @@ import com.mygdx.gameworld.GameWorld;
 import java.io.*;
 
 public class SaveManager {
-    public static boolean save(GameWorld gameWorld) {
+    public static boolean save(GameWorldInfo worldInfo) {
         try {
             File saveFile = new File(String.valueOf(Gdx.files.internal("saves/save.rbs")));
 
@@ -21,7 +21,7 @@ public class SaveManager {
 
             ObjectOutputStream saveStream = new ObjectOutputStream(new FileOutputStream(saveFile,
                     false));
-            saveStream.writeObject(gameWorld);
+            saveStream.writeObject(worldInfo);
             saveStream.flush();
             saveStream.close();
         } catch (FileNotFoundException e) {
@@ -33,12 +33,12 @@ public class SaveManager {
         return true;
     }
 
-    public static GameWorld load() {
+    public static GameWorldInfo load() {
         try {
             ObjectInputStream saveStream = new ObjectInputStream(new
                     FileInputStream(String.valueOf(Gdx.files.internal("saves/save" +
                     ".rbs"))));
-            return (GameWorld) saveStream.readObject();
+            return (GameWorldInfo) saveStream.readObject();
         } catch (IOException e) {
             return null;
         } catch (ClassNotFoundException e) {
