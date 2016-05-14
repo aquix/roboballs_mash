@@ -35,14 +35,24 @@ public class SaveManager {
 
     public static GameWorldInfo load() {
         try {
+            File saveFile = new File(String.valueOf(Gdx.files.internal("saves/save.rbs")));
+
             ObjectInputStream saveStream = new ObjectInputStream(new
-                    FileInputStream(String.valueOf(Gdx.files.internal("saves/save" +
-                    ".rbs"))));
-            return (GameWorldInfo) saveStream.readObject();
+                    FileInputStream(saveFile));
+
+            GameWorldInfo info = (GameWorldInfo) saveStream.readObject();
+            saveStream.close();
+            boolean deleted = saveFile.delete();
+            return info;
         } catch (IOException e) {
             return null;
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    public static boolean isSaveExist() {
+        File saveFile = new File(String.valueOf(Gdx.files.internal("saves/save.rbs")));
+        return saveFile.exists();
     }
 }

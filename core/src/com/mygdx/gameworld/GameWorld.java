@@ -128,7 +128,7 @@ public class GameWorld implements Serializable {
         }
 
         // Update map
-        map.updateCells(map.getEnemies());
+        map.updateCells();
 
         // Grab new bullets from game map
         List<Bullet> newBullets = map.grabNewBullets();
@@ -195,7 +195,7 @@ public class GameWorld implements Serializable {
         }
 
         // Check for game over
-        if (lives <= 2) {
+        if (lives <= 0) {
             gameState = GameState.GAMEOVER;
         }
 

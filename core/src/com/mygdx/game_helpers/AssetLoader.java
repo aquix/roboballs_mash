@@ -41,6 +41,7 @@ public class AssetLoader {
     public HashMap<String, TextureRegion> bullets;
     public TextureRegion littleGem;
     public TextureRegion bigGem;
+    public TextureRegion heart;
 
     private Texture mainMenuBackgroundTexture;
     public TextureRegion mainMenuBackground;
@@ -61,7 +62,7 @@ public class AssetLoader {
         mainMenuBackgroundTexture = new Texture(Gdx.files.internal
                 ("backgrounds/main_menu_background_stub.png"));
         menuIconsTexture = new Texture(Gdx.files.internal
-                ("gui/menu_icons_stub.png"));
+                ("gui/menu_icons.png"));
 
         // Load background
         background = new TextureRegion(backgroundTexture, 0, 0, 1280, 720);
@@ -101,12 +102,21 @@ public class AssetLoader {
         // Load main menu
         mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
                 0, Configuration.windowWidth, Configuration.windowHeight);
-        levelTile = new TextureRegion(menuIconsTexture, 0, 0, 50, 50);
-        lockedLevel = new TextureRegion(menuIconsTexture, 510, 0, 50, 50);
+        mainMenuBackground.flip(false, true);
+        levelTile = new TextureRegion(menuIconsTexture, 0, 0, 75, 75);
+        levelTile.flip(false, true);
+        lockedLevel = new TextureRegion(menuIconsTexture, 75, 0, 75, 75);
+        lockedLevel.flip(false, true);
 
         // Load gems
         littleGem = new TextureRegion(bulletsTexture, 140, 0, 64, 64);
+        littleGem.flip(false, true);
         bigGem = new TextureRegion(bulletsTexture, 80, 0, 38, 62);
+        bigGem.flip(false, true);
+
+        // Load hud icons
+        heart = new TextureRegion(bulletsTexture, 0, 0, 56, 56);
+        heart.flip(false, true);
     }
 
     public void dispose() {

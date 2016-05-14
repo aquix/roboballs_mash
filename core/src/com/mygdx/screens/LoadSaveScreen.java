@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gui_objects.MenuAction;
 import com.mygdx.gui_objects.MenuItem;
 
@@ -19,6 +20,7 @@ public class LoadSaveScreen extends UniversalScreen {
 
     public LoadSaveScreen(Game game) {
         super(game);
+
         font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
         glyphLayout = new GlyphLayout();
         menuItems = new ArrayList<MenuItem>();

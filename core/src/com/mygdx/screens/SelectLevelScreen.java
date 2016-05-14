@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,9 +17,11 @@ import com.mygdx.game_helpers.AssetLoader;
 public class SelectLevelScreen extends UniversalScreen {
     private int unlockedLevelsCount;
     private Rectangle[] levelTiles;
+    private BitmapFont font;
 
     public SelectLevelScreen(Game game) {
         super(game);
+        font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
         unlockedLevelsCount = PlayerData.getInstance().getAvailableLevels();
         levelTiles = new Rectangle[Configuration.levelsCount];
 
@@ -27,18 +30,18 @@ public class SelectLevelScreen extends UniversalScreen {
         int rows = (int)(Math.ceil((double)Configuration.levelsCount /
                 columns));
 
-        float startX = Configuration.windowWidth / 2 - (columns / 2.0f) * 75;
-        float startY = Configuration.windowHeight / 2 - (rows/ 2.0f) * 75;
+        float startX = Configuration.windowWidth / 2 - (columns / 2.0f) * 85;
+        float startY = Configuration.windowHeight / 2 - (rows/ 2.0f) * 85;
         float x = startX;
         float y = startY;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                levelTiles[i * columns + j] = new Rectangle(x, y, 50, 50);
+                levelTiles[i * columns + j] = new Rectangle(x, y, 75, 75);
 
-                x += 75;
+                x += 85;
             }
-            y += 75;
+            y += 85;
             x = startX;
         }
     }
@@ -52,10 +55,15 @@ public class SelectLevelScreen extends UniversalScreen {
         batcher.disableBlending();
         batcher.draw(AssetLoader.getInstance().mainMenuBackground, 0, 0, Configuration
                 .windowWidth, Configuration.windowHeight);
+        batcher.enableBlending();
 
         for (int i = 0; i < levelTiles.length; i++) {
             batcher.draw(AssetLoader.getInstance().levelTile, levelTiles[i].x,
                     levelTiles[i].y);
+
+            font.draw(batcher, String.valueOf(i + 1), levelTiles[i].x + 10,
+                    levelTiles[i].y + 10);
+
             if (i >= unlockedLevelsCount) {
                 batcher.draw(AssetLoader.getInstance().lockedLevel, levelTiles[i].x,
                         levelTiles[i].y);

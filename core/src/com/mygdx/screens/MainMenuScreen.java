@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_helpers.SaveManager;
 
 public class MainMenuScreen extends UniversalScreen {
     private BitmapFont font;
@@ -17,7 +18,11 @@ public class MainMenuScreen extends UniversalScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (button == Input.Buttons.LEFT) {
-            game.setScreen(new LoadSaveScreen(game));
+            if (SaveManager.isSaveExist()) {
+                game.setScreen(new LoadSaveScreen(game));
+            } else {
+                game.setScreen(new SelectLevelScreen(game));
+            }
         }
         return true;
     }

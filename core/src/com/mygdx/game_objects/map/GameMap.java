@@ -105,7 +105,7 @@ public class GameMap implements Serializable {
     }
 
     // TODO optimize this govnokod
-    public void updateCells(List<Enemy> enemies) {
+    public void updateCells() {
 
         for (Enemy enemy : enemies) {
             for (int i = 0; i < 5; i++) {
@@ -116,6 +116,15 @@ public class GameMap implements Serializable {
                     } else {
                         cells[i][j].removeEnemy(enemy);
                     }
+                }
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (cells[i][j].getRobot() != null && !cells[i][j].getRobot()
+                        .isAlive()) {
+                    cells[i][j].setRobot(null);
                 }
             }
         }

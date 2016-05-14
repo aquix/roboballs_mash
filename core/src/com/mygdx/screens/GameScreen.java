@@ -43,10 +43,9 @@ public class GameScreen extends UniversalScreen {
         switch (world.getGameState()) {
             case WIN:
                 // TODO fix win screen
-                game.setScreen(new GameScreen(game, 1));
+                game.setScreen(new LevelCompletedScreen(game));
                 break;
             case GAMEOVER:
-                // TODO game over
                 game.setScreen(new GameOverScreen(game));
                 break;
             case PAUSE:
