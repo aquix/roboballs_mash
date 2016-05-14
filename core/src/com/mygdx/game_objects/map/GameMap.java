@@ -144,4 +144,8 @@ public class GameMap implements Serializable {
     public ArrayList<Gem> grabNewGems() {
         return gems;
     }
+
+    public MapCell[][] getCells() {
+        return cells;
+    }
 }

@@ -13,6 +13,7 @@ import com.mygdx.game_objects.Enemy;
 import com.mygdx.game_objects.collect_items.Gem;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.Robot;
+import com.mygdx.game_objects.map.MapCell;
 import com.mygdx.game_objects.robots.GemBot;
 import com.mygdx.game_objects.robots.GunnerBot;
 import com.mygdx.gui_objects.HudPanel;
@@ -298,6 +299,15 @@ public class GameWorld implements Serializable {
 
     public void render(ExtendedShapeRenderer shapeRenderer) {
         selectRobotPanel.render(shapeRenderer);
+
+        if (action == PointerActions.ADD_ROBOT && selectedRobot != null) {
+            for (MapCell[] cellLine : map.getCells()) {
+                for (MapCell cell : cellLine) {
+                    cell.render(shapeRenderer, cell.contains(selectedRobot.getX()
+                            + 50, selectedRobot.getY() + 50));
+                }
+            }
+        }
     }
 
     public void onMove(int x, int y) {
