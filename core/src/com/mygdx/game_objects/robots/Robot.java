@@ -1,14 +1,14 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.robots;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.CellType;
 import com.mygdx.game_objects.map.GameMap;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class Robot extends GameObject {

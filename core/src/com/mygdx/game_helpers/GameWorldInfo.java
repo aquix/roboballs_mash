@@ -1,7 +1,7 @@
 package com.mygdx.game_helpers;
 
-import com.mygdx.game_objects.Bullet;
-import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.bullets.Bullet;
+import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.gameworld.GameState;
 import com.mygdx.gui_objects.SelectRobotPanel;

@@ -1,7 +1,9 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.bullets.Bullet;
+import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.map.GameMap;
 
 public abstract class Enemy extends GameObject {

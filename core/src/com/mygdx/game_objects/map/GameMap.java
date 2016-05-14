@@ -2,15 +2,13 @@ package com.mygdx.game_objects.map;
 
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Json;
-import com.mygdx.game_objects.Bullet;
-import com.mygdx.game_objects.Enemy;
-import com.mygdx.game_objects.Robot;
+import com.mygdx.game_objects.bullets.Bullet;
+import com.mygdx.game_objects.enemies.Enemy;
+import com.mygdx.game_objects.robots.Robot;
 import com.mygdx.game_objects.collect_items.Gem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameMap implements Serializable {
     private MapCell[][] cells;

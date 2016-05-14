@@ -1,6 +1,6 @@
 package com.mygdx.level_infrastructure;
 
-import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.enemies.Enemy;
 
 import java.util.ArrayList;
 

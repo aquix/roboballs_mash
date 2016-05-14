@@ -1,17 +1,12 @@
 package com.mygdx.gui_objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.RobotsData;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
-import com.mygdx.game_objects.Robot;
-import com.mygdx.game_objects.RobotFactory;
+import com.mygdx.game_objects.robots.Robot;
+import com.mygdx.game_objects.robots.RobotFactory;
 import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 public class RobotTile extends GameObject {

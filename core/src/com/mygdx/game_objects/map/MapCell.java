@@ -3,9 +3,8 @@ package com.mygdx.game_objects.map;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game_objects.Enemy;
-import com.mygdx.game_objects.IRenderable;
-import com.mygdx.game_objects.Robot;
+import com.mygdx.game_objects.enemies.Enemy;
+import com.mygdx.game_objects.robots.Robot;
 
 import java.io.Serializable;
 import java.util.HashSet;

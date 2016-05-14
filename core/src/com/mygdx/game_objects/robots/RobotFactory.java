@@ -1,7 +1,8 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.robots;
+
+import com.mygdx.game_objects.robots.Robot;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class RobotFactory {
     public static Robot createRobot(Class type, float x, float y) {

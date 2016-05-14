@@ -2,12 +2,7 @@ package com.mygdx.level_infrastructure;
 
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.mygdx.config.EnemiesData;
-import com.mygdx.config.EnemyParams;
-import com.mygdx.game_objects.Enemy;
+import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.enemies.SimpleEnemy;
 
 import java.io.*;

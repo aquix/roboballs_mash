@@ -1,14 +1,9 @@
 package com.mygdx.gui_objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.config.Configuration;
-import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
-import com.mygdx.game_objects.Robot;
-import com.mygdx.game_objects.RobotFactory;
+import com.mygdx.game_objects.robots.Robot;
 import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 import java.io.Serializable;

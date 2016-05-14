@@ -3,12 +3,8 @@ package com.mygdx.game_objects.enemies;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
-import com.mygdx.game_objects.Enemy;
-import com.mygdx.game_objects.EnemyState;
 import com.mygdx.game_objects.map.GameMap;
-import com.mygdx.game_objects.Robot;
-
-import java.util.ArrayList;
+import com.mygdx.game_objects.robots.Robot;
 
 public class SimpleEnemy extends Enemy {
     private Robot aimRobot;

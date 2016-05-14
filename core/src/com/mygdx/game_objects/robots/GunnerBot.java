@@ -2,7 +2,6 @@ package com.mygdx.game_objects.robots;
 
 import com.mygdx.config.RobotsData;
 import com.mygdx.game_objects.map.GameMap;
-import com.mygdx.game_objects.Robot;
 import com.mygdx.game_objects.bullets.GunnerBotBullet;
 
 public class GunnerBot extends Robot {

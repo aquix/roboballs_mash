@@ -1,8 +1,10 @@
-package com.mygdx.game_objects;
+package com.mygdx.game_objects.bullets;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.enemies.Enemy;
 
 public class Bullet extends GameObject {
     protected boolean isActive;
