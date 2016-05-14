@@ -103,7 +103,7 @@ public class GameWorld implements Serializable {
         gameTime += delta;
 
         // Create new enemies by spawn time
-        if (readyEnemies.size() != 0 && gameTime >= readyEnemies.first()
+        if (!readyEnemies.isEmpty() && gameTime >= readyEnemies.first()
                 .getSpawnTime()) {
             Enemy newEnemy = readyEnemies.pollFirst();
             newEnemy.start();
@@ -188,7 +188,7 @@ public class GameWorld implements Serializable {
         selectRobotPanel.update(delta, gemsCount);
 
         // Check for win
-        if (readyEnemies.size() == 0 && map.getEnemies().size() == 0) {
+        if (readyEnemies.isEmpty() && map.getEnemies().isEmpty()) {
             gameState = GameState.WIN;
         }
 

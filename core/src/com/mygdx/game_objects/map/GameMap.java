@@ -95,7 +95,7 @@ public class GameMap implements Serializable {
     }
 
     public boolean isLineEmpty(int lineIndex) {
-        return getEnemiesOnLine(lineIndex).size() == 0;
+        return getEnemiesOnLine(lineIndex).isEmpty();
     }
 
     public void produceGem(Gem gem) {

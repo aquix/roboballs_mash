@@ -7,7 +7,6 @@ import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
 public class SimpleEnemy extends Enemy {
-    private Robot aimRobot;
     public SimpleEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.data.get("SimpleEnemy").width,
                 210 + startLine * 100 - EnemiesData.data.get("SimpleEnemy")
@@ -47,44 +46,16 @@ public class SimpleEnemy extends Enemy {
             velocity.y = 200;
         }
 
-        if (state == EnemyState.DAMAGING) {
-            this.velocity.x = 0;
-        } else {
-            this.velocity.x = max_velocity;
+        if (stateChanged) {
+            if (state == EnemyState.ALIVE) {
+                behaviour = new DefaultSimpleEnemyBehaviour();
+            } else if (state == EnemyState.DAMAGING) {
+                behaviour = new DamageSimpleEnemyBehaviour();
+            }
+            stateChanged = false;
         }
 
+        behaviour.update(delta, map, this);
         super.update(delta, map);
-
-        if (leftoverCooldown <= 0) {
-            if (aimRobot == null) {
-                this.state = EnemyState.ALIVE;
-            }
-            for (Robot robot : map.getRobots()) {
-                damageRobot(robot);
-            }
-        }
-
-        if (aimRobot != null && !aimRobot.isAlive()) {
-            aimRobot = null;
-        }
-    }
-
-    private void damageRobot(Robot robot) {
-        boolean damageSomebody = false;
-        if (leftoverCooldown <= 0) {
-            if (this.collisionRect.overlaps(robot.getCollisionRect()) &&
-                    robot.isAlive()) {
-                aimRobot = robot;
-                this.state = EnemyState.DAMAGING;
-                robot.makeDamaged(this);
-                leftoverCooldown = cooldown;
-                damageSomebody = true;
-            }
-        }
-
-        if (!damageSomebody) {
-            this.state = EnemyState.ALIVE;
-            aimRobot = null;
-        }
     }
 }

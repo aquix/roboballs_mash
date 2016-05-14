@@ -5,6 +5,7 @@ import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.map.GameMap;
+import com.mygdx.game_objects.robots.Robot;
 
 public abstract class Enemy extends GameObject {
     protected float spawnTime;
@@ -15,6 +16,10 @@ public abstract class Enemy extends GameObject {
     protected float max_velocity;
     protected EnemyState state;
     protected float damage;
+    protected IEnemyBehaviour behaviour;
+    protected Robot aimRobot;
+    protected boolean stateChanged;
+    protected EnemyState previousState;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine) {
@@ -22,6 +27,8 @@ public abstract class Enemy extends GameObject {
         this.spawnTime = spawnTime;
         this.startLine = startLine;
         state = EnemyState.READY;
+        behaviour = new DefaultSimpleEnemyBehaviour();
+        stateChanged = false;
     }
 
     public float getSpawnTime() {

@@ -63,4 +63,13 @@ public abstract class GameObject implements IRenderable, Serializable {
         rect.y += delta * velocity.y;
         collisionRect.y += delta * velocity.y;
     }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(float velocityX, float velocityY) {
+        velocity.x = velocityX;
+        velocity.y = velocityY;
+    }
 }
