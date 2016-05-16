@@ -1,6 +1,6 @@
 {
     "levelNumber" : 1,
-    "startGems": 20,
+    "startGems": 200,
     "levelMap": "aaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\ngggggggggg",
     "enemies": [
         {

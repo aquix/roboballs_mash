@@ -33,15 +33,15 @@ class LevelCreator {
     private ArrayList<EnemyCreator> enemies;
 
     public Level getLevel() {
-        ArrayList<Enemy> result_enemies = new ArrayList<Enemy>();
+        ArrayList<Enemy> resultEnemies = new ArrayList<Enemy>();
         for (EnemyCreator enemy : enemies) {
             if (enemy.getName().equals("SimpleEnemy")) {
-                result_enemies.add(new SimpleEnemy(enemy.getSpawnTime(),
+                resultEnemies.add(new SimpleEnemy(enemy.getSpawnTime(),
                         enemy.getStartLine()));
             }
         }
 
-        return new Level(levelNumber, result_enemies, startGems, levelMap);
+        return new Level(levelNumber, resultEnemies, startGems, levelMap);
     }
 }
 
@@ -55,12 +55,8 @@ public class LevelFactory {
                     .internal("levels/" + Integer.toString(levelNumber) +
                             ".json")));
 
-            String s = String.valueOf(Gdx.files
-                            .internal("levels/" + levelNumber + ".json"));
-
-            LevelCreator levelCreator = (LevelCreator) gson.fromJson(reader,
-                    LevelCreator.class);
-            return levelCreator.getLevel();
+            return gson.fromJson(reader,
+                    LevelCreator.class).getLevel();
         } catch (FileNotFoundException e) {
                 e.printStackTrace();
         }

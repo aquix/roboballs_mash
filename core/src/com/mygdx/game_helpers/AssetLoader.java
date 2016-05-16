@@ -92,8 +92,7 @@ public class AssetLoader {
         // Load enemies
         enemies = new HashMap<String, TextureRegion>();
         enemies.put("SimpleEnemy", new TextureRegion(enemiesTexture, 0, 0,
-                EnemiesData.data.get("SimpleEnemy").width, EnemiesData.data
-                .get("SimpleEnemy").height));
+                EnemiesData.get("SimpleEnemy").width, EnemiesData.get("SimpleEnemy").height));
         enemies.get("SimpleEnemy").flip(false, true);
 
         // Load bullets

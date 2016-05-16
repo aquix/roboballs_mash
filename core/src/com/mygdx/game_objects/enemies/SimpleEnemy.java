@@ -10,19 +10,19 @@ import com.mygdx.game_objects.robots.Robot;
 
 public class SimpleEnemy extends Enemy {
     public SimpleEnemy(float spawnTime, int startLine) {
-        super(-EnemiesData.data.get("SimpleEnemy").width,
-                210 + startLine * 100 - EnemiesData.data.get("SimpleEnemy")
+        super(-EnemiesData.get("SimpleEnemy").width,
+                210 + startLine * 100 - EnemiesData.get("SimpleEnemy")
                         .height,
-                EnemiesData.data.get("SimpleEnemy").width,
-                EnemiesData.data.get("SimpleEnemy").height, spawnTime,
+                EnemiesData.get("SimpleEnemy").width,
+                EnemiesData.get("SimpleEnemy").height, spawnTime,
                 startLine);
-        EnemyParams enemyParams = EnemiesData.data.get("SimpleEnemy");
+        EnemyParams enemyParams = EnemiesData.get("SimpleEnemy");
         cooldown = enemyParams.cooldown;
         leftoverCooldown = cooldown;
         health = enemyParams.health;
         max_velocity = enemyParams.velocity_x;
         name = "SimpleEnemy";
-        damage = EnemiesData.data.get("SimpleEnemy").damage;
+        damage = EnemiesData.get("SimpleEnemy").damage;
 
         collisionRect.width = 100;
         collisionRect.height = 100;
