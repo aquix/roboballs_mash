@@ -56,8 +56,7 @@ public class LevelFactory {
                             ".json")));
 
             String s = String.valueOf(Gdx.files
-                            .internal("levels/" +
-                                    Integer.toString(levelNumber) + ".json"));
+                            .internal("levels/" + levelNumber + ".json"));
 
             LevelCreator levelCreator = (LevelCreator) gson.fromJson(reader,
                     LevelCreator.class);

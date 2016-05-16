@@ -2,15 +2,14 @@ package com.mygdx.game_helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.RobotsData;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
-import sun.security.jca.GetInstance;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 
@@ -36,12 +35,14 @@ public class AssetLoader {
     public HashMap<String, TextureRegion> robots;
     private Texture enemiesTexture;
     public HashMap<String, TextureRegion> enemies;
+    public Animation simpleEnemyAnimation;
 
     private Texture bulletsTexture;
     public HashMap<String, TextureRegion> bullets;
     public TextureRegion littleGem;
     public TextureRegion bigGem;
     public TextureRegion heart;
+    public TextureRegion gemIcon;
 
     private Texture mainMenuBackgroundTexture;
     public TextureRegion mainMenuBackground;
@@ -111,12 +112,29 @@ public class AssetLoader {
         // Load gems
         littleGem = new TextureRegion(bulletsTexture, 140, 0, 64, 64);
         littleGem.flip(false, true);
-        bigGem = new TextureRegion(bulletsTexture, 80, 0, 38, 62);
+        bigGem = new TextureRegion(bulletsTexture, 63, 0, 71, 61);
         bigGem.flip(false, true);
 
         // Load hud icons
         heart = new TextureRegion(bulletsTexture, 0, 0, 56, 56);
         heart.flip(false, true);
+        gemIcon = new TextureRegion(bulletsTexture, 63, 0, 71, 61);
+        gemIcon.flip(false, true);
+
+        int width = 198;
+        int height = 150;
+        TextureRegion[] simpleEnemyFrames = {new TextureRegion
+                (enemiesTexture, 0, 0, width, height), new TextureRegion
+                (enemiesTexture, width, 0, width, height), new TextureRegion
+                (enemiesTexture, width * 2, 0, width, height), new TextureRegion
+                (enemiesTexture, width * 3, 0, width, height)};
+
+        for (TextureRegion frame : simpleEnemyFrames) {
+            frame.flip(false, true);
+        }
+
+        simpleEnemyAnimation = new Animation(0.3f, simpleEnemyFrames);
+        simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     }
 
     public void dispose() {

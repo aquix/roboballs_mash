@@ -46,6 +46,6 @@ public class Gem extends GameObject {
 
     public int pickGem() {
         isAlive = false;
-        return type.getValue();
+        return type.value;
     }
 }

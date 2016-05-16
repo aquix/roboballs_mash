@@ -20,7 +20,14 @@ public class GemBot extends Robot {
         super.update(delta, map);
 
         if (leftoverCooldown <= 0) {
-            map.produceGem(new Gem(rect.x + 18, rect.y + 36, GemType.LITTLE));
+            double randGem = Math.random();
+            GemType type;
+            if (randGem <= 0.2) {
+                type = GemType.BIG;
+            } else {
+                type = GemType.LITTLE;
+            }
+            map.produceGem(new Gem(rect.x + 18, rect.y + 36, type));
             leftoverCooldown = cooldown;
         }
     }

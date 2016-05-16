@@ -22,7 +22,6 @@ public class SaveManager {
             ObjectOutputStream saveStream = new ObjectOutputStream(new FileOutputStream(saveFile,
                     false));
             saveStream.writeObject(worldInfo);
-            saveStream.flush();
             saveStream.close();
         } catch (FileNotFoundException e) {
             return false;

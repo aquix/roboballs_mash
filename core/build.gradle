@@ -14,4 +14,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.fasterxml:jackson-module-json-org:0.9.1'
     compile 'com.badlogicgames.gdx:gdx-backend-gwt:1.9.2'
+    compile 'com.google.guava:guava:19.0'
 }

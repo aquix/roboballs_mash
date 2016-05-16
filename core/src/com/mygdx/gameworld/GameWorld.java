@@ -272,7 +272,7 @@ public class GameWorld implements Serializable {
         }
     }
 
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float runTime) {
         hud.render(batcher);
         if (selectedRobot != null) {
             selectedRobot.render(batcher);
@@ -283,7 +283,7 @@ public class GameWorld implements Serializable {
         }
 
         for (Enemy enemy : map.getEnemies()) {
-            enemy.render(batcher);
+            enemy.render(batcher, runTime);
         }
 
         for (Bullet bullet : bullets) {

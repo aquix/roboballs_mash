@@ -35,8 +35,7 @@ public abstract class Enemy extends GameObject {
         return spawnTime;
     }
 
-    @Override
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float gameTime) {
         batcher.draw(AssetLoader.getInstance().enemies.get(name), rect.x,
                 rect.y, rect.width, rect.height);
     }

@@ -8,7 +8,7 @@ public class EnemiesData {
 
     static {
         data = new HashMap<String, EnemyParams>();
-        data.put("SimpleEnemy", new EnemyParams("SimpleEnemy", 4, 1f, 50,
+        data.put("SimpleEnemy", new EnemyParams("SimpleEnemy", 4, 1f, 500,
                 190, 150, 1));
     }
 }

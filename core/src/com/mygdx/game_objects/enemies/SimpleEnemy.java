@@ -1,8 +1,10 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
+import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
@@ -57,5 +59,16 @@ public class SimpleEnemy extends Enemy {
 
         behaviour.update(delta, map, this);
         super.update(delta, map);
+    }
+
+    public void render(SpriteBatch batcher, float gameTime) {
+        batcher.draw(AssetLoader.getInstance().simpleEnemyAnimation
+                .getKeyFrame(gameTime), rect.x, rect.y, rect.width, rect
+                .height);
+    }
+
+    @Override
+    public void render(SpriteBatch batcher) {
+
     }
 }

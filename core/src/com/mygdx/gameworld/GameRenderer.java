@@ -34,7 +34,7 @@ public class GameRenderer {
         batcher.draw(AssetLoader.getInstance().background, 0, 0,
                 Configuration.windowWidth, Configuration.windowHeight);
         batcher.enableBlending();
-        world.render(batcher);
+        world.render(batcher, runTime);
         batcher.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
