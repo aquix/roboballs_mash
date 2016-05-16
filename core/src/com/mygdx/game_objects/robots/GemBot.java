@@ -7,12 +7,9 @@ import com.mygdx.game_objects.map.GameMap;
 
 public class GemBot extends Robot {
     public GemBot(float x, float y) {
-        super(x, y, RobotsData.getInstance().getData().get("GemBot").width, RobotsData
-                .getInstance().getData().get("GemBot").height,"GemBot",
-                RobotsData.getInstance().getData().get("GemBot")
-                .cooldown, RobotsData.getInstance().getData().get("GemBot").health,
-                RobotsData
-                .getInstance().getData().get("GemBot").cellTypes);
+        super(x, y, RobotsData.get("GemBot").width, RobotsData.get("GemBot").height,"GemBot",
+                RobotsData.get("GemBot").cooldown, RobotsData.get("GemBot").health,
+                RobotsData.get("GemBot").cellTypes);
     }
 
     @Override

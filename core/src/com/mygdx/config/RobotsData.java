@@ -1,34 +1,86 @@
 package com.mygdx.config;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mygdx.game_objects.map.CellType;
+import com.mygdx.lang_helpers.ArrayListHelpers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.*;
+
+class RobotParamsCreator {
+    public String name;
+    public float health;
+    public float cooldown;
+    public int width;
+    public int height;
+    public float bulletVelocityX;
+    public float bulletVelocityY;
+    public float damage;
+    public String[] cellTypes;
+    public float tileCooldown;
+    public int cost;
+
+    public RobotParams createRobotParams() {
+        // Create cell types
+        ArrayList<CellType> cells = new ArrayList<CellType>();
+        for (String cellType : cellTypes) {
+            if (cellType.equals("GROUND")) {
+                cells.add(CellType.GROUND);
+            } else if (cellType.equals("AIR")) {
+                cells.add(CellType.AIR);
+            } else if (cellType.equals("WATER")) {
+                cells.add(CellType.WATER);
+            }
+        }
+
+        // Create velocity vector
+        Vector2 bulletVelocity = new Vector2(bulletVelocityX, bulletVelocityY);
+
+        return new RobotParams(name, health, cooldown, bulletVelocity,
+                damage, cells, tileCooldown, cost);
+    }
+}
 
 public class RobotsData {
-    private static RobotsData instance;
+    private static HashMap<String, RobotParams> data;
 
-    private RobotsData() {
+    public static RobotParams get(String name) {
+        return data.get(name);
+    }
+
+    public static void createRobotParams (List<RobotParams> enemyParamsList) {
         data = new HashMap<String, RobotParams>();
-        data.put("GunnerBot", new RobotParams("GunnerBot", 6, 2.5f, -400, 0,
-                1, new ArrayList<CellType>(Collections.singletonList(CellType
-                .GROUND)), 5, 20));
-        data.put("GemBot", new RobotParams("GemBot", 6, 6, 0, 0, 0, new
-                ArrayList<CellType>(Collections.singletonList(CellType
-                .GROUND)), 3, 10));
-    }
-
-    public static RobotsData getInstance() {
-        if (instance == null) {
-            instance = new RobotsData();
+        for (RobotParams enemyParams : enemyParamsList) {
+            data.put(enemyParams.name, enemyParams);
         }
-        return instance;
     }
-    private HashMap<String, RobotParams> data;
 
-    public HashMap<String, RobotParams> getData() {
-        return data;
+    static {
+        try {
+            Reader reader = new FileReader(String.valueOf(Gdx.files.internal
+                    ("robots/robot_params.json")));
+
+            Gson gson = new Gson();
+            Type robotParamsCreatorListType = new
+                    TypeToken<List<RobotParamsCreator>>(){}.getType();
+            List<RobotParamsCreator> robotParamsCreatorList = gson.fromJson(reader,
+                    robotParamsCreatorListType);
+
+            List<RobotParams> robotParamsList = new ArrayList<RobotParams>();
+            for (RobotParamsCreator robotParamsCreator :
+                    robotParamsCreatorList) {
+                robotParamsList.add(robotParamsCreator.createRobotParams());
+            }
+            createRobotParams(robotParamsList);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

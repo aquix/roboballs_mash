@@ -24,9 +24,9 @@ public class RobotTile extends GameObject {
         String[] typeNameParts = type.getName().split("\\.");
         name = typeNameParts[typeNameParts.length - 1];
 
-        cooldown = RobotsData.getInstance().getData().get(name).tileCooldown;
+        cooldown = RobotsData.get(name).tileCooldown;
         leftoverCooldown = cooldown;
-        cost = RobotsData.getInstance().getData().get(name).cost;
+        cost = RobotsData.get(name).cost;
         playerGems = 0;
     }
 

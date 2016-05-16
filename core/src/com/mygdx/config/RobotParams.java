@@ -17,16 +17,15 @@ public class RobotParams {
     public float tileCooldown;
     public int cost;
 
-    public RobotParams(String name, float health, float cooldown, float
-            bulletVelocityX, float bulletVelocitY, float damage,
-                       ArrayList<CellType> cellTypes, float tileCooldown, int
-                               cost) {
+    public RobotParams(String name, float health, float cooldown, Vector2 bulletVelocity,
+                       float damage, ArrayList<CellType> cellTypes, float
+                               tileCooldown, int cost) {
         this.name = name;
         this.health = health;
         this.cooldown = cooldown;
         this.width = 100;
         this.height = 100;
-        this.bulletVelocity = new Vector2(bulletVelocityX, bulletVelocitY);
+        this.bulletVelocity = bulletVelocity;
         this.damage = damage;
         this.cellTypes = cellTypes;
         this.tileCooldown = tileCooldown;

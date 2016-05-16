@@ -3,8 +3,6 @@ package com.mygdx.config;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mygdx.game_objects.enemies.Enemy;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;

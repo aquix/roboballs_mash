@@ -85,8 +85,8 @@ public class AssetLoader {
                 100));
         robots.get("GemBot").flip(false, true);
         robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, 0,
-                RobotsData.getInstance().getData().get("GemBot").width,
-                RobotsData.getInstance().getData().get("GemBot").height));
+                RobotsData.get("GemBot").width, RobotsData.get("GemBot")
+                .height));
         robots.get("GunnerBot").flip(false, true);
 
         // Load enemies

@@ -6,14 +6,10 @@ import com.mygdx.game_objects.bullets.GunnerBotBullet;
 
 public class GunnerBot extends Robot {
     public GunnerBot(float x, float y) {
-        super(x, y, RobotsData.getInstance().getData().get("GunnerBot").width,
-                RobotsData.getInstance().getData()
-                .get("GunnerBot").height, "GunnerBot", RobotsData.getInstance
-                        ().getData().get
-                ("GunnerBot").cooldown, RobotsData.getInstance().getData().get
-                ("GunnerBot")
-                .health, RobotsData.getInstance().getData().get("GunnerBot")
-                        .cellTypes);
+        super(x, y, RobotsData.get("GunnerBot").width,
+                RobotsData.get("GunnerBot").height, "GunnerBot", RobotsData.get
+                ("GunnerBot").cooldown, RobotsData.get("GunnerBot").health,
+                RobotsData.get("GunnerBot").cellTypes);
     }
 
     @Override
