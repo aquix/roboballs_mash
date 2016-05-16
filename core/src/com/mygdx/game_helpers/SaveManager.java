@@ -93,7 +93,6 @@ public class SaveManager {
 
             PlayerData playerData = (PlayerData) saveStream.readObject();
             saveStream.close();
-            saveFile.delete();
             return playerData;
         } catch (IOException e) {
             return null;

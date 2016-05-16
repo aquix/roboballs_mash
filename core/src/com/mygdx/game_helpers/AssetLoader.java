@@ -11,6 +11,7 @@ import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.RobotsData;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class AssetLoader {
@@ -26,8 +27,8 @@ public class AssetLoader {
         return instance;
     }
 
-    private Texture backgroundTexture;
-    public TextureRegion background;
+    private HashMap<Integer, Texture> backgroundTextures;
+    public HashMap<Integer, TextureRegion> backgrounds;
 
     private Texture robotTilesTexture;
     public HashMap<String, TextureRegion> robotTiles;
@@ -55,9 +56,10 @@ public class AssetLoader {
     public TextureRegion replayLevel;
 
     public void load() {
+        backgroundTextures = new HashMap<Integer, Texture>();
+        backgrounds = new HashMap<Integer, TextureRegion>();
+
         // Load textures from disk
-        backgroundTexture = new Texture(Gdx.files.internal
-                ("backgrounds/level1.png"));
         robotTilesTexture = new Texture(Gdx.files.internal("gui/robot_tiles.png"));
         robotsTexture = new Texture(Gdx.files.internal("robots/robots.png"));
         enemiesTexture = new Texture(Gdx.files.internal
@@ -67,10 +69,6 @@ public class AssetLoader {
                 ("backgrounds/main_menu_background_stub.png"));
         menuIconsTexture = new Texture(Gdx.files.internal
                 ("gui/menu_icons.png"));
-
-        // Load background
-        background = new TextureRegion(backgroundTexture, 0, 0, 1280, 720);
-        background.flip(false, true);
 
         // Load robot tiles
         robotTiles = new HashMap<String, TextureRegion>();
@@ -152,9 +150,35 @@ public class AssetLoader {
     }
 
     public void dispose() {
-        backgroundTexture.dispose();
+        for (Integer key : backgroundTextures.keySet()) {
+            backgroundTextures.get(key).dispose();
+        }
+
         robotTilesTexture.dispose();
         robotsTexture.dispose();
         enemiesTexture.dispose();
+    }
+
+    public void disposeBackgroundsExcept(int levelNumber) {
+        for (Integer key : backgroundTextures.keySet()) {
+            if (key != levelNumber) {
+                backgroundTextures.get(key).dispose();
+                backgroundTextures.remove(key);
+                backgrounds.remove(key);
+            }
+        }
+    }
+
+    public TextureRegion getLevelBackground(int levelNumber) {
+        if (!backgroundTextures.containsKey(levelNumber) || !backgrounds
+                .containsKey(levelNumber)) {
+            backgroundTextures.put(levelNumber, new Texture(Gdx.files.internal
+                    ("backgrounds/level" + levelNumber + ".png")));
+            TextureRegion background = new TextureRegion(backgroundTextures.get
+                    (levelNumber));
+            background.flip(false, true);
+            backgrounds.put(levelNumber, background);
+        }
+        return backgrounds.get(levelNumber);
     }
 }

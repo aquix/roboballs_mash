@@ -30,10 +30,7 @@ public class GameRenderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batcher.begin();
-        batcher.disableBlending();
-        batcher.draw(AssetLoader.getInstance().background, 0, 0,
-                Configuration.windowWidth, Configuration.windowHeight);
-        batcher.enableBlending();
+
         world.render(batcher, runTime);
         batcher.end();
         Gdx.gl.glEnable(GL20.GL_BLEND);

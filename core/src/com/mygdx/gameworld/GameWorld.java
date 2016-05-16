@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_helpers.GameWorldInfo;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.enemies.Enemy;
@@ -64,10 +65,8 @@ public class GameWorld implements Serializable {
             public int compare(Enemy enemy, Enemy t1) {
                 if (enemy.getSpawnTime() < t1.getSpawnTime()) {
                     return -1;
-                } else if (enemy.getSpawnTime() > t1.getSpawnTime()) {
-                    return 1;
                 } else {
-                    return 0;
+                    return 1;
                 }
             }
         });
@@ -273,6 +272,11 @@ public class GameWorld implements Serializable {
     }
 
     public void render(SpriteBatch batcher, float runTime) {
+        batcher.disableBlending();
+        batcher.draw(AssetLoader.getInstance().getLevelBackground(levelNumber),
+                0, 0, Configuration.windowWidth, Configuration.windowHeight);
+        batcher.enableBlending();
+
         hud.render(batcher);
         if (selectedRobot != null) {
             selectedRobot.render(batcher);
