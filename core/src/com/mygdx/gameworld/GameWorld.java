@@ -322,6 +322,10 @@ public class GameWorld implements Serializable {
         this.gameState = gameState;
     }
 
+    public int getLives() {
+        return lives;
+    }
+
     public void restoreState(GameWorldInfo info) {
         readyEnemies = info.readyEnemies;
         map = info.map;

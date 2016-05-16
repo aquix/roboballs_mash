@@ -49,17 +49,10 @@ public class PauseScreen extends UniversalScreen {
 
         batcher.enableBlending();
 
-        if (!isSaveGameDialog) {
-
-        } else {
-
-        }
-
         for (MenuItem item : menuItems) {
             item.render(batcher);
         }
 
-        batcher.disableBlending();
         batcher.end();
     }
 

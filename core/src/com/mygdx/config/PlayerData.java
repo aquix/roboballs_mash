@@ -1,22 +1,62 @@
 package com.mygdx.config;
 
-public class PlayerData {
+import com.mygdx.game_helpers.SaveManager;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class PlayerData implements Serializable {
     private static PlayerData instance;
 
     private PlayerData() {
-        availableLevels = 2;
+        unlockedLevelsCount = 1;
+        completedLevelsCount = 0;
+        completedLevels = new ArrayList<CompletedLevel>();
     }
 
     public static PlayerData getInstance() {
         if (instance == null) {
-            instance = new PlayerData();
+            if (SaveManager.isSavedUserDataExists()) {
+                instance = SaveManager.loadUserData();
+            } else {
+                instance = new PlayerData();
+                SaveManager.saveUserData(instance);
+            }
         }
         return instance;
     }
 
-    private int availableLevels;
+    private int unlockedLevelsCount;
+    private int completedLevelsCount;
+    private ArrayList<CompletedLevel> completedLevels;
 
-    public int getAvailableLevels() {
-        return availableLevels;
+    public int getUnlockedLevelsCount() {
+        return unlockedLevelsCount;
+    }
+
+    public ArrayList<CompletedLevel> getCompletedLevels() {
+        return completedLevels;
+    }
+
+    public int getCompletedLevelsCount() {
+        return completedLevelsCount;
+    }
+
+    public void savePlayerData() {
+        SaveManager.saveUserData(instance);
+    }
+
+    public void levelCompleted(int levelNumber, CompletedLevel stars) {
+        if (levelNumber == unlockedLevelsCount) {
+            if (unlockedLevelsCount < Configuration.totalGameLevels) {
+                unlockedLevelsCount++;
+            }
+            completedLevelsCount++;
+            completedLevels.add(stars);
+        } else {
+            if (completedLevels.get(levelNumber - 1).value < stars.value) {
+                completedLevels.set(levelNumber - 1, stars);
+            }
+        }
     }
 }

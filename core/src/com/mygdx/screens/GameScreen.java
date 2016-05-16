@@ -2,8 +2,6 @@ package com.mygdx.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.GameWorldInfo;
@@ -15,6 +13,7 @@ import com.mygdx.gameworld.GameWorld;
 public class GameScreen extends UniversalScreen {
     private GameWorld world;
     private GameRenderer renderer;
+    private int level;
 
     private float scaleX;
     private float scaleY;
@@ -23,6 +22,7 @@ public class GameScreen extends UniversalScreen {
 
     public GameScreen(Game game, int level) {
         super(game);
+        this.level = level;
         world = new GameWorld(level);
         renderer = new GameRenderer(world, camera, batcher, shapeRenderer);
 
@@ -43,7 +43,8 @@ public class GameScreen extends UniversalScreen {
         switch (world.getGameState()) {
             case WIN:
                 // TODO fix win screen
-                game.setScreen(new LevelCompletedScreen(game));
+                game.setScreen(new LevelCompletedScreen(game, level, world
+                        .getLives()));
                 break;
             case GAMEOVER:
                 game.setScreen(new GameOverScreen(game));
@@ -79,11 +80,11 @@ public class GameScreen extends UniversalScreen {
     }
 
     public void saveGame() {
-        SaveManager.save(world.getInfo());
+        SaveManager.saveLevel(world.getInfo());
     }
 
     public void loadGame() {
-        GameWorldInfo info = (GameWorldInfo)SaveManager.load();
+        GameWorldInfo info = (GameWorldInfo)SaveManager.loadLevel();
         world.restoreState(info);
     }
 }

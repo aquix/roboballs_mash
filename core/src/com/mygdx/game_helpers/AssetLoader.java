@@ -50,6 +50,9 @@ public class AssetLoader {
     private Texture menuIconsTexture;
     public TextureRegion levelTile;
     public TextureRegion lockedLevel;
+    public TextureRegion toMenu;
+    public TextureRegion nextLevel;
+    public TextureRegion replayLevel;
 
     public void load() {
         // Load textures from disk
@@ -109,6 +112,16 @@ public class AssetLoader {
         lockedLevel = new TextureRegion(menuIconsTexture, 75, 0, 75, 75);
         lockedLevel.flip(false, true);
 
+        // Load winscreen icons
+        toMenu = new TextureRegion(menuIconsTexture, 0, 84, 142, 142);
+        toMenu.flip(false, true);
+        nextLevel = new TextureRegion(menuIconsTexture, 142, 84, 142,
+                142);
+        nextLevel.flip(false, true);
+        replayLevel = new TextureRegion(menuIconsTexture, 142 * 2, 84, 142,
+                142);
+        replayLevel.flip(false, true);
+
         // Load gems
         littleGem = new TextureRegion(bulletsTexture, 140, 0, 64, 64);
         littleGem.flip(false, true);
@@ -121,6 +134,7 @@ public class AssetLoader {
         gemIcon = new TextureRegion(bulletsTexture, 63, 0, 71, 61);
         gemIcon.flip(false, true);
 
+        // Load simple enemy frames
         int width = 198;
         int height = 150;
         TextureRegion[] simpleEnemyFrames = {new TextureRegion
