@@ -47,7 +47,7 @@ public class GameScreen extends UniversalScreen {
                         .getLives()));
                 break;
             case GAMEOVER:
-                game.setScreen(new GameOverScreen(game));
+                game.setScreen(new GameOverScreen(game, level));
                 break;
             case PAUSE:
                 pause();

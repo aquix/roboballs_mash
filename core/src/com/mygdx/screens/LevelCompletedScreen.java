@@ -19,19 +19,17 @@ public class LevelCompletedScreen extends UniversalScreen {
     private ArrayList<MenuItem> menuItems;
     private GlyphLayout glyphLayout;
     private int levelNumber;
-    private int livesLeft;
+    private CompletedLevel stars;
 
     public LevelCompletedScreen(Game game, int levelNumber, int livesLeft) {
         super(game);
         this.levelNumber = levelNumber;
-        this.livesLeft = livesLeft;
         font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
         menuItems = new ArrayList<MenuItem>();
         glyphLayout = new GlyphLayout();
         initScreen();
 
         // Save user progress
-        CompletedLevel stars;
         switch (livesLeft) {
             case 1:
                 stars = CompletedLevel.ONE_STAR;
