@@ -16,7 +16,7 @@ public class Bullet extends GameObject {
     }
 
     @Override
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float runTime) {
         batcher.draw(AssetLoader.getInstance().bullets.get(name), rect.x,
                 rect.y, rect.width, rect.height);
     }

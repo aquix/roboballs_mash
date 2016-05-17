@@ -48,9 +48,4 @@ public class HudPanel extends GameObject {
         this.gems = gems;
         this.lives = lives;
     }
-
-    @Override
-    public void render(SpriteBatch batcher) {
-
-    }
 }

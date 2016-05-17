@@ -22,7 +22,7 @@ public class MenuItem extends GameObject {
     }
 
     @Override
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float runTime) {
         if (image != null) {
             batcher.draw(image, rect.x, rect.y);
         }

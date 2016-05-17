@@ -27,9 +27,9 @@ public class SelectRobotPanel extends GameObject implements Serializable{
         }
     }
 
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float runTime) {
         for (RobotTile tile: tiles) {
-            tile.render(batcher);
+            tile.render(batcher, runTime);
         }
     }
 

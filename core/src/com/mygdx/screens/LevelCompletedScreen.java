@@ -62,7 +62,7 @@ public class LevelCompletedScreen extends UniversalScreen {
         batcher.enableBlending();
 
         for (MenuItem item : menuItems) {
-            item.render(batcher);
+            item.render(batcher, 0);
         }
 
         batcher.end();
@@ -79,7 +79,8 @@ public class LevelCompletedScreen extends UniversalScreen {
                         game.setScreen(new MainMenuScreen(game));
                         break;
                     case NEXT_LEVEL:
-                        game.setScreen(new GameScreen(game, 1));
+                        // TODO check if no available levels
+                        game.setScreen(new GameScreen(game, levelNumber + 1));
                         break;
                     case REPLAY_LEVEL:
                         game.setScreen(new GameScreen(game, levelNumber));

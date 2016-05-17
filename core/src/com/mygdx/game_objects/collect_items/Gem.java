@@ -32,7 +32,7 @@ public class Gem extends GameObject {
     }
 
     @Override
-    public void render(SpriteBatch batcher) {
+    public void render(SpriteBatch batcher, float runTime) {
         if (type == GemType.LITTLE) {
             batcher.draw(AssetLoader.getInstance().littleGem, rect.x, rect.y);
         } else if (type == GemType.BIG) {

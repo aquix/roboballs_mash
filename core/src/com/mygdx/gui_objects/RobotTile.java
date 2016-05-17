@@ -30,7 +30,7 @@ public class RobotTile extends GameObject {
         playerGems = 0;
     }
 
-    public void render(SpriteBatch batcher){
+    public void render(SpriteBatch batcher, float runTime){
         batcher.draw(AssetLoader.getInstance().robotTiles.get(name),
                 rect.getX(), rect.getY());
     }

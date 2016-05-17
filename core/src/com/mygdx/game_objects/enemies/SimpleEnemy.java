@@ -66,9 +66,4 @@ public class SimpleEnemy extends Enemy {
                 .getKeyFrame(gameTime), rect.x, rect.y, rect.width, rect
                 .height);
     }
-
-    @Override
-    public void render(SpriteBatch batcher) {
-
-    }
 }

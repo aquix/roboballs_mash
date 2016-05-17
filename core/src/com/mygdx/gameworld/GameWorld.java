@@ -279,11 +279,11 @@ public class GameWorld implements Serializable {
 
         hud.render(batcher, runTime);
         if (selectedRobot != null) {
-            selectedRobot.render(batcher);
+            selectedRobot.render(batcher, 0);
         }
-        selectRobotPanel.render(batcher);
+        selectRobotPanel.render(batcher, runTime);
         for (Robot robot : map.getRobots()) {
-            robot.render(batcher);
+            robot.render(batcher, runTime);
         }
 
         for (Enemy enemy : map.getEnemies()) {
@@ -291,11 +291,11 @@ public class GameWorld implements Serializable {
         }
 
         for (Bullet bullet : bullets) {
-            bullet.render(batcher);
+            bullet.render(batcher, runTime);
         }
 
         for (Gem gem : gems) {
-            gem.render(batcher);
+            gem.render(batcher, runTime);
         }
     }
 

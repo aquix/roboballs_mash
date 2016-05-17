@@ -3,16 +3,11 @@ package com.mygdx.game_helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectSet;
 import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
-import com.mygdx.config.RobotsData;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class AssetLoader {
@@ -34,7 +29,8 @@ public class AssetLoader {
     private Texture robotTilesTexture;
     public HashMap<String, TextureRegion> robotTiles;
     private Texture robotsTexture;
-    public HashMap<String, TextureRegion> robots;
+    public HashMap<String, Animation> robots;
+
     private Texture enemiesTexture;
     public HashMap<String, TextureRegion> enemies;
     public Animation simpleEnemyAnimation;
@@ -81,16 +77,6 @@ public class AssetLoader {
         robotTiles.put("GunnerBot", new TextureRegion(robotTilesTexture, 0,
                 0, 102, 113));
         robotTiles.get("GunnerBot").flip(false, true);
-
-        // Load robots
-        robots = new HashMap<String, TextureRegion>();
-        robots.put("GemBot", new TextureRegion(robotsTexture, 0, 100, 100,
-                100));
-        robots.get("GemBot").flip(false, true);
-        robots.put("GunnerBot", new TextureRegion(robotsTexture, 0, 0,
-                RobotsData.get("GemBot").width, RobotsData.get("GemBot")
-                .height));
-        robots.get("GunnerBot").flip(false, true);
 
         // Load enemies
         enemies = new HashMap<String, TextureRegion>();
@@ -152,7 +138,37 @@ public class AssetLoader {
         }
 
         simpleEnemyAnimation = new Animation(0.3f, simpleEnemyFrames);
-        simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+
+        // Load robot animations
+        robots = new HashMap<String, Animation>();
+
+        // Load GunnerBot animation
+        TextureRegion[] gunnerBotFrames = new TextureRegion[7];
+        for (int i = 0; i < 7; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    0, 100, 100);
+            frame.flip(false, true);
+            gunnerBotFrames[i] = frame;
+        }
+
+        Animation gunnerbotAnimation = new Animation(0.2f, gunnerBotFrames);
+        gunnerbotAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        robots.put("GunnerBot", gunnerbotAnimation);
+
+        // Load GemBot animation
+        TextureRegion[] gemBotFrames = new TextureRegion[7];
+        for (int i = 0; i < 7; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    100, 100, 100);
+            frame.flip(false, true);
+            gemBotFrames[i] = frame;
+        }
+
+        Animation gembotAnimation = new Animation(0.2f, gemBotFrames);
+        gembotAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        robots.put("GemBot", gembotAnimation);
     }
 
     public void dispose() {

@@ -41,7 +41,7 @@ public class GameOverScreen extends UniversalScreen {
         batcher.enableBlending();
 
         for (MenuItem item : menuItems) {
-            item.render(batcher);
+            item.render(batcher, 0);
         }
 
         batcher.end();

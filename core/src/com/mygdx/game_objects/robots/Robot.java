@@ -29,10 +29,9 @@ public abstract class Robot extends GameObject {
         this.cellTypes = cellTypes;
     }
 
-    @Override
-    public void render(SpriteBatch batcher) {
-        batcher.draw(AssetLoader.getInstance().robots.get(name), rect
-                .x, rect.y, rect.width, rect.height);
+    public void render(SpriteBatch batcher, float runTime) {
+        batcher.draw(AssetLoader.getInstance().robots.get(name)
+                .getKeyFrame(runTime), rect.x, rect.y, rect.width, rect.height);
     }
 
     public void setCell(int i, int j) {
