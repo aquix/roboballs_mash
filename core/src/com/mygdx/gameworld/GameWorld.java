@@ -89,7 +89,7 @@ public class GameWorld implements Serializable {
         gameState = GameState.PLAY;
         gemsCount = level.getStartGems();
         lives = 3;
-        hud = new HudPanel(this.lives, this.gemsCount);
+        hud = new HudPanel(this.lives, this.gemsCount, readyEnemies.last().getSpawnTime());
         gems = new ArrayList<Gem>();
 
         bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
@@ -113,7 +113,7 @@ public class GameWorld implements Serializable {
         for (Enemy enemy : map.getEnemies()) {
             enemy.update(delta, map);
             for (Bullet bullet : bullets) {
-                if (enemy.getRect().overlaps(bullet.getCollisionRect())) {
+                if (enemy.getCollisionRect().overlaps(bullet.getCollisionRect())) {
                     bullet.damageEnemy(enemy);
                 }
             }
@@ -277,7 +277,7 @@ public class GameWorld implements Serializable {
                 0, 0, Configuration.windowWidth, Configuration.windowHeight);
         batcher.enableBlending();
 
-        hud.render(batcher);
+        hud.render(batcher, runTime);
         if (selectedRobot != null) {
             selectedRobot.render(batcher);
         }

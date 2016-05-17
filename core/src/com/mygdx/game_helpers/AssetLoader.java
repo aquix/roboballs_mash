@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ObjectSet;
 import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.RobotsData;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class AssetLoader {
     public TextureRegion toMenu;
     public TextureRegion nextLevel;
     public TextureRegion replayLevel;
+    public TextureRegion enemyTimeScale;
+    public TextureRegion enemyTimeFiller;
 
     public void load() {
         backgroundTextures = new HashMap<Integer, Texture>();
@@ -130,6 +133,10 @@ public class AssetLoader {
         heart.flip(false, true);
         gemIcon = new TextureRegion(bulletsTexture, 63, 0, 71, 61);
         gemIcon.flip(false, true);
+        enemyTimeScale = new TextureRegion(menuIconsTexture, 177, 24, 401, 27);
+        enemyTimeScale.flip(false, true);
+        enemyTimeFiller = new TextureRegion(menuIconsTexture, 179, 57, 378, 12);
+        enemyTimeFiller.flip(false, true);
 
         // Load simple enemy frames
         int width = 198;
