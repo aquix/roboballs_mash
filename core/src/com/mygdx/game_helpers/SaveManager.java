@@ -36,7 +36,7 @@ public class SaveManager {
     public static GameWorldInfo loadLevel() {
         try {
             File saveFile = new File(String.valueOf(Gdx.files.internal
-                    ("saves/savedlevel.rbs")));
+                    ("saves/saveLevel.rbs")));
 
             ObjectInputStream saveStream = new ObjectInputStream(new
                     FileInputStream(saveFile));
@@ -54,7 +54,7 @@ public class SaveManager {
 
     public static boolean isSavedLevelExists() {
         File saveFile = new File(String.valueOf(Gdx.files.internal
-                ("saves/savedlevel.rbs")));
+                ("saves/saveLevel.rbs")));
         return saveFile.exists();
     }
 
