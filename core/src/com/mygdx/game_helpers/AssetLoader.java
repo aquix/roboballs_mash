@@ -70,12 +70,18 @@ public class AssetLoader {
 
         // Load robot tiles
         robotTiles = new HashMap<String, TextureRegion>();
-        robotTiles.put("GemBot", new TextureRegion(robotTilesTexture, 102, 0,
-                102, 113));
+        robotTiles.put("GemBot", new TextureRegion(robotTilesTexture, 75, 0,
+                75, 82));
         robotTiles.get("GemBot").flip(false, true);
         robotTiles.put("GunnerBot", new TextureRegion(robotTilesTexture, 0,
-                0, 102, 113));
+                0, 75, 82));
         robotTiles.get("GunnerBot").flip(false, true);
+        robotTiles.put("AirBot", new TextureRegion(robotTilesTexture, 225,
+                0, 75, 82));
+        robotTiles.get("AirBot").flip(false, true);
+        robotTiles.put("ShieldBot", new TextureRegion(robotTilesTexture, 150,
+                0, 75, 82));
+        robotTiles.get("ShieldBot").flip(false, true);
 
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
@@ -185,7 +191,7 @@ public class AssetLoader {
         }
 
         Animation gunnerbotAnimation = new Animation(0.2f, gunnerBotFrames);
-        gunnerbotAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        gunnerbotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         robots.put("GunnerBot", gunnerbotAnimation);
 
         // Load GemBot animation
@@ -198,8 +204,34 @@ public class AssetLoader {
         }
 
         Animation gembotAnimation = new Animation(0.2f, gemBotFrames);
-        gembotAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        gembotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         robots.put("GemBot", gembotAnimation);
+
+        // Load AirBot animation
+        TextureRegion[] airBotFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    200, 100, 100);
+            frame.flip(false, true);
+            airBotFrames[i] = frame;
+        }
+
+        Animation airBotAnimation = new Animation(0.2f, airBotFrames);
+        airBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        robots.put("AirBot", airBotAnimation);
+
+        // Load ShieldBot animation
+        TextureRegion[] shieldBotFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    300, 100, 100);
+            frame.flip(false, true);
+            shieldBotFrames[i] = frame;
+        }
+
+        Animation shieldBotAnimation = new Animation(0.2f, shieldBotFrames);
+        shieldBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        robots.put("ShieldBot", shieldBotAnimation);
     }
 
     public void dispose() {
@@ -210,6 +242,9 @@ public class AssetLoader {
         robotTilesTexture.dispose();
         robotsTexture.dispose();
         enemiesTexture.dispose();
+        bulletsTexture.dispose();
+        mainMenuBackgroundTexture.dispose();
+        menuIconsTexture.dispose();
     }
 
     public void disposeBackgroundsExcept(int levelNumber) {

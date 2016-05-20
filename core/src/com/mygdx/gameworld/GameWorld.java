@@ -13,10 +13,8 @@ import com.mygdx.game_objects.bullets.RobotBullet;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.collect_items.Gem;
 import com.mygdx.game_objects.map.GameMap;
-import com.mygdx.game_objects.robots.Robot;
+import com.mygdx.game_objects.robots.*;
 import com.mygdx.game_objects.map.MapCell;
-import com.mygdx.game_objects.robots.GemBot;
-import com.mygdx.game_objects.robots.GunnerBot;
 import com.mygdx.gui_objects.HudPanel;
 import com.mygdx.gui_objects.RobotTile;
 import com.mygdx.gui_objects.SelectRobotPanel;
@@ -78,7 +76,7 @@ public class GameWorld implements Serializable {
 
         map = new GameMap(level.getLevelMap());
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
-                GunnerBot.class));
+                GunnerBot.class, AirBot.class, ShieldBot.class));
 
         selectRobotPanel = new SelectRobotPanel(availableRobots);
         action = PointerActions.NOTHING;

@@ -16,9 +16,9 @@ public class SelectRobotPanel extends GameObject implements Serializable{
         super(0, 610, 110, 1280);
         tiles = new ArrayList<RobotTile>();
 
-        Vector2 newTilePosition = new Vector2(10, 610);
-        float tileSizeX = 102;
-        float tileSizeY = 112;
+        Vector2 newTilePosition = new Vector2(10, 635);
+        float tileSizeX = 75;
+        float tileSizeY = 82;
         for (Class type : robotTypes) {
             tiles.add(new RobotTile(type, newTilePosition.x,
                     newTilePosition.y, tileSizeX, tileSizeY));
