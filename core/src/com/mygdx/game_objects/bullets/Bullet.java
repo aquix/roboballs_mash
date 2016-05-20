@@ -5,6 +5,7 @@ import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.enemies.Enemy;
+import com.mygdx.game_objects.map.GameMap;
 
 public class Bullet extends GameObject {
     protected boolean isActive;
@@ -25,8 +26,7 @@ public class Bullet extends GameObject {
         return isActive;
     }
 
-    @Override
-    public void update(float delta) {
+    public void update(float delta, GameMap map) {
         super.update(delta);
         if (!this.collisionRect.overlaps(Configuration.screenRect)) {
             this.isActive = false;
@@ -35,12 +35,5 @@ public class Bullet extends GameObject {
 
     public float getDamage() {
         return damage;
-    }
-
-    public void damageEnemy(Enemy enemy) {
-        boolean successDamage = enemy.makeDamaged(this);
-        if (successDamage) {
-            this.isActive = false;
-        }
     }
 }

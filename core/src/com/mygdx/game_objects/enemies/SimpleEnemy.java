@@ -15,21 +15,12 @@ public class SimpleEnemy extends Enemy {
                         .height,
                 EnemiesData.get("SimpleEnemy").width,
                 EnemiesData.get("SimpleEnemy").height, spawnTime,
-                startLine);
-        EnemyParams enemyParams = EnemiesData.get("SimpleEnemy");
-        cooldown = enemyParams.cooldown;
-        leftoverCooldown = cooldown;
-        health = enemyParams.health;
-        max_velocity = enemyParams.velocity_x;
-        name = "SimpleEnemy";
-        damage = EnemiesData.get("SimpleEnemy").damage;
+                startLine, "SimpleEnemy");
 
         collisionRect.width = 100;
         collisionRect.height = 100;
         collisionRect.x = rect.x + (rect.width - 100);
         collisionRect.y = rect.y + (rect.height - 100);
-
-        aimRobot = null;
     }
 
     @Override
@@ -59,11 +50,5 @@ public class SimpleEnemy extends Enemy {
 
         behaviour.update(delta, map, this);
         super.update(delta, map);
-    }
-
-    public void render(SpriteBatch batcher, float gameTime) {
-        batcher.draw(AssetLoader.getInstance().simpleEnemyAnimation
-                .getKeyFrame(gameTime), rect.x, rect.y, rect.width, rect
-                .height);
     }
 }

@@ -32,8 +32,7 @@ public class AssetLoader {
     public HashMap<String, Animation> robots;
 
     private Texture enemiesTexture;
-    public HashMap<String, TextureRegion> enemies;
-    public Animation simpleEnemyAnimation;
+    public HashMap<String, Animation> enemies;
 
     private Texture bulletsTexture;
     public HashMap<String, TextureRegion> bullets;
@@ -78,16 +77,15 @@ public class AssetLoader {
                 0, 102, 113));
         robotTiles.get("GunnerBot").flip(false, true);
 
-        // Load enemies
-        enemies = new HashMap<String, TextureRegion>();
-        enemies.put("SimpleEnemy", new TextureRegion(enemiesTexture, 0, 0,
-                EnemiesData.get("SimpleEnemy").width, EnemiesData.get("SimpleEnemy").height));
-        enemies.get("SimpleEnemy").flip(false, true);
-
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
         bullets.put("GunnerBotBullet", new TextureRegion(bulletsTexture, 222,
             14, 50, 32));
+        bullets.put("HelicopterEnemyBomb", new TextureRegion(bulletsTexture,
+                292, 2, 51, 61));
+
+        bullets.get("GunnerBotBullet").flip(false, true);
+        bullets.get("HelicopterEnemyBomb").flip(false, true);
 
         // Load main menu
         mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
@@ -124,6 +122,8 @@ public class AssetLoader {
         enemyTimeFiller = new TextureRegion(menuIconsTexture, 179, 57, 378, 12);
         enemyTimeFiller.flip(false, true);
 
+        // Load enemies
+        enemies = new HashMap<String, Animation>();
         // Load simple enemy frames
         int width = 198;
         int height = 150;
@@ -137,9 +137,40 @@ public class AssetLoader {
             frame.flip(false, true);
         }
 
-        simpleEnemyAnimation = new Animation(0.3f, simpleEnemyFrames);
-        simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        Animation simpleEnemyAnimation = new Animation(0.3f, simpleEnemyFrames);
+        simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        enemies.put("SimpleEnemy", simpleEnemyAnimation);
 
+        // Load helicopter enemy frames
+        width = 150;
+        height = 90;
+        TextureRegion[] helicopterEnemyFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(enemiesTexture, width * i,
+                    404, width, height);
+            frame.flip(false, true);
+            helicopterEnemyFrames[i] = frame;
+        }
+
+        Animation helicopterEnemyAnimation = new Animation(0.2f, helicopterEnemyFrames);
+        helicopterEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        enemies.put("HelicopterEnemy", helicopterEnemyAnimation);
+
+        // Load bomb helicopter enemy frames
+        width = 150;
+        height = 90;
+        TextureRegion[] helicopterBombEnemyFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(enemiesTexture, width * i,
+                    494, width, height);
+            frame.flip(false, true);
+            helicopterBombEnemyFrames[i] = frame;
+        }
+
+        Animation helicopterBombEnemyAnimation = new Animation(0.2f,
+                helicopterBombEnemyFrames);
+        helicopterBombEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        enemies.put("HelicopterBombEnemy", helicopterBombEnemyAnimation);
 
         // Load robot animations
         robots = new HashMap<String, Animation>();

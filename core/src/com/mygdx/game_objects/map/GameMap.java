@@ -2,6 +2,7 @@ package com.mygdx.game_objects.map;
 
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.robots.Robot;
@@ -154,5 +155,16 @@ public class GameMap implements Serializable {
 
     public MapCell[][] getCells() {
         return cells;
+    }
+
+    public Vector2 getCellIndexes(float x, float y) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (cells[i][j].contains(x, y)) {
+                    return new Vector2(j, i);
+                }
+            }
+        }
+        return null;
     }
 }

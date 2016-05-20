@@ -4,6 +4,21 @@
     "levelMap": "aaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\ngggggggggg",
     "enemies": [
         {
+            "name": "HelicopterEnemy",
+            "spawnTime": 3,
+            "startLine": 0
+        },
+        {
+            "name": "HelicopterBombEnemy",
+            "spawnTime": 2,
+            "startLine": 2
+        },
+        {
+            "name": "HelicopterBombEnemy",
+            "spawnTime": 5,
+            "startLine": 1
+        },
+        {
             "name": "SimpleEnemy",
             "spawnTime": 7,
             "startLine": 4

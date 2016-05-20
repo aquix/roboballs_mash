@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.bullets.EnemyBullet;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.CellType;
 import com.mygdx.game_objects.map.GameMap;
@@ -59,6 +60,11 @@ public abstract class Robot extends GameObject {
 
     public boolean makeDamaged(Enemy enemy) {
         health -= enemy.getDamage();
+        return true;
+    }
+
+    public boolean makeDamaged(EnemyBullet bullet) {
+        health -= bullet.getDamage();
         return true;
     }
 

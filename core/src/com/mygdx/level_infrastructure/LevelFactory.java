@@ -3,6 +3,8 @@ package com.mygdx.level_infrastructure;
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.mygdx.game_objects.enemies.Enemy;
+import com.mygdx.game_objects.enemies.HelicopterBombEnemy;
+import com.mygdx.game_objects.enemies.HelicopterEnemy;
 import com.mygdx.game_objects.enemies.SimpleEnemy;
 
 import java.io.*;
@@ -37,6 +39,12 @@ class LevelCreator {
         for (EnemyCreator enemy : enemies) {
             if (enemy.getName().equals("SimpleEnemy")) {
                 resultEnemies.add(new SimpleEnemy(enemy.getSpawnTime(),
+                        enemy.getStartLine()));
+            } else if (enemy.getName().equals("HelicopterEnemy")) {
+                resultEnemies.add(new HelicopterEnemy(enemy.getSpawnTime(),
+                        enemy.getStartLine()));
+            } else if (enemy.getName().equals("HelicopterBombEnemy")) {
+                resultEnemies.add(new HelicopterBombEnemy(enemy.getSpawnTime(),
                         enemy.getStartLine()));
             }
         }

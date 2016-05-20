@@ -8,6 +8,8 @@ import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_helpers.GameWorldInfo;
 import com.mygdx.game_objects.bullets.Bullet;
+import com.mygdx.game_objects.bullets.EnemyBullet;
+import com.mygdx.game_objects.bullets.RobotBullet;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.collect_items.Gem;
 import com.mygdx.game_objects.map.GameMap;
@@ -41,7 +43,8 @@ public class GameWorld implements Serializable {
     private transient Rectangle robotBarField;
     private transient Rectangle statusBarField;
     private float gameTime;
-    private ArrayList<Bullet> bullets;
+    private ArrayList<RobotBullet> robotBullets;
+    private ArrayList<EnemyBullet> enemyBullets;
     private GameState gameState;
     private int gemsCount;
     private int lives;
@@ -49,7 +52,8 @@ public class GameWorld implements Serializable {
     private transient HudPanel hud;
     private transient ArrayList<Gem> gems;
 
-    private transient ArrayListHelpers<Bullet> bulletArrayListHelpers;
+    private transient ArrayListHelpers<RobotBullet> robotbulletArrayListHelpers;
+    private transient ArrayListHelpers<EnemyBullet> enemybulletArrayListHelpers;
     private transient ArrayListHelpers<Robot> robotArrayListHelpers;
     private transient ArrayListHelpers<Enemy> enemyArrayListHelpers;
     private transient ArrayListHelpers<Gem> gemArrayListHelpers;
@@ -85,14 +89,16 @@ public class GameWorld implements Serializable {
         robotBarField = new Rectangle(0, Configuration.windowHeight - 100,
                 Configuration.windowWidth, 100);
 
-        bullets = new ArrayList<Bullet>();
+        robotBullets = new ArrayList<RobotBullet>();
+        enemyBullets = new ArrayList<EnemyBullet>();
         gameState = GameState.PLAY;
         gemsCount = level.getStartGems();
         lives = 3;
         hud = new HudPanel(this.lives, this.gemsCount, readyEnemies.last().getSpawnTime());
         gems = new ArrayList<Gem>();
 
-        bulletArrayListHelpers = new ArrayListHelpers<Bullet>();
+        robotbulletArrayListHelpers = new ArrayListHelpers<RobotBullet>();
+        enemybulletArrayListHelpers = new ArrayListHelpers<EnemyBullet>();
         enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
         robotArrayListHelpers = new ArrayListHelpers<Robot>();
         gemArrayListHelpers = new ArrayListHelpers<Gem>();
@@ -112,7 +118,7 @@ public class GameWorld implements Serializable {
         // Update enemies state
         for (Enemy enemy : map.getEnemies()) {
             enemy.update(delta, map);
-            for (Bullet bullet : bullets) {
+            for (RobotBullet bullet : robotBullets) {
                 if (enemy.getCollisionRect().overlaps(bullet.getCollisionRect())) {
                     bullet.damageEnemy(enemy);
                 }
@@ -127,14 +133,25 @@ public class GameWorld implements Serializable {
         // Update map
         map.updateCells();
 
-        // Grab new bullets from game map
+        // Grab new robotBullets from game map
         List<Bullet> newBullets = map.grabNewBullets();
-        bullets.addAll(newBullets);
+        for (Bullet newBullet : newBullets) {
+            if (newBullet instanceof RobotBullet) {
+                robotBullets.add((RobotBullet)newBullet);
+            } else if (newBullet instanceof EnemyBullet) {
+                enemyBullets.add((EnemyBullet)newBullet);
+            }
+        }
         newBullets.clear();
 
-        // Update bullets and apply damage for enemies
-        for (Bullet bullet : bullets) {
-            bullet.update(delta);
+        // Update robot bullets
+        for (Bullet bullet : robotBullets) {
+            bullet.update(delta, map);
+        }
+
+        // Update enemy bullets
+        for (EnemyBullet bullet : enemyBullets) {
+            bullet.update(delta, map);
         }
 
         // Grab new gemsCount
@@ -147,9 +164,17 @@ public class GameWorld implements Serializable {
             gem.update(delta);
         }
 
-        bulletArrayListHelpers.removeIf(bullets, new Predicate<Bullet>() {
+        robotbulletArrayListHelpers.removeIf(robotBullets, new Predicate<RobotBullet>() {
             @Override
-            public boolean test(Bullet obj) {
+            public boolean test(RobotBullet obj) {
+                return !obj.isActive();
+            }
+        });
+
+        enemybulletArrayListHelpers.removeIf(enemyBullets, new
+                Predicate<EnemyBullet>() {
+            @Override
+            public boolean test(EnemyBullet obj) {
                 return !obj.isActive();
             }
         });
@@ -178,6 +203,11 @@ public class GameWorld implements Serializable {
         // Update robots
         for (Robot robot : map.getRobots()) {
             robot.update(delta, map);
+            for (EnemyBullet bullet : enemyBullets) {
+                if (robot.getCollisionRect().overlaps(bullet.getCollisionRect())) {
+                    bullet.damageRobot(robot);
+                }
+            }
         }
 
         // Update hud
@@ -197,8 +227,8 @@ public class GameWorld implements Serializable {
         }
 
         // JAVA 8 code
-//        //Delete death bullets
-//        bullets.removeIf(new Predicate<Bullet>() {
+//        //Delete death robotBullets
+//        robotBullets.removeIf(new Predicate<Bullet>() {
 //            @Override
 //            public boolean test(Bullet bullet) {
 //                return !bullet.isActive();
@@ -290,7 +320,11 @@ public class GameWorld implements Serializable {
             enemy.render(batcher, runTime);
         }
 
-        for (Bullet bullet : bullets) {
+        for (RobotBullet bullet : robotBullets) {
+            bullet.render(batcher, runTime);
+        }
+
+        for (EnemyBullet bullet : enemyBullets) {
             bullet.render(batcher, runTime);
         }
 
@@ -336,7 +370,8 @@ public class GameWorld implements Serializable {
         selectRobotPanel = info.selectRobotPanel;
         availableRobots = info.availableRobots;
         gameTime = info.gameTime;
-        bullets = info.bullets;
+        robotBullets = info.robotBullets;
+        enemyBullets = info.enemyBullets;
         gameState = info.gameState;
         gemsCount = info.gemsCount;
         lives = info.lives;
@@ -351,7 +386,8 @@ public class GameWorld implements Serializable {
         info.selectRobotPanel = selectRobotPanel;
         info.availableRobots = availableRobots;
         info.gameTime = gameTime;
-        info.bullets = bullets;
+        info.robotBullets = robotBullets;
+        info.enemyBullets = enemyBullets;
         info.gameState = gameState;
         info.gemsCount = gemsCount;
         info.lives = lives;
