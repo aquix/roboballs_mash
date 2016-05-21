@@ -2,10 +2,14 @@ package com.mygdx.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_helpers.SaveManager;
@@ -24,6 +28,11 @@ public class PauseScreen extends UniversalScreen {
     private ArrayList<MenuItem> menuItems;
     private GlyphLayout glyphLayout;
 
+    private Texture backgroundTexture;
+    private TextureRegion background;
+    private float runTime;
+    private final float shadingTime = 2;
+
     public PauseScreen(Game game, UniversalScreen previousScreen) {
         super(game);
         font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
@@ -33,10 +42,24 @@ public class PauseScreen extends UniversalScreen {
         glyphLayout = new GlyphLayout();
         actionAfterSaveDialog = MenuAction.NONE;
         initPauseScreen();
+
+        // Make screenshot of current window
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+
+        backgroundTexture = new Texture(pixmap);
+        background = new TextureRegion(backgroundTexture);
+        background.flip(false, true);
+        pixmap.dispose();
+
+        runTime = 0;
     }
 
     @Override
     public void render(float delta) {
+        runTime += delta;
         Gdx.gl.glClearColor(0, 0, 0, 1);
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -44,10 +67,27 @@ public class PauseScreen extends UniversalScreen {
         batcher.begin();
 
         batcher.disableBlending();
-        batcher.draw(AssetLoader.getInstance().mainMenuBackground, 0, 0, Configuration
+        batcher.draw(background, 0, 0, Configuration
                 .windowWidth, Configuration.windowHeight);
 
         batcher.enableBlending();
+        batcher.end();
+
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        // Calculate transparency of filter
+        float alpha = 0.6f;
+        if (runTime < shadingTime) {
+            alpha = (0.6f / shadingTime) * runTime;
+        }
+
+        shapeRenderer.setColor(new Color(0, 0, 0, alpha));
+        shapeRenderer.rect(0, 0, Configuration.windowWidth, Configuration.windowHeight);
+        shapeRenderer.end();
+
+        batcher.begin();
 
         for (MenuItem item : menuItems) {
             item.render(batcher, 0);
@@ -71,7 +111,7 @@ public class PauseScreen extends UniversalScreen {
                         actionAfterSaveDialog = item.getAction();
                         isSaveGameDialog = true;
                         initSaveGameDialog();
-                        break;
+                        return true;
                     case SAVE_YES:
                         if (previousScreen instanceof GameScreen) {
                             ((GameScreen) previousScreen).saveGame();
@@ -150,5 +190,11 @@ public class PauseScreen extends UniversalScreen {
         } else if (actionAfterSaveDialog == MenuAction.EXIT_TO_MAIN) {
             game.setScreen(new MainMenuScreen(game));
         }
+    }
+
+    @Override
+    public void dispose() {
+        backgroundTexture.dispose();
+        super.dispose();
     }
 }
