@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.IDamagable;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.GameMap;
 
-public class Bullet extends GameObject {
+public class Bullet extends GameObject implements IDamagable {
     protected boolean isActive;
     protected float damage;
 

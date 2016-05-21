@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.IDamagable;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.bullets.RobotBullet;
@@ -73,7 +74,7 @@ public abstract class Enemy extends GameObject {
         return state != EnemyState.DEAD;
     }
 
-    public boolean makeDamaged(RobotBullet bullet) {
+    public boolean makeDamaged(IDamagable bullet) {
         health -= bullet.getDamage();
         return true;
     }

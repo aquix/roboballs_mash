@@ -76,7 +76,7 @@ public class GameWorld implements Serializable {
 
         map = new GameMap(level.getLevelMap());
         availableRobots = new ArrayList<Class>(Arrays.asList(GemBot.class,
-                GunnerBot.class, AirBot.class, ShieldBot.class));
+                GunnerBot.class, AirBot.class, ShieldBot.class, MineBot.class));
 
         selectRobotPanel = new SelectRobotPanel(availableRobots);
         action = PointerActions.NOTHING;

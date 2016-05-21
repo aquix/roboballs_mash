@@ -64,7 +64,7 @@ public class AssetLoader {
                 ("enemies/enemies.png"));
         bulletsTexture = new Texture(Gdx.files.internal("littles/littles.png"));
         mainMenuBackgroundTexture = new Texture(Gdx.files.internal
-                ("backgrounds/main_menu_background_stub.png"));
+                ("backgrounds/main_menu_background.png"));
         menuIconsTexture = new Texture(Gdx.files.internal
                 ("gui/menu_icons.png"));
 
@@ -82,6 +82,9 @@ public class AssetLoader {
         robotTiles.put("ShieldBot", new TextureRegion(robotTilesTexture, 150,
                 0, 75, 82));
         robotTiles.get("ShieldBot").flip(false, true);
+        robotTiles.put("MineBot", new TextureRegion(robotTilesTexture, 300,
+                0, 75, 82));
+        robotTiles.get("MineBot").flip(false, true);
 
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
@@ -232,6 +235,19 @@ public class AssetLoader {
         Animation shieldBotAnimation = new Animation(0.2f, shieldBotFrames);
         shieldBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         robots.put("ShieldBot", shieldBotAnimation);
+
+        // Load ShieldBot animation
+        TextureRegion[] mineBotFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    400, 100, 100);
+            frame.flip(false, true);
+            mineBotFrames[i] = frame;
+        }
+
+        Animation mineBotAnimation = new Animation(0.2f, mineBotFrames);
+        mineBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        robots.put("MineBot", mineBotAnimation);
     }
 
     public void dispose() {
