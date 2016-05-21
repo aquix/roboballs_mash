@@ -17,7 +17,7 @@ public class SimpleEnemy extends Enemy {
                 EnemiesData.get("SimpleEnemy").height, spawnTime,
                 startLine, "SimpleEnemy");
 
-        collisionRect.width = 100;
+        collisionRect.width = 30;
         collisionRect.height = 100;
         collisionRect.x = rect.x + (rect.width - 100);
         collisionRect.y = rect.y + (rect.height - 100);

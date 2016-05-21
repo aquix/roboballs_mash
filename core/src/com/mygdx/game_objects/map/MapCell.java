@@ -58,10 +58,11 @@ public class MapCell implements Serializable {
         return type;
     }
 
-    public void render(ShapeRenderer shapeRenderer, boolean selectedCell) {
+    public void render(ShapeRenderer shapeRenderer, boolean selectedCell,
+                       boolean compatibleType) {
         Color color;
         if (selectedCell) {
-            if (robot == null) {
+            if (robot == null && compatibleType) {
                 color = new Color(0, 200, 0, 0.5f);
             } else {
                 color = new Color(200, 0, 0, 0.5f);

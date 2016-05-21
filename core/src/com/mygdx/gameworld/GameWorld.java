@@ -338,7 +338,8 @@ public class GameWorld implements Serializable {
             for (MapCell[] cellLine : map.getCells()) {
                 for (MapCell cell : cellLine) {
                     cell.render(shapeRenderer, cell.contains(selectedRobot.getX()
-                            + 50, selectedRobot.getY() + 50));
+                            + 50, selectedRobot.getY() + 50), selectedRobot
+                            .getCellTypes().contains(cell.getType()));
                 }
             }
         }
