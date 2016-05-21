@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
@@ -10,7 +11,7 @@ public class DamageSimpleEnemyBehaviour implements IEnemyBehaviour {
 
         if (!self.aimRobot.isAlive()) {
             self.aimRobot = null;
-            self.state = EnemyState.ALIVE;
+            self.state = State.ALIVE;
             self.behaviour = new DefaultSimpleEnemyBehaviour();
             return;
         }

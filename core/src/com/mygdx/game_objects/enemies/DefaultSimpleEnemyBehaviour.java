@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
@@ -12,7 +13,7 @@ public class DefaultSimpleEnemyBehaviour implements IEnemyBehaviour {
         for (Robot robot : map.getRobots()) {
             if (self.getCollisionRect().overlaps(robot.getCollisionRect())) {
                 self.aimRobot = robot;
-                self.state = EnemyState.DAMAGING;
+                self.state = State.DAMAGING;
                 self.behaviour = new DamageSimpleEnemyBehaviour();
             }
         }

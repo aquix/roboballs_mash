@@ -5,16 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.config.RobotsData;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.IDamagable;
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.GameMap;
 
 import java.util.Set;
 
 public class MineBot extends Robot implements IDamagable {
-    enum State {
-        ALIVE, EXPLOSING, DEAD
-    }
-
     private float damage;
     private State state;
     private final float exploseAnimationTime = 1;
@@ -43,11 +40,11 @@ public class MineBot extends Robot implements IDamagable {
                 if (!enemiesInCell.isEmpty()) {
                     for (Enemy enemy : enemiesInCell) {
                         enemy.makeDamaged(this);
-                        state = State.EXPLOSING;
+                        state = State.FALLING_DOWN;
                     }
                 }
             }
-        } else if (state == State.EXPLOSING) {
+        } else if (state == State.FALLING_DOWN) {
             exploseTime += delta;
             if (exploseTime >= exploseAnimationTime) {
                 state = State.DEAD;
@@ -66,7 +63,7 @@ public class MineBot extends Robot implements IDamagable {
     public void render(SpriteBatch batcher, float runTime) {
         if (state == State.ALIVE) {
             super.render(batcher, runTime);
-        } else if (state == State.EXPLOSING) {
+        } else if (state == State.FALLING_DOWN) {
             batcher.draw(AssetLoader.getInstance().mineBotExplosing
                     .getKeyFrame(exploseTime), rect.x, rect.y, rect.width, rect.height);
             batcher.draw(AssetLoader.getInstance().explose.getKeyFrame

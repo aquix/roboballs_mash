@@ -35,6 +35,7 @@ public class AssetLoader {
 
     private Texture enemiesTexture;
     public HashMap<String, Animation> enemies;
+    public Animation simpleEnemyFall;
 
     private Texture bulletsTexture;
     public HashMap<String, TextureRegion> bullets;
@@ -157,6 +158,20 @@ public class AssetLoader {
         Animation simpleEnemyAnimation = new Animation(0.3f, simpleEnemyFrames);
         simpleEnemyAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         enemies.put("SimpleEnemy", simpleEnemyAnimation);
+
+        // Load simple enemy destroying frames
+        width = 250;
+        height = 150;
+        TextureRegion[] simpleEnemyFallFrames = new TextureRegion[6];
+        for (int i = 0; i < 6; i++) {
+            TextureRegion frame = new TextureRegion(enemiesTexture, width * i,
+                    151, width, height);
+            frame.flip(false, true);
+            simpleEnemyFallFrames[i] = frame;
+        }
+
+        simpleEnemyFall = new Animation(0.1f, simpleEnemyFallFrames);
+        simpleEnemyFall.setPlayMode(Animation.PlayMode.NORMAL);
 
         // Load helicopter enemy frames
         width = 150;

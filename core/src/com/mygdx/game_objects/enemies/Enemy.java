@@ -5,6 +5,7 @@ import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.IDamagable;
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.bullets.RobotBullet;
@@ -18,19 +19,19 @@ public abstract class Enemy extends GameObject {
     protected float leftoverCooldown;
     protected int startLine;
     protected float max_velocity;
-    protected EnemyState state;
+    protected State state;
     protected float damage;
     protected IEnemyBehaviour behaviour;
     protected Robot aimRobot;
     protected boolean stateChanged;
-    protected EnemyState previousState;
+    protected State previousState;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine, String name) {
         super(x, y, width, height);
         this.spawnTime = spawnTime;
         this.startLine = startLine;
-        state = EnemyState.READY;
+        state = State.READY;
         behaviour = new DefaultSimpleEnemyBehaviour();
         stateChanged = false;
         this.name = name;
@@ -48,8 +49,7 @@ public abstract class Enemy extends GameObject {
 
     public void render(SpriteBatch batcher, float gameTime) {
         batcher.draw(AssetLoader.getInstance().enemies.get(name).getKeyFrame
-                (gameTime), rect.x,
-                rect.y, rect.width, rect.height);
+                (gameTime), rect.x, rect.y);
     }
 
     public void update(float delta, GameMap map) {
@@ -61,17 +61,17 @@ public abstract class Enemy extends GameObject {
             }
         }
         if (health <= 0) {
-            state = EnemyState.DEAD;
+            state = State.FALLING_DOWN;
         }
     }
 
     public void start() {
         velocity.x = max_velocity;
-        state = EnemyState.ALIVE;
+        state = State.ALIVE;
     }
 
     public boolean isAlive() {
-        return state != EnemyState.DEAD;
+        return state != State.DEAD;
     }
 
     public boolean makeDamaged(IDamagable bullet) {
@@ -84,6 +84,6 @@ public abstract class Enemy extends GameObject {
     }
 
     public void kill() {
-        this.state = EnemyState.DEAD;
+        this.state = State.DEAD;
     }
 }
