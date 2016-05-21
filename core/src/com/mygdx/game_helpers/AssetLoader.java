@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.config.Configuration;
 import com.mygdx.config.EnemiesData;
 
@@ -30,6 +31,7 @@ public class AssetLoader {
     public HashMap<String, TextureRegion> robotTiles;
     private Texture robotsTexture;
     public HashMap<String, Animation> robots;
+    public Animation mineBotExplosing;
 
     private Texture enemiesTexture;
     public HashMap<String, Animation> enemies;
@@ -53,6 +55,10 @@ public class AssetLoader {
     public TextureRegion enemyTimeScale;
     public TextureRegion enemyTimeFiller;
 
+    private Texture effectsTexture;
+    public Animation explose;
+
+
     public void load() {
         backgroundTextures = new HashMap<Integer, Texture>();
         backgrounds = new HashMap<Integer, TextureRegion>();
@@ -67,6 +73,8 @@ public class AssetLoader {
                 ("backgrounds/main_menu_background.png"));
         menuIconsTexture = new Texture(Gdx.files.internal
                 ("gui/menu_icons.png"));
+        effectsTexture = new Texture(Gdx.files.internal
+                ("effects/effects.png"));
 
         // Load robot tiles
         robotTiles = new HashMap<String, TextureRegion>();
@@ -236,7 +244,7 @@ public class AssetLoader {
         shieldBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         robots.put("ShieldBot", shieldBotAnimation);
 
-        // Load ShieldBot animation
+        // Load MineBot animation
         TextureRegion[] mineBotFrames = new TextureRegion[5];
         for (int i = 0; i < 5; i++) {
             TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
@@ -248,6 +256,34 @@ public class AssetLoader {
         Animation mineBotAnimation = new Animation(0.2f, mineBotFrames);
         mineBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         robots.put("MineBot", mineBotAnimation);
+
+        TextureRegion[] mineBotExploseFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    500, 100, 100);
+            frame.flip(false, true);
+            mineBotExploseFrames[i] = frame;
+        }
+
+        mineBotExplosing = new Animation(0.1f, mineBotExploseFrames);
+        mineBotExplosing.setPlayMode(Animation.PlayMode.NORMAL);
+
+
+        // Load effects animations
+        TextureRegion[] explosingFrames = new TextureRegion[16];
+        int k = 0;
+        for (int i = 3; i >= 0; i--) {
+            for (int j = 3; j >= 0; j--) {
+                TextureRegion frame = new TextureRegion(effectsTexture, 64 * j,
+                    64 * i, 64, 64);
+                frame.flip(false, true);
+                explosingFrames[k] = frame;
+                k++;
+            }
+        }
+
+        explose = new Animation(0.1f, explosingFrames);
+        explose.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
     }
 
     public void dispose() {
@@ -261,6 +297,7 @@ public class AssetLoader {
         bulletsTexture.dispose();
         mainMenuBackgroundTexture.dispose();
         menuIconsTexture.dispose();
+        effectsTexture.dispose();
     }
 
     public void disposeBackgroundsExcept(int levelNumber) {
