@@ -2,6 +2,7 @@ package com.mygdx.game_objects.enemies;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.config.EnemiesData;
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.HelicopterEnemyBomb;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.map.MapCell;
@@ -18,6 +19,11 @@ public class HelicopterBombEnemy extends Enemy {
 
     @Override
     public void update(float delta, GameMap map) {
+        if (state == State.FALLING_DOWN) {
+            state = State.DEAD;
+            return;
+        }
+
         super.update(delta, map);
 
         if (leftoverCooldown <= 0) {

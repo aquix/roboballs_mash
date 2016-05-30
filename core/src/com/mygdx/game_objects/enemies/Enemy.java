@@ -25,6 +25,8 @@ public abstract class Enemy extends GameObject {
     protected Robot aimRobot;
     protected boolean stateChanged;
     protected State previousState;
+    protected final float fallAnimationTime = 2;
+    protected float fallTime = 0;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine, String name) {

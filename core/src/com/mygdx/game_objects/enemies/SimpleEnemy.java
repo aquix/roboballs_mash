@@ -10,8 +10,7 @@ import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
 public class SimpleEnemy extends Enemy {
-    private final float fallAnimationTime = 2;
-    private float fallTime = 0;
+
 
     public SimpleEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.get("SimpleEnemy").width,
