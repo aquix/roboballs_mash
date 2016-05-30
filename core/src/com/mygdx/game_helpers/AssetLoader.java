@@ -94,6 +94,9 @@ public class AssetLoader {
         robotTiles.put("MineBot", new TextureRegion(robotTilesTexture, 300,
                 0, 75, 82));
         robotTiles.get("MineBot").flip(false, true);
+        robotTiles.put("IceBot", new TextureRegion(robotTilesTexture, 375,
+                0, 75, 82));
+        robotTiles.get("IceBot").flip(false, true);
 
         // Load bullets
         bullets = new HashMap<String, TextureRegion>();
@@ -101,9 +104,12 @@ public class AssetLoader {
             14, 50, 32));
         bullets.put("HelicopterEnemyBomb", new TextureRegion(bulletsTexture,
                 292, 2, 51, 61));
+        bullets.put("IceBotBullet", new TextureRegion(bulletsTexture,
+                348, 0, 105, 54));
 
         bullets.get("GunnerBotBullet").flip(false, true);
         bullets.get("HelicopterEnemyBomb").flip(false, true);
+        bullets.get("IceBotBullet").flip(false, true);
 
         // Load main menu
         mainMenuBackground = new TextureRegion(mainMenuBackgroundTexture, 0,
@@ -282,6 +288,19 @@ public class AssetLoader {
 
         mineBotExplosing = new Animation(0.1f, mineBotExploseFrames);
         mineBotExplosing.setPlayMode(Animation.PlayMode.NORMAL);
+
+        // Load IceBot animation
+        TextureRegion[] iceBotFrames = new TextureRegion[5];
+        for (int i = 0; i < 5; i++) {
+            TextureRegion frame = new TextureRegion(robotsTexture, 100 * i,
+                    600, 100, 100);
+            frame.flip(false, true);
+            iceBotFrames[i] = frame;
+        }
+
+        Animation iceBotAnimation = new Animation(0.2f, iceBotFrames);
+        iceBotAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        robots.put("IceBot", iceBotAnimation);
 
 
         // Load effects animations
