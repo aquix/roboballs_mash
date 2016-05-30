@@ -21,10 +21,8 @@ public abstract class Enemy extends GameObject {
     protected float max_velocity;
     protected State state;
     protected float damage;
-    protected IEnemyBehaviour behaviour;
     protected Robot aimRobot;
     protected boolean stateChanged;
-    protected State previousState;
     protected final float fallAnimationTime = 2;
     protected float fallTime = 0;
 
@@ -34,7 +32,6 @@ public abstract class Enemy extends GameObject {
         this.spawnTime = spawnTime;
         this.startLine = startLine;
         state = State.READY;
-        behaviour = new DefaultSimpleEnemyBehaviour();
         stateChanged = false;
         this.name = name;
         EnemyParams enemyParams = EnemiesData.get(name);

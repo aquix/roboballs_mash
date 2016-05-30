@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public abstract class GameObject implements IRenderable, Serializable {
     protected Vector2 velocity;
+    protected Vector2 acceleration;
     protected Rectangle rect;
     protected Rectangle collisionRect;
     protected String name;
@@ -18,6 +19,7 @@ public abstract class GameObject implements IRenderable, Serializable {
         this.rect = new Rectangle(x, y, width, height);
         this.collisionRect = new Rectangle(x, y, width, height);
         this.velocity = new Vector2(0, 0);
+        this.acceleration = new Vector2(0, 0);
     }
 
     public float getWidth() {

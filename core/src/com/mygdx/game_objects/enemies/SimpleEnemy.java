@@ -10,8 +10,6 @@ import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
 public class SimpleEnemy extends Enemy {
-
-
     public SimpleEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.get("SimpleEnemy").width,
                 210 + startLine * 100 - EnemiesData.get("SimpleEnemy")
@@ -29,14 +27,6 @@ public class SimpleEnemy extends Enemy {
 
     @Override
     public void update(float delta, GameMap map) {
-        if (state == State.FALLING_DOWN) {
-            fallTime += delta;
-            if (fallTime >= fallAnimationTime) {
-                state = State.DEAD;
-            }
-            return;
-        }
-
         boolean isOnGround = false;
         for (Rectangle groundRect : map.getGroundRects()) {
             if (groundRect.overlaps(this.collisionRect) || rect.x < 140) {
@@ -51,16 +41,37 @@ public class SimpleEnemy extends Enemy {
             velocity.y = 200;
         }
 
-        if (stateChanged) {
-            if (state == State.ALIVE) {
-                behaviour = new DefaultSimpleEnemyBehaviour();
-            } else if (state == State.DAMAGING) {
-                behaviour = new DamageSimpleEnemyBehaviour();
+        if (state == State.ALIVE) {
+            velocity.x = max_velocity;
+            velocity.y = 0;
+
+            for (Robot robot : map.getRobots()) {
+                if (collisionRect.overlaps(robot.getCollisionRect())) {
+                    aimRobot = robot;
+                    state = State.DAMAGING;
+                }
             }
-            stateChanged = false;
+        } else if (state == State.DAMAGING) {
+            velocity.x = 0;
+
+            if (!aimRobot.isAlive()) {
+                aimRobot = null;
+                state = State.ALIVE;
+                return;
+            }
+
+            if (leftoverCooldown <= 0) {
+                aimRobot.makeDamaged(this);
+                leftoverCooldown = cooldown;
+            }
+        } else if (state == State.FALLING_DOWN) {
+            fallTime += delta;
+            if (fallTime >= fallAnimationTime) {
+                state = State.DEAD;
+            }
+            return;
         }
 
-        behaviour.update(delta, map, this);
         super.update(delta, map);
     }
 

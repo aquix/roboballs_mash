@@ -1,13 +1,17 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.config.EnemiesData;
+import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.HelicopterEnemyBomb;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.map.MapCell;
 
-public class HelicopterBombEnemy extends Enemy {
+public class HelicopterBombEnemy extends Helicopter {
     public HelicopterBombEnemy(float spawnTime, int startLine) {
         super(-EnemiesData.get("HelicopterBombEnemy").width,
                 210 + startLine * 100 - EnemiesData.get("HelicopterBombEnemy")
@@ -19,11 +23,6 @@ public class HelicopterBombEnemy extends Enemy {
 
     @Override
     public void update(float delta, GameMap map) {
-        if (state == State.FALLING_DOWN) {
-            state = State.DEAD;
-            return;
-        }
-
         super.update(delta, map);
 
         if (leftoverCooldown <= 0) {
@@ -41,4 +40,6 @@ public class HelicopterBombEnemy extends Enemy {
             }
         }
     }
+
+
 }

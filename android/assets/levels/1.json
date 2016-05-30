@@ -5,7 +5,7 @@
     "enemies": [
         {
             "name": "HelicopterEnemy",
-            "spawnTime": 3,
+            "spawnTime": 0,
             "startLine": 0
         },
         {
