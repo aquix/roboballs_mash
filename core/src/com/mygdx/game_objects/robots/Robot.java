@@ -1,6 +1,7 @@
 package com.mygdx.game_objects.robots;
 
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
@@ -19,6 +20,7 @@ public abstract class Robot extends GameObject {
     protected float health;
     protected float cooldown;
     protected ArrayList<CellType> cellTypes;
+    protected Sprite sprite;
 
     public Robot(float x, float y, float width, float height, String name,
                  float cooldown, float health, ArrayList<CellType> cellTypes) {
@@ -29,11 +31,15 @@ public abstract class Robot extends GameObject {
         this.leftoverCooldown = cooldown;
         this.health = health;
         this.cellTypes = cellTypes;
+        this.sprite = new Sprite(AssetLoader.getInstance().robots.get(name)
+                .getKeyFrame(0));
     }
 
     public void render(SpriteBatch batcher, float runTime) {
-        batcher.draw(AssetLoader.getInstance().robots.get(name)
-                .getKeyFrame(runTime), rect.x, rect.y, rect.width, rect.height);
+        sprite.setRegion(AssetLoader.getInstance().robots.get(name)
+                .getKeyFrame(runTime));
+        sprite.setPosition(rect.x, rect.y);
+        sprite.draw(batcher);
     }
 
     public void setCell(int i, int j) {

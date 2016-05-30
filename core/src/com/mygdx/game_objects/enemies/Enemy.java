@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
@@ -25,6 +26,7 @@ public abstract class Enemy extends GameObject {
     protected boolean stateChanged;
     protected final float fallAnimationTime = 2;
     protected float fallTime = 0;
+    Sprite sprite;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine, String name) {
@@ -40,6 +42,8 @@ public abstract class Enemy extends GameObject {
         health = enemyParams.health;
         max_velocity = enemyParams.velocity_x;
         damage = EnemiesData.get(name).damage;
+        sprite = new Sprite(AssetLoader.getInstance().enemies.get(name).getKeyFrame
+                (0));
     }
 
     public float getSpawnTime() {
@@ -47,8 +51,12 @@ public abstract class Enemy extends GameObject {
     }
 
     public void render(SpriteBatch batcher, float gameTime) {
-        batcher.draw(AssetLoader.getInstance().enemies.get(name).getKeyFrame
-                (gameTime), rect.x, rect.y);
+        sprite.setRegion(AssetLoader.getInstance().enemies.get(name).getKeyFrame
+                (gameTime));
+        sprite.setPosition(rect.x, rect.y);
+        sprite.setX(rect.x);
+        sprite.setY(rect.y);
+        sprite.draw(batcher);
     }
 
     public void update(float delta, GameMap map) {

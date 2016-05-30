@@ -8,19 +8,13 @@ import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.map.GameMap;
 
 public abstract class Helicopter extends Enemy {
-    protected float fallingRotate;
-
     public Helicopter(float x, float y, float width, float height, float spawnTime, int startLine, String name) {
         super(x, y, width, height, spawnTime, startLine, name);
-        fallingRotate = 0;
     }
 
     @Override
     public void update(float delta, GameMap map) {
         if (state == State.FALLING_DOWN) {
-            if (fallingRotate <= 60) {
-                fallingRotate += 0.4;
-            }
             acceleration.x = -5;
             acceleration.y = 150;
 
@@ -43,14 +37,11 @@ public abstract class Helicopter extends Enemy {
         if (state == State.ALIVE) {
             super.render(batcher, gameTime);
         } else if (state == State.DAMAGING) {
-            // TODO add damage animaiton
+            // TODO add damage animation
             super.render(batcher, gameTime);
         } else if (state == State.FALLING_DOWN) {
-            Sprite sprite = new Sprite(AssetLoader.getInstance().enemies.get(name)
-                    .getKeyFrame(gameTime));
-            sprite.rotate(fallingRotate);
-            sprite.setX(rect.x);
-            sprite.setY(rect.y);
+            sprite.rotate(0.5f);
+            sprite.setPosition(rect.x, rect.y);
             sprite.draw(batcher);
         }
 

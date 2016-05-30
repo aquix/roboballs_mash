@@ -2,6 +2,7 @@ package com.mygdx.game_objects.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.google.gwt.aria.client.SpinbuttonRole;
 import com.mygdx.config.EnemiesData;
 import com.mygdx.config.EnemyParams;
 import com.mygdx.game_helpers.AssetLoader;
@@ -80,11 +81,13 @@ public class SimpleEnemy extends Enemy {
         if (state == State.ALIVE) {
             super.render(batcher, gameTime);
         } else if (state == State.DAMAGING) {
-            // TODO add damage animaiton
+            // TODO add damage animation
             super.render(batcher, gameTime);
         } else if (state == State.FALLING_DOWN) {
-            batcher.draw(AssetLoader.getInstance().simpleEnemyFall.getKeyFrame
-                            (fallTime), rect.x, rect.y);
+            sprite.setRegion(AssetLoader.getInstance().simpleEnemyFall.getKeyFrame
+                            (fallTime));
+            sprite.setPosition(rect.x, rect.y);
+            sprite.draw(batcher);
         }
     }
 }
