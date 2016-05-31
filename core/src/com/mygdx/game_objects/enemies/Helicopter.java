@@ -35,7 +35,7 @@ public abstract class Helicopter extends Enemy {
 
     @Override
     public void render(SpriteBatch batcher, float gameTime) {
-        if (state == State.ALIVE || state == State.DAMAGED) {
+        if (state == State.ALIVE || state == State.DAMAGED || state == State.ICE_DAMAGED) {
             super.render(batcher, gameTime);
         } else if (state == State.DAMAGING) {
             // TODO add damage animation

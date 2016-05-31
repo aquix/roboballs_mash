@@ -10,6 +10,7 @@ import com.mygdx.game_objects.IDamagable;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.bullets.IceBotBullet;
 import com.mygdx.game_objects.bullets.RobotBullet;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
@@ -30,6 +31,8 @@ public abstract class Enemy extends GameObject implements IDamagable {
     Sprite sprite;
     protected final float damagedAnimationTime = 0.1f;
     protected float damagedTime = 0;
+    protected float speedModifier;
+    protected float speedModifierTime;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine, String name) {
@@ -47,6 +50,8 @@ public abstract class Enemy extends GameObject implements IDamagable {
         damage = EnemiesData.get(name).damage;
         sprite = new Sprite(AssetLoader.getInstance().enemies.get(name).getKeyFrame
                 (0));
+        speedModifier = 1;
+        speedModifierTime = 0;
     }
 
     public float getSpawnTime() {
@@ -54,13 +59,22 @@ public abstract class Enemy extends GameObject implements IDamagable {
     }
 
     public void render(SpriteBatch batcher, float gameTime) {
-        if (state == State.DAMAGED) {
+        if (state == State.DAMAGED || state == State.ICE_DAMAGED) {
             float alpha = (float)Math.abs(0.25f * Math.cos(10 * Math.PI *
                     damagedTime)) + 0.75f;
-            sprite.setColor(new Color(200, 0, 0, alpha));
+            if (state == State.DAMAGED) {
+                sprite.setColor(new Color(1, 0, 0, alpha));
+            } else {
+                sprite.setColor(new Color(0.188f, 0.643f, 0.298f, alpha));
+            }
         } else {
-            sprite.setColor(new Color(255, 255, 255, 1));
+            sprite.setColor(new Color(1, 1, 1, 1));
         }
+
+        if (speedModifier != 1 && state != State.ICE_DAMAGED) {
+            sprite.setColor(new Color(0x30a4cfff));
+        }
+
         sprite.setRegion(AssetLoader.getInstance().enemies.get(name).getKeyFrame
                 (gameTime));
         sprite.setPosition(rect.x, rect.y);
@@ -68,6 +82,13 @@ public abstract class Enemy extends GameObject implements IDamagable {
     }
 
     public void update(float delta, GameMap map) {
+        speedModifierTime -= delta;
+        if (speedModifierTime <= 0) {
+            speedModifier = 1;
+        }
+        if (velocity.x == max_velocity) {
+            velocity.x = max_velocity * speedModifier;
+        }
         super.update(delta);
         if (leftoverCooldown > 0) {
             leftoverCooldown -= delta;
@@ -75,7 +96,7 @@ public abstract class Enemy extends GameObject implements IDamagable {
                 leftoverCooldown = 0;
             }
         }
-        if (state == State.DAMAGED) {
+        if (state == State.DAMAGED || state == State.ICE_DAMAGED) {
             damagedTime += delta;
             if (damagedTime >= damagedAnimationTime) {
                 state = State.ALIVE;
@@ -108,5 +129,14 @@ public abstract class Enemy extends GameObject implements IDamagable {
 
     public void kill() {
         this.state = State.DEAD;
+    }
+
+    public void changeSpeed(float speedModifier, float speedModifierTime) {
+        this.speedModifier = speedModifier;
+        this.speedModifierTime = speedModifierTime;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

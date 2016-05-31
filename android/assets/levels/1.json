@@ -20,7 +20,7 @@
         },
         {
             "name": "SimpleEnemy",
-            "spawnTime": 7,
+            "spawnTime": 0,
             "startLine": 4
         },
         {
