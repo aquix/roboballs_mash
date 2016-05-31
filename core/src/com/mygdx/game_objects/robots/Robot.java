@@ -1,12 +1,14 @@
 package com.mygdx.game_objects.robots;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
 import com.mygdx.game_objects.IDamagable;
+import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.EnemyBullet;
 import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.CellType;
@@ -21,6 +23,9 @@ public abstract class Robot extends GameObject {
     protected float cooldown;
     protected ArrayList<CellType> cellTypes;
     protected Sprite sprite;
+    protected State state;
+    protected final float damagedAnimationTime = 0.5f;
+    protected float damagedTime = 0;
 
     public Robot(float x, float y, float width, float height, String name,
                  float cooldown, float health, ArrayList<CellType> cellTypes) {
@@ -33,9 +38,17 @@ public abstract class Robot extends GameObject {
         this.cellTypes = cellTypes;
         this.sprite = new Sprite(AssetLoader.getInstance().robots.get(name)
                 .getKeyFrame(0));
+        this.state = State.ALIVE;
     }
 
     public void render(SpriteBatch batcher, float runTime) {
+        if (state == State.DAMAGED) {
+            float alpha = (float)Math.abs(0.5f * Math.cos(2 * Math.PI *
+                    damagedTime)) + 0.5f;
+            sprite.setColor(new Color(200, 200, 200, alpha));
+        } else {
+            sprite.setColor(new Color(255, 255, 255, 1));
+        }
         sprite.setRegion(AssetLoader.getInstance().robots.get(name)
                 .getKeyFrame(runTime));
         sprite.setPosition(rect.x, rect.y);
@@ -59,19 +72,26 @@ public abstract class Robot extends GameObject {
                 leftoverCooldown = 0;
             }
         }
+
+        if (state == State.DAMAGED) {
+            damagedTime += delta;
+            if (damagedTime >= damagedAnimationTime) {
+                state = State.ALIVE;
+                damagedTime = 0;
+            }
+        }
+        if (health <= 0) {
+            state = State.DEAD;
+        }
     }
 
     public boolean isAlive() {
-        return health > 0;
+        return state != State.DEAD;
     }
 
-    public boolean makeDamaged(Enemy enemy) {
-        health -= enemy.getDamage();
-        return true;
-    }
-
-    public boolean makeDamaged(IDamagable bullet) {
-        health -= bullet.getDamage();
+    public boolean makeDamaged(IDamagable damagable) {
+        health -= damagable.getDamage();
+        state = State.DAMAGED;
         return true;
     }
 

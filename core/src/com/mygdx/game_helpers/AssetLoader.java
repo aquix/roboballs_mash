@@ -139,7 +139,7 @@ public class AssetLoader {
         // Load hud icons
         heart = new TextureRegion(bulletsTexture, 0, 0, 56, 56);
         heart.flip(false, true);
-        gemIcon = new TextureRegion(bulletsTexture, 63, 0, 71, 61);
+        gemIcon = new TextureRegion(bulletsTexture, 463, 0, 40, 64);
         gemIcon.flip(false, true);
         enemyTimeScale = new TextureRegion(menuIconsTexture, 177, 24, 401, 27);
         enemyTimeScale.flip(false, true);

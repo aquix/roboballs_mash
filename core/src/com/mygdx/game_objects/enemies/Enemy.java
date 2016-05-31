@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.EnemiesData;
@@ -13,7 +14,7 @@ import com.mygdx.game_objects.bullets.RobotBullet;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
-public abstract class Enemy extends GameObject {
+public abstract class Enemy extends GameObject implements IDamagable {
     protected float spawnTime;
     protected float health;
     protected float cooldown;
@@ -27,6 +28,8 @@ public abstract class Enemy extends GameObject {
     protected final float fallAnimationTime = 2;
     protected float fallTime = 0;
     Sprite sprite;
+    protected final float damagedAnimationTime = 0.1f;
+    protected float damagedTime = 0;
 
     public Enemy(float x, float y, float width, float height, float
             spawnTime, int startLine, String name) {
@@ -51,11 +54,16 @@ public abstract class Enemy extends GameObject {
     }
 
     public void render(SpriteBatch batcher, float gameTime) {
+        if (state == State.DAMAGED) {
+            float alpha = (float)Math.abs(0.25f * Math.cos(10 * Math.PI *
+                    damagedTime)) + 0.75f;
+            sprite.setColor(new Color(200, 0, 0, alpha));
+        } else {
+            sprite.setColor(new Color(255, 255, 255, 1));
+        }
         sprite.setRegion(AssetLoader.getInstance().enemies.get(name).getKeyFrame
                 (gameTime));
         sprite.setPosition(rect.x, rect.y);
-        sprite.setX(rect.x);
-        sprite.setY(rect.y);
         sprite.draw(batcher);
     }
 
@@ -65,6 +73,13 @@ public abstract class Enemy extends GameObject {
             leftoverCooldown -= delta;
             if (leftoverCooldown < 0) {
                 leftoverCooldown = 0;
+            }
+        }
+        if (state == State.DAMAGED) {
+            damagedTime += delta;
+            if (damagedTime >= damagedAnimationTime) {
+                state = State.ALIVE;
+                damagedTime = 0;
             }
         }
         if (health <= 0) {
@@ -83,6 +98,7 @@ public abstract class Enemy extends GameObject {
 
     public boolean makeDamaged(IDamagable bullet) {
         health -= bullet.getDamage();
+        state = State.DAMAGED;
         return true;
     }
 

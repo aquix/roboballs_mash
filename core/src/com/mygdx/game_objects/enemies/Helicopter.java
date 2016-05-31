@@ -1,5 +1,6 @@
 package com.mygdx.game_objects.enemies;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,6 +15,8 @@ public abstract class Helicopter extends Enemy {
 
     @Override
     public void update(float delta, GameMap map) {
+        super.update(delta, map);
+
         if (state == State.FALLING_DOWN) {
             acceleration.x = -5;
             acceleration.y = 150;
@@ -28,18 +31,17 @@ public abstract class Helicopter extends Enemy {
                 }
             }
         }
-
-        super.update(delta, map);
     }
 
     @Override
     public void render(SpriteBatch batcher, float gameTime) {
-        if (state == State.ALIVE) {
+        if (state == State.ALIVE || state == State.DAMAGED) {
             super.render(batcher, gameTime);
         } else if (state == State.DAMAGING) {
             // TODO add damage animation
             super.render(batcher, gameTime);
         } else if (state == State.FALLING_DOWN) {
+            sprite.setColor(new Color(255, 255, 255, 1));
             sprite.rotate(0.5f);
             sprite.setPosition(rect.x, rect.y);
             sprite.draw(batcher);

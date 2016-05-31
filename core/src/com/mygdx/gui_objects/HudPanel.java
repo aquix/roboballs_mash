@@ -30,7 +30,7 @@ public class HudPanel extends GameObject {
     }
 
     public void render(SpriteBatch batcher, float runTime) {
-        batcher.draw(AssetLoader.getInstance().bigGem, rect.x + 900, rect.y);
+        batcher.draw(AssetLoader.getInstance().gemIcon, rect.x + 900, rect.y);
         batcher.draw(AssetLoader.getInstance().heart, rect.x + 1030, rect.y);
         batcher.draw(AssetLoader.getInstance().enemyTimeScale, rect.x + 120,
                 rect.y + 20);
