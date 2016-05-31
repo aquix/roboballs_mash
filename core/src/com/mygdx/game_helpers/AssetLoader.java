@@ -1,6 +1,8 @@
 package com.mygdx.game_helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -58,6 +60,16 @@ public class AssetLoader {
 
     private Texture effectsTexture;
     public Animation explose;
+
+
+    // Music and sounds
+    public Music menuMusic;
+    public Music gameMusic;
+    public Music selectLevelMusic;
+    public Sound explosionSound;
+    public Sound gemSound;
+    public Sound shotSound;
+    public Sound iceShotSound;
 
 
     public void load() {
@@ -318,6 +330,18 @@ public class AssetLoader {
 
         explose = new Animation(0.1f, explosingFrames);
         explose.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+
+        // Load music and sounds
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu.mp3"));
+        selectLevelMusic = Gdx.audio.newMusic(Gdx.files.internal
+                ("sounds/levels.mp3"));
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/game.mp3"));
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal
+                ("sounds/explosion.mp3"));
+        gemSound = Gdx.audio.newSound(Gdx.files.internal("sounds/gem.mp3"));
+        shotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/shot.mp3"));
+        iceShotSound = Gdx.audio.newSound(Gdx.files.internal("sounds/ice_shot.mp3"));
     }
 
     public void dispose() {
@@ -332,6 +356,14 @@ public class AssetLoader {
         mainMenuBackgroundTexture.dispose();
         menuIconsTexture.dispose();
         effectsTexture.dispose();
+
+        menuMusic.dispose();
+        selectLevelMusic.dispose();
+        gameMusic.dispose();
+        explosionSound.dispose();
+        gemSound.dispose();
+        shotSound.dispose();
+        iceShotSound.dispose();
     }
 
     public void disposeBackgroundsExcept(int levelNumber) {

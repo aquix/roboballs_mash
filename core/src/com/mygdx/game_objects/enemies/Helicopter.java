@@ -26,6 +26,7 @@ public abstract class Helicopter extends Enemy {
 
             for (Rectangle rect : map.getGroundRects()) {
                 if (collisionRect.overlaps(rect)) {
+                    AssetLoader.getInstance().explosionSound.play();
                     state = State.DEAD;
                     return;
                 }

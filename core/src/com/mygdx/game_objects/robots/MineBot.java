@@ -41,6 +41,7 @@ public class MineBot extends Robot implements IDamagable {
                     for (Enemy enemy : enemiesInCell) {
                         enemy.makeDamaged(this);
                         state = State.FALLING_DOWN;
+                        AssetLoader.getInstance().explosionSound.play();
                     }
                 }
             }

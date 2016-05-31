@@ -1,6 +1,7 @@
 package com.mygdx.game_objects.bullets;
 
 import com.mygdx.config.RobotsData;
+import com.mygdx.game_helpers.AssetLoader;
 
 public class GunnerBotBullet extends RobotBullet {
 
@@ -9,5 +10,6 @@ public class GunnerBotBullet extends RobotBullet {
         name = "GunnerBotBullet";
         velocity = RobotsData.get("GunnerBot").bulletVelocity;
         damage = RobotsData.get("GunnerBot").damage;
+        AssetLoader.getInstance().shotSound.play();
     }
 }

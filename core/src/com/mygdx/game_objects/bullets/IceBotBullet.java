@@ -1,6 +1,7 @@
 package com.mygdx.game_objects.bullets;
 
 import com.mygdx.config.RobotsData;
+import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.enemies.Enemy;
 
@@ -15,6 +16,7 @@ public class IceBotBullet extends RobotBullet {
         damage = RobotsData.get("IceBot").damage;
         speedModifier = 0.5f;
         speedModifierTime = 3f;
+        AssetLoader.getInstance().iceShotSound.play();
     }
 
     public float getSpeedModifier() {

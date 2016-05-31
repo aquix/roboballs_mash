@@ -190,10 +190,12 @@ public class PauseScreen extends UniversalScreen {
         } else if (actionAfterSaveDialog == MenuAction.EXIT_TO_MAIN) {
             game.setScreen(new MainMenuScreen(game));
         }
+        dispose();
     }
 
     @Override
     public void dispose() {
+        AssetLoader.getInstance().gameMusic.stop();
         backgroundTexture.dispose();
         super.dispose();
     }

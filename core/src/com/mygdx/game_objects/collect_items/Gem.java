@@ -45,6 +45,7 @@ public class Gem extends GameObject {
     }
 
     public int pickGem() {
+        AssetLoader.getInstance().gemSound.play();
         isAlive = false;
         return type.value;
     }

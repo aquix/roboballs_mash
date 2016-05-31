@@ -39,6 +39,7 @@ public class SelectLevelScreen extends UniversalScreen {
             y += 85;
             x = startX;
         }
+        AssetLoader.getInstance().selectLevelMusic.play();
     }
 
     @Override
@@ -74,9 +75,16 @@ public class SelectLevelScreen extends UniversalScreen {
             if (levelTiles[i].contains(screenX, screenY) &&
                     i < unlockedLevelsCount) {
                 game.setScreen(new GameScreen(game, i + 1));
+                this.dispose();
             }
         }
 
         return true;
+    }
+
+    @Override
+    public void dispose() {
+        AssetLoader.getInstance().selectLevelMusic.stop();
+        super.dispose();
     }
 }

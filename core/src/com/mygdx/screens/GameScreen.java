@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.config.Configuration;
+import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_helpers.GameWorldInfo;
 import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gameworld.GameRenderer;
@@ -29,6 +30,7 @@ public class GameScreen extends UniversalScreen {
         this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
                 .getWidth();
         this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
+        AssetLoader.getInstance().gameMusic.play();
     }
 
     @Override
@@ -45,9 +47,11 @@ public class GameScreen extends UniversalScreen {
                 // TODO fix win screen
                 game.setScreen(new LevelCompletedScreen(game, level, world
                         .getLives()));
+                dispose();
                 break;
             case GAMEOVER:
                 game.setScreen(new GameOverScreen(game, level));
+                dispose();
                 break;
             case PAUSE:
                 pause();
@@ -86,5 +90,11 @@ public class GameScreen extends UniversalScreen {
     public void loadGame() {
         GameWorldInfo info = (GameWorldInfo)SaveManager.loadLevel();
         world.restoreState(info);
+    }
+
+    @Override
+    public void dispose() {
+        AssetLoader.getInstance().gameMusic.stop();
+        super.dispose();
     }
 }

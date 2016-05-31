@@ -13,6 +13,7 @@ public class MainMenuScreen extends UniversalScreen {
     public MainMenuScreen(Game game) {
         super(game);
         font = new BitmapFont(Gdx.files.internal("fonts/default.fnt"), true);
+        AssetLoader.getInstance().menuMusic.play();
     }
 
     @Override
@@ -22,6 +23,7 @@ public class MainMenuScreen extends UniversalScreen {
                 game.setScreen(new LoadSaveScreen(game));
             } else {
                 game.setScreen(new SelectLevelScreen(game));
+                this.dispose();
             }
         }
         return true;
@@ -43,5 +45,23 @@ public class MainMenuScreen extends UniversalScreen {
                 2 - 200, Configuration.windowHeight / 2 - 10);
         batcher.disableBlending();
         batcher.end();
+    }
+
+    @Override
+    public void dispose() {
+//        float currentVolume = AssetLoader.getInstance().menuMusic.getVolume();
+//        while (currentVolume > 0) {
+//            Gdx.app.log("Volume: ", String.valueOf(currentVolume));
+//            currentVolume -= 0.01;
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            AssetLoader.getInstance().menuMusic.setVolume(currentVolume);
+//        }
+
+        AssetLoader.getInstance().menuMusic.stop();
+        super.dispose();
     }
 }
