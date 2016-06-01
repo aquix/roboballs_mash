@@ -1,9 +1,6 @@
 package com.mygdx.game_objects.robots;
 
-import com.mygdx.config.RobotsData;
-import com.mygdx.game_objects.map.CellType;
-
-import java.util.ArrayList;
+import com.mygdx.info.RobotsData;
 
 public class ShieldBot extends Robot {
     public ShieldBot(float x, float y) {

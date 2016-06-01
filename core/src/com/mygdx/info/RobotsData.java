@@ -1,12 +1,10 @@
-package com.mygdx.config;
+package com.mygdx.info;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mygdx.game_objects.map.CellType;
-import com.mygdx.lang_helpers.ArrayListHelpers;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

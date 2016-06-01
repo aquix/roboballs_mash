@@ -3,9 +3,7 @@ package com.mygdx.game_objects.enemies;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.google.gwt.aria.client.SpinbuttonRole;
-import com.mygdx.config.EnemiesData;
-import com.mygdx.config.EnemyParams;
+import com.mygdx.info.EnemiesData;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.map.GameMap;
@@ -45,7 +43,6 @@ public class SimpleEnemy extends Enemy {
 
         if (state == State.ALIVE) {
             velocity.x = max_velocity;
-            velocity.y = 0;
 
             for (Robot robot : map.getRobots()) {
                 if (collisionRect.overlaps(robot.getCollisionRect())) {

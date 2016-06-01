@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
-import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gui_objects.MenuAction;
 import com.mygdx.gui_objects.MenuItem;
-import com.mygdx.lang_helpers.ArrayListHelpers;
 
 import java.util.ArrayList;
 

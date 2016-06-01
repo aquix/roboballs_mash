@@ -3,7 +3,7 @@ package com.mygdx.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_helpers.SaveManager;
 

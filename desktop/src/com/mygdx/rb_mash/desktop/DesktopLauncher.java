@@ -2,7 +2,7 @@ package com.mygdx.rb_mash.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.rb_mash.RoboballsMash;
 
 public class DesktopLauncher {

@@ -1,4 +1,4 @@
-package com.mygdx.config;
+package com.mygdx.info;
 
 public enum CompletedLevel {
     ONE_STAR(1), TWO_STARS(2), THREE_STARS(3);

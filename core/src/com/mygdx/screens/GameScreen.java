@@ -3,9 +3,9 @@ package com.mygdx.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
-import com.mygdx.game_helpers.GameWorldInfo;
+import com.mygdx.info.GameWorldInfo;
 import com.mygdx.game_helpers.SaveManager;
 import com.mygdx.gameworld.GameRenderer;
 import com.mygdx.gameworld.GameState;
@@ -30,6 +30,7 @@ public class GameScreen extends UniversalScreen {
         this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
                 .getWidth();
         this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
+        AssetLoader.getInstance().gameMusic.setLooping(true);
         AssetLoader.getInstance().gameMusic.play();
     }
 

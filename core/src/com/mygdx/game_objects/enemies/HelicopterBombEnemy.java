@@ -1,15 +1,9 @@
 package com.mygdx.game_objects.enemies;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.config.EnemiesData;
-import com.mygdx.game_helpers.AssetLoader;
-import com.mygdx.game_objects.State;
+import com.mygdx.info.EnemiesData;
 import com.mygdx.game_objects.bullets.HelicopterEnemyBomb;
 import com.mygdx.game_objects.map.GameMap;
-import com.mygdx.game_objects.map.MapCell;
 
 public class HelicopterBombEnemy extends Helicopter {
     public HelicopterBombEnemy(float spawnTime, int startLine) {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.gui_objects.MenuAction;
 import com.mygdx.gui_objects.MenuItem;

@@ -1,10 +1,8 @@
 package com.mygdx.game_helpers;
 
 import com.badlogic.gdx.Gdx;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mygdx.config.PlayerData;
-import com.mygdx.gameworld.GameWorld;
+import com.mygdx.info.GameWorldInfo;
+import com.mygdx.info.PlayerData;
 
 import java.io.*;
 

@@ -3,19 +3,17 @@ package com.mygdx.game_objects.enemies;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.config.EnemiesData;
-import com.mygdx.config.EnemyParams;
+import com.mygdx.info.EnemiesData;
+import com.mygdx.info.EnemyParams;
 import com.mygdx.game_helpers.AssetLoader;
+import com.mygdx.game_objects.IAliveable;
 import com.mygdx.game_objects.IDamagable;
 import com.mygdx.game_objects.State;
-import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.GameObject;
-import com.mygdx.game_objects.bullets.IceBotBullet;
-import com.mygdx.game_objects.bullets.RobotBullet;
 import com.mygdx.game_objects.map.GameMap;
 import com.mygdx.game_objects.robots.Robot;
 
-public abstract class Enemy extends GameObject implements IDamagable {
+public abstract class Enemy extends GameObject implements IDamagable, IAliveable {
     protected float spawnTime;
     protected float health;
     protected float cooldown;

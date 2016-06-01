@@ -2,7 +2,7 @@ package com.mygdx.game_objects.bullets;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.config.EnemiesData;
+import com.mygdx.info.EnemiesData;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.map.GameMap;
 

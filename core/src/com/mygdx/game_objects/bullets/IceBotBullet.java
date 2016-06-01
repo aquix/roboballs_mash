@@ -1,6 +1,6 @@
 package com.mygdx.game_objects.bullets;
 
-import com.mygdx.config.RobotsData;
+import com.mygdx.info.RobotsData;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.enemies.Enemy;

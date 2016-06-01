@@ -1,14 +1,14 @@
 package com.mygdx.game_objects.bullets;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.IAliveable;
 import com.mygdx.game_objects.IDamagable;
-import com.mygdx.game_objects.enemies.Enemy;
 import com.mygdx.game_objects.map.GameMap;
 
-public class Bullet extends GameObject implements IDamagable {
+public class Bullet extends GameObject implements IDamagable, IAliveable {
     protected boolean isActive;
     protected float damage;
 
@@ -23,7 +23,7 @@ public class Bullet extends GameObject implements IDamagable {
                 rect.y, rect.width, rect.height);
     }
 
-    public boolean isActive() {
+    public boolean isAlive() {
         return isActive;
     }
 

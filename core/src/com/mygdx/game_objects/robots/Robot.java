@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.IAliveable;
 import com.mygdx.game_objects.IDamagable;
 import com.mygdx.game_objects.State;
 import com.mygdx.game_objects.bullets.EnemyBullet;
@@ -16,7 +17,7 @@ import com.mygdx.game_objects.map.GameMap;
 
 import java.util.ArrayList;
 
-public abstract class Robot extends GameObject {
+public abstract class Robot extends GameObject implements IAliveable {
     protected Vector2 cell;
     protected float leftoverCooldown;
     protected float health;

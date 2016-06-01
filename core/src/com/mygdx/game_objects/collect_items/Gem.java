@@ -1,11 +1,13 @@
 package com.mygdx.game_objects.collect_items;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.game_objects.GameObject;
+import com.mygdx.game_objects.IAliveable;
 
-public class Gem extends GameObject {
+public class Gem extends GameObject implements IAliveable {
     private GemType type;
     private Vector2 appearPosition;
     private float accelerationY;
@@ -13,6 +15,7 @@ public class Gem extends GameObject {
 
     public Gem(float x, float y, GemType type) {
         super(x, y - 1, 64, 64);
+        this.collisionRect = new Rectangle(x - 20, y - 20, 84, 84);
 
         this.appearPosition = new Vector2(x, y);
         this.accelerationY = 400;

@@ -1,4 +1,4 @@
-package com.mygdx.config;
+package com.mygdx.info;
 
 import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;

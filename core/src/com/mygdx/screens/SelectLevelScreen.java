@@ -5,8 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.config.Configuration;
-import com.mygdx.config.PlayerData;
+import com.mygdx.info.Configuration;
+import com.mygdx.info.PlayerData;
 import com.mygdx.game_helpers.AssetLoader;
 
 public class SelectLevelScreen extends UniversalScreen {

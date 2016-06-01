@@ -4,9 +4,9 @@ package com.mygdx.gameworld;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.config.Configuration;
+import com.mygdx.info.Configuration;
 import com.mygdx.game_helpers.AssetLoader;
-import com.mygdx.game_helpers.GameWorldInfo;
+import com.mygdx.info.GameWorldInfo;
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.bullets.EnemyBullet;
 import com.mygdx.game_objects.bullets.RobotBullet;
@@ -18,10 +18,7 @@ import com.mygdx.game_objects.map.MapCell;
 import com.mygdx.gui_objects.HudPanel;
 import com.mygdx.gui_objects.RobotTile;
 import com.mygdx.gui_objects.SelectRobotPanel;
-import com.mygdx.lang_helpers.ArrayListHelpers;
-import com.mygdx.lang_helpers.ExtendedShapeRenderer;
-import com.mygdx.lang_helpers.Predicate;
-import com.mygdx.lang_helpers.SerializableComparator;
+import com.mygdx.lang_helpers.*;
 import com.mygdx.level_infrastructure.Level;
 import com.mygdx.level_infrastructure.LevelFactory;
 
@@ -49,12 +46,6 @@ public class GameWorld implements Serializable {
     private int levelNumber;
     private transient HudPanel hud;
     private transient ArrayList<Gem> gems;
-
-    private transient ArrayListHelpers<RobotBullet> robotbulletArrayListHelpers;
-    private transient ArrayListHelpers<EnemyBullet> enemybulletArrayListHelpers;
-    private transient ArrayListHelpers<Robot> robotArrayListHelpers;
-    private transient ArrayListHelpers<Enemy> enemyArrayListHelpers;
-    private transient ArrayListHelpers<Gem> gemArrayListHelpers;
 
     public GameWorld(int levelNumber) {
         this.levelNumber = levelNumber;
@@ -95,12 +86,6 @@ public class GameWorld implements Serializable {
         lives = 3;
         hud = new HudPanel(this.lives, this.gemsCount, readyEnemies.last().getSpawnTime());
         gems = new ArrayList<Gem>();
-
-        robotbulletArrayListHelpers = new ArrayListHelpers<RobotBullet>();
-        enemybulletArrayListHelpers = new ArrayListHelpers<EnemyBullet>();
-        enemyArrayListHelpers = new ArrayListHelpers<Enemy>();
-        robotArrayListHelpers = new ArrayListHelpers<Robot>();
-        gemArrayListHelpers = new ArrayListHelpers<Gem>();
     }
 
     public void update(float delta) {
@@ -163,41 +148,12 @@ public class GameWorld implements Serializable {
             gem.update(delta);
         }
 
-        robotbulletArrayListHelpers.removeIf(robotBullets, new Predicate<RobotBullet>() {
-            @Override
-            public boolean test(RobotBullet obj) {
-                return !obj.isActive();
-            }
-        });
+        DeadObjectsRemover.removeDead(robotBullets);
+        DeadObjectsRemover.removeDead(enemyBullets);
+        DeadObjectsRemover.removeDead(gems);
+        DeadObjectsRemover.removeDead(map.getEnemies());
+        DeadObjectsRemover.removeDead(map.getRobots());
 
-        enemybulletArrayListHelpers.removeIf(enemyBullets, new
-                Predicate<EnemyBullet>() {
-            @Override
-            public boolean test(EnemyBullet obj) {
-                return !obj.isActive();
-            }
-        });
-
-        gemArrayListHelpers.removeIf(gems, new Predicate<Gem>() {
-            @Override
-            public boolean test(Gem obj) {
-                return !obj.isAlive();
-            }
-        });
-
-        enemyArrayListHelpers.removeIf(map.getEnemies(), new Predicate<Enemy>() {
-            @Override
-            public boolean test(Enemy obj) {
-                return !obj.isAlive();
-            }
-        });
-
-        robotArrayListHelpers.removeIf(map.getRobots(), new Predicate<Robot>() {
-            @Override
-            public boolean test(Robot obj) {
-                return !obj.isAlive();
-            }
-        });
 
         // Update robots
         for (Robot robot : map.getRobots()) {
@@ -230,7 +186,7 @@ public class GameWorld implements Serializable {
 //        robotBullets.removeIf(new Predicate<Bullet>() {
 //            @Override
 //            public boolean test(Bullet bullet) {
-//                return !bullet.isActive();
+//                return !bullet.isAlive();
 //            }
 //        });
 //

@@ -1,6 +1,6 @@
 package com.mygdx.game_objects.bullets;
 
-import com.mygdx.config.RobotsData;
+import com.mygdx.info.RobotsData;
 import com.mygdx.game_helpers.AssetLoader;
 
 public class GunnerBotBullet extends RobotBullet {

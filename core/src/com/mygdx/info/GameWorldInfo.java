@@ -1,4 +1,4 @@
-package com.mygdx.game_helpers;
+package com.mygdx.info;
 
 import com.mygdx.game_objects.bullets.Bullet;
 import com.mygdx.game_objects.bullets.EnemyBullet;

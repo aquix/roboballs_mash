@@ -6,9 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.config.Configuration;
-import com.mygdx.config.PlayerData;
+import com.mygdx.info.Configuration;
 import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 public abstract class UniversalScreen implements Screen, InputProcessor {

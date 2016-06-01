@@ -1,15 +1,8 @@
 package com.mygdx.game_objects.robots;
 
-import com.mygdx.config.RobotsData;
-import com.mygdx.game_objects.State;
-import com.mygdx.game_objects.bullets.GunnerBotBullet;
+import com.mygdx.info.RobotsData;
 import com.mygdx.game_objects.bullets.IceBotBullet;
-import com.mygdx.game_objects.collect_items.Gem;
-import com.mygdx.game_objects.collect_items.GemType;
-import com.mygdx.game_objects.map.CellType;
 import com.mygdx.game_objects.map.GameMap;
-
-import java.util.ArrayList;
 
 public class IceBot extends Robot {
     public IceBot(float x, float y) {

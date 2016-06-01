@@ -1,4 +1,4 @@
-package com.mygdx.config;
+package com.mygdx.info;
 
 import com.mygdx.game_helpers.SaveManager;
 

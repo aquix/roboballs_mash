@@ -1,4 +1,4 @@
-package com.mygdx.config;
+package com.mygdx.info;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game_objects.map.CellType;

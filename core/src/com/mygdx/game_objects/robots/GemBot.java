@@ -1,7 +1,6 @@
 package com.mygdx.game_objects.robots;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.config.RobotsData;
+import com.mygdx.info.RobotsData;
 import com.mygdx.game_objects.collect_items.Gem;
 import com.mygdx.game_objects.collect_items.GemType;
 import com.mygdx.game_objects.map.GameMap;

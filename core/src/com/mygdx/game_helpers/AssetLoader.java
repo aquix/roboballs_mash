@@ -6,9 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.config.Configuration;
-import com.mygdx.config.EnemiesData;
+import com.mygdx.info.Configuration;
 
 import java.util.HashMap;
 
