@@ -49,6 +49,10 @@ public class GameOverScreen extends UniversalScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        screenX *= scaleX;
+        screenY *= scaleY;
+
         for (MenuItem item : menuItems) {
             if (item.contains(screenX, screenY) && item.isClickable()) {
                 switch (item.getAction()) {

@@ -10,15 +10,13 @@ import com.mygdx.lang_helpers.ExtendedShapeRenderer;
 
 public class GameRenderer {
     private GameWorld world;
-    private OrthographicCamera camera;
 
     private ExtendedShapeRenderer shapeRenderer;
     private SpriteBatch batcher;
 
-    public GameRenderer(GameWorld world, OrthographicCamera camera,
-                        SpriteBatch batcher, ExtendedShapeRenderer shapeRenderer) {
+    public GameRenderer(GameWorld world, SpriteBatch batcher,
+                        ExtendedShapeRenderer shapeRenderer) {
         this.world = world;
-        this.camera = camera;
         this.batcher = batcher;
         this.shapeRenderer = shapeRenderer;
     }

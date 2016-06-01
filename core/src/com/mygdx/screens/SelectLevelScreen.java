@@ -71,6 +71,10 @@ public class SelectLevelScreen extends UniversalScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        screenX *= scaleX;
+        screenY *= scaleY;
+
         for (int i = 0; i < levelTiles.length; i++) {
             if (levelTiles[i].contains(screenX, screenY) &&
                     i < unlockedLevelsCount) {

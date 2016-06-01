@@ -16,20 +16,14 @@ public class GameScreen extends UniversalScreen {
     private GameRenderer renderer;
     private int level;
 
-    private float scaleX;
-    private float scaleY;
-
     private float runTime = 0;
 
     public GameScreen(Game game, int level) {
         super(game);
         this.level = level;
         world = new GameWorld(level);
-        renderer = new GameRenderer(world, camera, batcher, shapeRenderer);
+        renderer = new GameRenderer(world, batcher, shapeRenderer);
 
-        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics
-                .getWidth();
-        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
         AssetLoader.getInstance().gameMusic.setLooping(true);
         AssetLoader.getInstance().gameMusic.play();
     }
@@ -62,7 +56,15 @@ public class GameScreen extends UniversalScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        world.onClick((int)(screenX * scaleX), (int)(screenY * scaleY), button);
+        super.touchDown(screenX, screenY, pointer, button);
+        screenX *= scaleX;
+        screenY *= scaleY;
+
+        Gdx.app.log("Mouse coords:", String.valueOf(screenX) + ", " + String
+                .valueOf(screenY));
+        Gdx.app.log("scales:", String.valueOf(scaleX) + ", " + String
+                .valueOf(scaleY));
+        world.onClick((int)(screenX), (int)(screenY), button);
         return true;
     }
 

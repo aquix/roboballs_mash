@@ -15,6 +15,9 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
     protected SpriteBatch batcher;
     protected ExtendedShapeRenderer shapeRenderer;
 
+    protected float scaleX;
+    protected float scaleY;
+
     public UniversalScreen(Game game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -24,6 +27,9 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
         shapeRenderer = new ExtendedShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         Gdx.input.setInputProcessor(this);
+
+        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics.getWidth();
+        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
     }
 
     @Override
@@ -43,7 +49,9 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics.getWidth();
+        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
+        return true;
     }
 
     @Override
@@ -68,7 +76,6 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -78,7 +85,8 @@ public abstract class UniversalScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-
+        this.scaleX = Configuration.windowWidth / (float)Gdx.graphics.getWidth();
+        this.scaleY = Configuration.windowHeight / (float)Gdx.graphics.getHeight();
     }
 
     @Override
