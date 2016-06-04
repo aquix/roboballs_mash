@@ -1,0 +1,72 @@
+{
+    "levelNumber" : 4,
+    "startGems": 30,
+    "levelMap": "aaaaaaaaaa\nggaaaaaaaa\nggggaaaaaa\nggggggaaaa\ngggggggggg",
+    "enemies": [
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 25,
+            "startLine": 4
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 35,
+            "startLine": 3
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 45,
+            "startLine": 2
+        },
+        {
+            "name": "HelicopterEnemy",
+            "spawnTime": 50,
+            "startLine": 3
+        },
+        {
+            "name": "HelicopterBombEnemy",
+            "spawnTime": 65,
+            "startLine": 0
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 72,
+            "startLine": 2
+        },
+        {
+            "name": "HelicopterEnemy",
+            "spawnTime": 80,
+            "startLine": 3
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 87,
+            "startLine": 3
+        },
+        {
+            "name": "HelicopterEnemy",
+            "spawnTime": 110,
+            "startLine": 3
+        },
+        {
+            "name": "HelicopterBombEnemy",
+            "spawnTime": 125,
+            "startLine": 0
+        },
+        {
+            "name": "HelicopterBombEnemy",
+            "spawnTime": 130,
+            "startLine": 0
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 135,
+            "startLine": 3
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 135,
+            "startLine": 2
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "levelNumber" : 1,
+    "startGems": 150,
+    "levelMap": "aaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\naaaaaaaaaa\ngggggggggg",
+    "enemies": [
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 7,
+            "startLine": 4
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 20,
+            "startLine": 4
+        },
+        {
+            "name": "SimpleEnemy",
+            "spawnTime": 15,
+            "startLine": 4
+        }
+    ]
+}

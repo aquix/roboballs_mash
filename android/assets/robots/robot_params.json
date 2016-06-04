@@ -1,0 +1,80 @@
+[
+    {
+        "name": "GunnerBot",
+        "health": 6,
+        "cooldown": 2.5,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": -400,
+        "bulletVelocitY": 0,
+        "damage": 1,
+        "cellTypes": [ "GROUND" ],
+        "tileCooldown": 5,
+        "cost": 20
+    },
+    {
+        "name": "GemBot",
+        "health": 6,
+        "cooldown": 7,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": 0,
+        "bulletVelocitY": 0,
+        "damage": 0,
+        "cellTypes": [ "GROUND" ],
+        "tileCooldown": 3,
+        "cost": 10
+    },
+    {
+        "name": "AirBot",
+        "health": 6,
+        "cooldown": 2.5,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": -400,
+        "bulletVelocitY": 0,
+        "damage": 1,
+        "cellTypes": [ "AIR" ],
+        "tileCooldown": 7,
+        "cost": 30
+    },
+    {
+        "name": "ShieldBot",
+        "health": 30,
+        "cooldown": 0,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": 0,
+        "bulletVelocitY": 0,
+        "damage": 0,
+        "cellTypes": [ "GROUND" ],
+        "tileCooldown": 20,
+        "cost": 30
+    },
+    {
+        "name": "MineBot",
+        "health": 6,
+        "cooldown": 3,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": 0,
+        "bulletVelocitY": 0,
+        "damage": 20,
+        "cellTypes": [ "GROUND" ],
+        "tileCooldown": 15,
+        "cost": 10
+    },
+    {
+        "name": "IceBot",
+        "health": 4,
+        "cooldown": 2.5,
+        "width": 100,
+        "height": 100,
+        "bulletVelocityX": -300,
+        "bulletVelocitY": 0,
+        "damage": 0.5,
+        "cellTypes": [ "GROUND" ],
+        "tileCooldown": 9,
+        "cost": 35
+    }
+]
