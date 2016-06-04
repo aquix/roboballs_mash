@@ -23,10 +23,9 @@ public abstract class Enemy extends GameObject implements IDamagable, IAliveable
     protected State state;
     protected float damage;
     protected Robot aimRobot;
-    protected boolean stateChanged;
     protected final float fallAnimationTime = 2;
     protected float fallTime = 0;
-    Sprite sprite;
+    protected transient Sprite sprite;
     protected final float damagedAnimationTime = 0.1f;
     protected float damagedTime = 0;
     protected float speedModifier;
@@ -38,7 +37,6 @@ public abstract class Enemy extends GameObject implements IDamagable, IAliveable
         this.spawnTime = spawnTime;
         this.startLine = startLine;
         state = State.READY;
-        stateChanged = false;
         this.name = name;
         EnemyParams enemyParams = EnemiesData.get(name);
         cooldown = enemyParams.cooldown;
@@ -136,5 +134,10 @@ public abstract class Enemy extends GameObject implements IDamagable, IAliveable
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public void reloadSprite() {
+        sprite = new Sprite(AssetLoader.getInstance().enemies.get(name).getKeyFrame
+                (0));
     }
 }

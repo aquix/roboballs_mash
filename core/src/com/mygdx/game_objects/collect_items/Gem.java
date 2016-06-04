@@ -10,7 +10,6 @@ import com.mygdx.game_objects.IAliveable;
 public class Gem extends GameObject implements IAliveable {
     private GemType type;
     private Vector2 appearPosition;
-    private float accelerationY;
     private boolean isAlive;
 
     public Gem(float x, float y, GemType type) {
@@ -18,7 +17,7 @@ public class Gem extends GameObject implements IAliveable {
         this.collisionRect = new Rectangle(x - 20, y - 20, 84, 84);
 
         this.appearPosition = new Vector2(x, y);
-        this.accelerationY = 400;
+        this.acceleration.y = 400;
         this.velocity.y = -200;
         this.type = type;
         this.isAlive = true;
@@ -27,7 +26,7 @@ public class Gem extends GameObject implements IAliveable {
     @Override
     public void update(float delta) {
         if (rect.y < appearPosition.y) {
-            velocity.y = velocity.y + accelerationY * delta;
+            velocity.y = velocity.y + acceleration.y * delta;
         } else {
             velocity.y = 0;
         }

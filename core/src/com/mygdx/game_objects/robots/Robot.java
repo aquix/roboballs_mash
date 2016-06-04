@@ -23,7 +23,7 @@ public abstract class Robot extends GameObject implements IAliveable {
     protected float health;
     protected float cooldown;
     protected ArrayList<CellType> cellTypes;
-    protected Sprite sprite;
+    protected transient Sprite sprite;
     protected State state;
     protected final float damagedAnimationTime = 0.5f;
     protected float damagedTime = 0;
@@ -98,5 +98,10 @@ public abstract class Robot extends GameObject implements IAliveable {
 
     public ArrayList<CellType> getCellTypes() {
         return cellTypes;
+    }
+
+    public void reloadSprite() {
+        this.sprite = new Sprite(AssetLoader.getInstance().robots.get(name)
+                .getKeyFrame(0));
     }
 }

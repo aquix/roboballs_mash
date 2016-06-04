@@ -7,20 +7,6 @@ import com.mygdx.game_helpers.AssetLoader;
 import com.mygdx.screens.MainMenuScreen;
 
 public class RoboballsMash extends Game {
-	private Game game = new Game() {
-		@Override
-		public void create() {
-            AssetLoader.getInstance().load();
-			setScreen(new MainMenuScreen(this));
-		}
-
-        @Override
-        public void dispose() {
-            super.dispose();
-            AssetLoader.getInstance().dispose();
-        }
-	};
-
 	public static Logger logger = new Logger("RoboballsMash");
 
 	@Override
@@ -28,11 +14,13 @@ public class RoboballsMash extends Game {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		logger.setLevel(Logger.DEBUG);
 
-		game.create();
+        AssetLoader.getInstance().load();
+        setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
-	public void render () {
-		game.render();
+	public void dispose() {
+		AssetLoader.getInstance().dispose();
+		super.dispose();
 	}
 }

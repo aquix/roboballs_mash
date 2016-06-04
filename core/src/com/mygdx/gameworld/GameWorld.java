@@ -333,6 +333,16 @@ public class GameWorld implements Serializable {
         lives = info.lives;
         levelNumber = info.levelNumber;
         gameState = GameState.PLAY;
+
+        for (Enemy enemy : readyEnemies) {
+            enemy.reloadSprite();
+        }
+        for (Enemy enemy : map.getEnemies()) {
+            enemy.reloadSprite();
+        }
+        for (Robot robot : map.getRobots()) {
+            robot.reloadSprite();
+        }
     }
 
     public GameWorldInfo getInfo() {
